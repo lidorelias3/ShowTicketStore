@@ -1,0 +1,67 @@
+body, html {
+    margin: 0;
+    width: 100%;
+    height: 100vh;
+}
+
+body {
+    flex-direction: column;
+    justify-content: center;
+}
+
+app-header, app-footer, router-outlet {
+    background-color: var(--background-color);
+}
+
+/* ============ Header ============ */
+
+app-header {
+    width: 100vw;
+    height: 10%;
+    display: flex;
+    border-bottom: 1px var(--border-color) solid;
+}
+
+/* ============ Body ============ */
+
+router-outlet {
+    width: 100vw;
+    height: 86%;
+    margin: 0;
+    border-width: 0;
+}
+
+/* ============ Footer ============ */
+
+app-footer {
+    width: 100vw;
+    height: 4%;
+    border-top: 1px var(--border-color) solid;
+    justify-content: center;
+}
+
+@media screen and (width < 1000px) {
+    nav {
+        flex-direction: column;
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: fit-content;
+        box-shadow: 2px 2px 13px 1px rgba(64, 64, 64, 0.7)
+    }
+
+    nav div {
+        background-color: #3d3d3dfb;
+        height: 40px;
+        width: 150px;
+        display: none;
+    }
+
+    nav div:hover {
+        background-color: #5b5b5b;
+    }
+
+    .menu {
+        display: block;
+    }
+}

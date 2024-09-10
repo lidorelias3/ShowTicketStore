@@ -1,0 +1,8 @@
+<div class="container flex">
+    <img id="logo" src="../../../assets/site-logo.png">
+    <!-- TODO: issue number 12 -->
+    <img class="menu" src="../../../assets/menu.png" />
+    <nav class="font-xl">
+        <div *ngFor="let button of buttons" [routerLink]="button.route">{{button.title}}</div>
+    </nav>
+</div>

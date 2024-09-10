@@ -1,0 +1,31 @@
+:root {
+    --light-text-color: #BCBAD3;
+    --dark-text-color: black;
+    --background-color: #222222;
+    --border-color: #525252;
+    --card-gray: #777777;
+    --light-gray: #4F4F4F;
+    --dark-gray: #3C3C3C;
+    --input-gray: #4f4f4f6b;
+}
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--light-text-color);
+    user-select: none;
+}
+
+body {
+    direction: rtl;
+    overflow-x: hidden;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+}
+
+.font-xl {
+    font-size: 20px;
+}
+
