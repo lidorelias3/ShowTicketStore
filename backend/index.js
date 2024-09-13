@@ -6,6 +6,8 @@ const PORT = 3000;
 const authRoutes = require('./src/routes/auth');
 
 
+app.use(express.json()); // For parsing application/json
+app.use(express.urlencoded({ extended: true }));
 
 app.use("/auth", authRoutes);
 
