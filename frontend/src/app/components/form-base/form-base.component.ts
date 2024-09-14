@@ -7,10 +7,10 @@ import { User } from 'src/app/models/user.model';
   styleUrls: ['./form-base.component.scss']
 })
 export class FormBaseComponent {
-  @Input() isRegistration: boolean = true;
-  @Input() helpText: string = 'כבר רשומים?';
-  @Input() linkText?: string = 'לכניסה';
-  @Input() link?: string = undefined;
+  @Input() isRegistration: boolean = false;
+  @Input() helpText: string = '';
+  @Input() linkText?: string = '';
+  @Input() link?: string = '';
   @Input() buttonText: string = '';
 
   @Output() buttonClick = new EventEmitter<User>();

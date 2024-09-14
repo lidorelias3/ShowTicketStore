@@ -1,17 +1,20 @@
 .container {
     width: 100%;
     height: 100%;
-    display: grid;
+    justify-content: center;
+    align-items: center;
 
     .glass {
         height: 60%;
         width: 60%;
-        align-self: center;
-        justify-self: center;
         background-color: var(--dark-gray);
         border-radius: 50px;
 
         flex-direction: column;
+        align-self: center;
+        justify-self: center;
+
+        z-index: 99;
 
         .icon {
             background-color: var(--light-gray);
@@ -21,7 +24,7 @@
             align-items: center;
             display: flex;
             position: relative;
-            top: -12.5vh;
+            top: -10.5vh;
             border-radius: 94px;
 
             img {
@@ -30,21 +33,40 @@
         }
 
         .form {
+            position: relative;
+            top: -15%;
 
             input {
                 width: 270px;
                 height: 30px;
-                margin-bottom: 10px;
+                margin-bottom: 15px;
+                padding-right: 5%;
 
                 background-color: #4F4F4F55;
-                border: none    ;
+                border: none;
             }
 
+            .link {
+                text-decoration: underline;
+                cursor: pointer;
+            }
         }
     }
 
     .button {
         background-color: var(--light-gray);
         width: 50%;
+        height: 10%;
+        position: relative;
+        z-index: 1;
+        display: flex;
+
+        justify-content: center;
+        align-items: flex-end;
+        font-size: 1.5em;
+        border-radius: 50px;
+        top: -5%;
+        padding-bottom: 2px;
+        cursor: pointer;
     }
 }
