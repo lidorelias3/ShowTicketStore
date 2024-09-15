@@ -1,0 +1,16 @@
+<div class="container flex col">
+    <div class="glass flex">
+        <div class="icon">
+            <img src="../../../assets/avatar.png"/>
+        </div>
+        <div class="form flex col">
+            <input *ngIf="isRegistration" type="text" class="form-control" id="username" required [(ngModel)]="user.name" placeholder="שם מלא">
+            <input type="text" class="form-control" id="username" required [(ngModel)]="user.username" placeholder="שם משתמש">
+            <input type="text" class="form-control" id="username" required [(ngModel)]="user.password" placeholder="סיסמה">
+
+            <div *ngIf="helpText.length > 0" class="help-text">{{helpText}}</div>
+            <div *ngIf="link && linkText && linkText.length > 0" class="link" [routerLink]="link">{{linkText}}</div>
+        </div>
+    </div>
+    <div class="button" (click)="submit()">{{buttonText}}</div> 
+</div>

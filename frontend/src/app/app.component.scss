@@ -26,9 +26,15 @@ app-header {
 
 router-outlet {
     width: 100vw;
-    height: 86%;
     margin: 0;
     border-width: 0;
+}
+
+::ng-deep router-outlet +  *{
+    height: 86vh;
+    width: 100%;
+    background-color: var(--background-color);
+
 }
 
 /* ============ Footer ============ */
@@ -38,6 +44,8 @@ app-footer {
     height: 4%;
     border-top: 1px var(--border-color) solid;
     justify-content: center;
+    position: relative;
+    bottom: 0;
 }
 
 @media screen and (width < 1000px) {

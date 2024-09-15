@@ -1,30 +1,34 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { MyCartComponent } from './my-cart/my-cart.component';
-import { LoginComponent } from './login/login.component';
-import { SignupComponent } from './signup/signup.component';
-import { ManagmentPageComponent } from './managment-page/managment-page.component';
-import { HomeComponent } from './home/home.component';
+import { FormBaseComponent } from './components/form-base/form-base.component';
+import { FormsModule } from '@angular/forms';
+import { RegistrationComponent } from './components/registration/registration.component';
+import { LoginComponent } from './components/login/login.component';
+import { MyCartComponent } from './components/my-cart/my-cart.component';
+import { ManagmentPageComponent } from './components/managment-page/managment-page.component';
+import { HomeComponent } from './components/home/home.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    MyCartComponent,
+    FormBaseComponent,
+    RegistrationComponent,
     LoginComponent,
-    SignupComponent,
+    MyCartComponent,
     ManagmentPageComponent,
     HomeComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
