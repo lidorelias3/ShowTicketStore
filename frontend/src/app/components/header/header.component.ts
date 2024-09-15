@@ -7,9 +7,9 @@ import { Component } from '@angular/core';
 })
 export class HeaderComponent {
   buttons: {title: string, route: string}[] = [
-    {title: 'כניסה', route: '/form'},
-    {title: 'הרשמה', route: '/form'},
-    {title: 'דף ניהול', route: '/'},
-    {title: 'העגלה שלי', route: '/'},
+    {title: 'כניסה', route: '/login'},
+    {title: 'הרשמה', route: '/register'},
+    {title: 'דף ניהול', route: '/managment-page'},
+    {title: 'העגלה שלי', route: '/my-cart'}
   ]
 }
