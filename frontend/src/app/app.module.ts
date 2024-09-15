@@ -8,9 +8,9 @@ import { FormBaseComponent } from './components/form-base/form-base.component';
 import { FormsModule } from '@angular/forms';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { LoginComponent } from './components/login/login.component';
-import { MyCartComponent } from './my-cart/my-cart.component';
-import { ManagmentPageComponent } from './managment-page/managment-page.component';
-import { HomeComponent } from './home/home.component';
+import { MyCartComponent } from './components/my-cart/my-cart.component';
+import { ManagmentPageComponent } from './components/managment-page/managment-page.component';
+import { HomeComponent } from './components/home/home.component';
 
 
 @NgModule({
@@ -20,7 +20,7 @@ import { HomeComponent } from './home/home.component';
     FooterComponent,
     FormBaseComponent,
     RegistrationComponent,
-    LoginComponent
+    LoginComponent,
     MyCartComponent,
     ManagmentPageComponent,
     HomeComponent
