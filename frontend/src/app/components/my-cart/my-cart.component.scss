@@ -1,0 +1,48 @@
+.ticket-store {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .ticket-item, .cart-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .ticket-details {
+    flex-grow: 1;
+  }
+  
+  button {
+    padding: 10px;
+    background-color: #a72828;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  button:hover {
+    background-color: #823d3d;
+  }
+  
+  .total {
+    margin-top: 20px;
+    font-size: 18px;
+  }
+  
+  hr {
+    margin: 30px 0;
+  }
+  
+  button.remove {
+    background-color: #dc3545;
+  }
+  
+  button.remove:hover {
+    background-color: #c82333;
+  }
+  

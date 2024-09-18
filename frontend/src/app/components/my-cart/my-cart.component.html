@@ -1,3 +1,26 @@
-<div class="container flex">
-    <img id="logo" src="../../../assets/cart.png">
-</div>
+<div class="ticket-store">
+    <h2>העגלה שלי</h2>
+  
+    <!-- Cart items -->
+    <div *ngIf="cart.length > 0; else emptyCart">
+      <div *ngFor="let item of cart" class="cart-item">
+        <div class="ticket-details">
+          <h4>{{ item.name }}</h4>
+          <p><strong>מחיר:</strong> ${{ item.price }}</p>
+        </div>
+        <button (click)="removeFromCart(item.id)">הסר רכישה</button>
+      </div>
+  
+      <div class="total">
+        <h3>סך הכל: ${{ totalCost }}</h3>
+      </div>
+  
+      <button (click)="clearCart()">נקה עגלה</button>
+    </div>
+  
+    <!-- Display when cart is empty -->
+    <ng-template #emptyCart>
+      <p>העגלה ריקה.</p>
+    </ng-template>
+  </div>
+  
