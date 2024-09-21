@@ -17,6 +17,6 @@ export class HomeComponent {
 
   addToCart(ticket: any) {
     this.ticketsService.addToCart(ticket);
-    // alert(`${ticket.name} added to cart!`);
+    alert(`${ticket.name} added to cart!`);
   }
 }
