@@ -1,1 +1,5 @@
-<p>Home Sweet Home</p>
+<div *ngFor="let ticket of tickets" class="ticket">
+    <h4>{{ ticket.name }} - ${{ ticket.price }}</h4>
+    <button (click)="addToCart(ticket)">Add to Cart</button>
+  </div>
+  
