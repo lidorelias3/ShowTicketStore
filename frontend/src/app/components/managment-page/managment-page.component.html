@@ -1,1 +1,56 @@
-<p>managment-page works!</p>
+<div class="container mt-5">
+  <h2>Ticket Management</h2>
+
+  <!-- Form to add new tickets -->
+  <form (ngSubmit)="addTicket()" #ticketForm="ngForm">
+    <div class="form-group">
+      <label for="ticketName">Ticket Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="ticketName"
+        name="ticketName"
+        required
+        [(ngModel)]="newTicket.name"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="ticketPrice">Ticket Price</label>
+      <input
+        type="number"
+        class="form-control"
+        id="ticketPrice"
+        name="ticketPrice"
+        required
+        [(ngModel)]="newTicket.price"
+      />
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-primary mt-3"
+      [disabled]="!ticketForm.valid"
+    >
+      Add Ticket
+    </button>
+  </form>
+
+  <!-- List of available tickets -->
+  <h3 class="mt-5">Available Tickets</h3>
+  <ul *ngIf="tickets.length > 0; else noTickets" class="list-group">
+    <li
+      *ngFor="let ticket of tickets"
+      class="list-group-item d-flex justify-content-between align-items-center"
+    >
+      {{ ticket.name }} - ${{ ticket.price }}
+      <button class="btn btn-danger" (click)="removeTicket(ticket.id)">
+        Remove
+      </button>
+    </li>
+  </ul>
+
+  <ng-template #noTickets>
+    <p>No tickets available. Add some tickets to the store.</p>
+  </ng-template>
+</div>
