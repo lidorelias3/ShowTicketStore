@@ -38,4 +38,13 @@ export class MyCartComponent implements OnInit {
   clearCart() {
     this.ticketsService.clearCart();
   }
+
+  // Pay method - shows a confirmation for now, can be expanded for real payments
+  pay() {
+    // Logic to handle payment (can be expanded to integrate with payment gateways)
+    alert(`You have paid $${this.totalCost}. Thank you for your purchase!`);
+    
+    // Clear cart after payment
+    this.clearCart();
+  }
 }

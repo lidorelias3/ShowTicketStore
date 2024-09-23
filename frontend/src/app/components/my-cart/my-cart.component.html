@@ -3,7 +3,11 @@
 
   <div *ngIf="cartItems.length > 0; else emptyCart">
     <div class="card-group">
-      <div *ngFor="let item of cartItems" class="card m-2 rounded-card">
+      <div
+        *ngFor="let item of cartItems"
+        class="card m-2 rounded-card"
+        style="min-width: 18rem"
+      >
         <div class="card-body">
           <h5 class="card-title">{{ item.name }}</h5>
           <p class="card-text">
@@ -25,8 +29,19 @@
         </div>
       </div>
     </div>
+
     <h3 class="mt-4">Total Cost: ${{ totalCost }}</h3>
-    <button class="btn btn-warning" (click)="clearCart()">Clear Cart</button>
+
+    <div class="d-flex mt-4">
+      <button class="btn btn-warning" (click)="clearCart()">Clear Cart</button>
+      <button
+        class="btn btn-success ml-auto"
+        (click)="pay()"
+        [disabled]="cartItems.length === 0"
+      >
+        Pay ${{ totalCost }}
+      </button>
+    </div>
   </div>
 
   <ng-template #emptyCart>
