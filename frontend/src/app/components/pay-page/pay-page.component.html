@@ -1,0 +1,77 @@
+<div class="container mt-5">
+  <h2>Payment Details</h2>
+
+  <form (ngSubmit)="processPayment()" #paymentForm="ngForm">
+    <div class="form-group">
+      <label for="cardNumber">Card Number</label>
+      <input
+        type="text"
+        class="form-control"
+        id="cardNumber"
+        name="cardNumber"
+        required
+        ngModel
+      />
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="expiration">Expiration Date</label>
+        <input
+          type="text"
+          class="form-control"
+          id="expiration"
+          name="expiration"
+          placeholder="MM/YY"
+          required
+          ngModel
+        />
+      </div>
+
+      <div class="form-group col-md-6">
+        <label for="securityCode">Security Code (CVV)</label>
+        <input
+          type="text"
+          class="form-control"
+          id="securityCode"
+          name="securityCode"
+          required
+          ngModel
+        />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="cardHolder">Cardholder's Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="cardHolder"
+        name="cardHolder"
+        required
+        ngModel
+      />
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-primary mt-3"
+      [disabled]="!paymentForm.valid"
+    >
+      Submit Payment
+    </button>
+  </form>
+
+  <div *ngIf="loading" class="mt-4">
+    <p>Processing your payment...</p>
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+
+  <div *ngIf="paymentSuccess" class="mt-4">
+    <h3>Payment Successful!</h3>
+    <p>Your payment has been processed. Thank you for your purchase!</p>
+    <button class="btn btn-success" (click)="goBack()">Return to Cart</button>
+  </div>
+</div>

@@ -11,6 +11,7 @@ import { LoginComponent } from './components/login/login.component';
 import { MyCartComponent } from './components/my-cart/my-cart.component';
 import { ManagmentPageComponent } from './components/managment-page/managment-page.component';
 import { HomeComponent } from './components/home/home.component';
+import { PayPageComponent } from './components/pay-page/pay-page.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { HomeComponent } from './components/home/home.component';
     LoginComponent,
     MyCartComponent,
     ManagmentPageComponent,
-    HomeComponent
+    HomeComponent,
+    PayPageComponent
   ],
   imports: [
     BrowserModule,

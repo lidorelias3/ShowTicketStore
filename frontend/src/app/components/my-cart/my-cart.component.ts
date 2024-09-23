@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { TicketsService } from '../../tickets.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-cart',
   templateUrl: './my-cart.component.html',
-  styleUrls: ['./my-cart.component.scss']
+  styleUrls: ['./my-cart.component.css']
 })
 export class MyCartComponent implements OnInit {
   cartItems: any[] = [];
   totalCost: number = 0;
 
-  constructor(private ticketsService: TicketsService) { }
+  constructor(private ticketsService: TicketsService, private router: Router) { }
 
   ngOnInit(): void {
     this.ticketsService.currentCart.subscribe(cart => {
@@ -39,12 +40,8 @@ export class MyCartComponent implements OnInit {
     this.ticketsService.clearCart();
   }
 
-  // Pay method - shows a confirmation for now, can be expanded for real payments
+  // Navigate to the pay page
   pay() {
-    // Logic to handle payment (can be expanded to integrate with payment gateways)
-    alert(`You have paid $${this.totalCost}. Thank you for your purchase!`);
-    
-    // Clear cart after payment
-    this.clearCart();
+    this.router.navigate(['/pay']);
   }
 }
