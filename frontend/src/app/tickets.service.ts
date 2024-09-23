@@ -5,42 +5,61 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class TicketsService {
-  private cart = new BehaviorSubject<any[]>([]);
-  currentCart = this.cart.asObservable();
+  private cartKey = 'cart';  // Key for localStorage
+  private cartSource = new BehaviorSubject<any[]>(this.loadCartFromLocalStorage());
+  currentCart = this.cartSource.asObservable();
 
   constructor() { }
 
-  addToCart(ticket: any) {
-    const currentCart = this.cart.value;
-    const ticketInCart = currentCart.find(item => item.id === ticket.id);
+  // Load cart from localStorage
+  private loadCartFromLocalStorage(): any[] {
+    const savedCart = localStorage.getItem(this.cartKey);
+    return savedCart ? JSON.parse(savedCart) : [];
+  }
 
-    if (ticketInCart) {
-      // Ticket already in cart, increase the quantity
-      ticketInCart.quantity += 1;
+  // Save cart to localStorage
+  private saveCartToLocalStorage(cart: any[]) {
+    localStorage.setItem(this.cartKey, JSON.stringify(cart));
+  }
+
+  addToCart(ticket: any) {
+    const cart = this.cartSource.getValue();
+    const existingTicket = cart.find(item => item.id === ticket.id);
+
+    if (existingTicket) {
+      existingTicket.quantity += 1;
     } else {
-      // Ticket not in cart, add with quantity 1
-      currentCart.push({ ...ticket, quantity: 1 });
+      cart.push({ ...ticket, quantity: 1 });
     }
 
-    this.cart.next(currentCart);
+    this.cartSource.next(cart);
+    this.saveCartToLocalStorage(cart);
   }
 
   removeFromCart(ticketId: number) {
-    const currentCart = this.cart.value.filter(item => item.id !== ticketId);
-    this.cart.next(currentCart);
+    let cart = this.cartSource.getValue();
+    cart = cart.filter(item => item.id !== ticketId);
+
+    this.cartSource.next(cart);
+    this.saveCartToLocalStorage(cart);
   }
 
   decreaseQuantity(ticketId: number) {
-    const currentCart = this.cart.value.map(item => {
-      if (item.id === ticketId && item.quantity > 1) {
-        return { ...item, quantity: item.quantity - 1 };
-      }
-      return item;
-    });
-    this.cart.next(currentCart);
+    const cart = this.cartSource.getValue();
+    const ticket = cart.find(item => item.id === ticketId);
+
+    if (ticket && ticket.quantity > 1) {
+      ticket.quantity -= 1;
+    } else {
+      this.removeFromCart(ticketId);
+    }
+
+    this.cartSource.next(cart);
+    this.saveCartToLocalStorage(cart);
   }
 
   clearCart() {
-    this.cart.next([]);
+    this.cartSource.next([]);
+    localStorage.removeItem(this.cartKey); // Clear localStorage
   }
 }
