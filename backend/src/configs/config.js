@@ -1,11 +1,7 @@
 var config = {
   }; 
+
+  config.mongo_uri = 'mongodb://localhost:27017/Project';
   
-  config.mysql = {
-    host: "127.0.0.1",
-    user: "root",
-    password: "Aa123456",
-    db_name: "Project"
-  };
   
   module.exports = config;
