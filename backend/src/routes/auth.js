@@ -1,11 +1,11 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const User = require('../models/user');
 
 const {body, validationResult} = require('express-validator')
 
 const router = express.Router();
 
-const dbcon = require('../utils/db');
 const handleResponse = require('../utils/responseHandler');
 
 
@@ -16,35 +16,38 @@ const RegisterValidator = [
 ];
 
 
-router.post('/login', async  (req, res) => {
+router.post('/login', RegisterValidator, async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return handleResponse(res, 400, false, "Invalid arameters" ,errors.array());
+    }
+
+    const { email, password } = req.body;
+
     try {
-        const { email, password } = req.body;
-
-        // Check if the email exists
-        const user = await getUserByEmail(email);
+        // Find user by email
+        const user = await User.findOne({ email });
         if (!user) {
-            return handleResponse(res, 401, false, "Invalid credentials");
+            return res.status(404).json({ message: "User not found" });
         }
 
-        // Compare the entered password with the stored hashed password
-        const passwordMatch = await bcrypt.compare(password, user.hashed_password);
-        if (!passwordMatch) {
-            return handleResponse(res, 401, false, "Invalid credentials");
+        // Compare the provided password with the hashed password stored in the db
+        const isMatch = await bcrypt.compare(password, user.hashedPassword);
+        if (!isMatch) {
+            return res.status(401).json({ message: "Invalid credentials" });
         }
 
-        // Successful login
-        // You can generate a JWT or session here if needed
-        return handleResponse(res, 200, true, "Login successful", { userId: user.id, email: user.email });
+        res.status(200).json({ message: "Login successful" });
 
     } catch (error) {
-        return handleResponse(res, 500, false, "Server error", null, error.message);
+        res.status(500).json({ message: "Error logging in", error: error.message });
     }
 });
 
 
 
-router.post('/register', RegisterValidator, async (req, res) => {
 
+router.post('/register', RegisterValidator, async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return handleResponse(res, 400, false, "Invalid arameters" ,errors.array());
@@ -52,41 +55,29 @@ router.post('/register', RegisterValidator, async (req, res) => {
 
     const { firstName, lastName, email, password } = req.body;
 
-    // Generate bcrypt salt and hash the password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    const emailExists = await getUserByEmail(email);
-        if (emailExists) {
-            return handleResponse(res, 409, false, "Email already exists");
+    try {
+        // Check if the email already exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(409).json({ message: "Email already in use" });
         }
 
-    const newUserQuery = 'INSERT INTO users (first_name, last_name, email, hashed_password) VALUES (?, ?, ?, ?)'
-    dbcon.query(newUserQuery, [firstName, lastName, email, hashedPassword], function(err, rows) {
-        if (err) {
-            return handleResponse(res, 400, false, "SQL error", err);
-        }
-
-        return handleResponse(res, 200, true, "User registered successfully");
-    });
-    
-});
-
-function getUserByEmail(email) {
-    return new Promise((resolve, reject) => {
-        const searchEmailQuery = 'SELECT * FROM users WHERE email = ?';
-        
-        dbcon.query(searchEmailQuery, [email], function (err, rows) {
-            if (err) {
-                return reject(err);  // Reject the promise with error
-            }
-            if (rows.length > 0) {
-                return resolve(rows[0]);  // Return user details if email exists
-            }
-            return resolve(null);  // Email does not exist
+        // Create a new user
+        const newUser = new User({
+            firstName,
+            lastName,
+            email,
+            hashedPassword: password  // Password will be hashed by the 'pre' hook
         });
-    });
-}
+
+        // Save the user to the database
+        await newUser.save();
+        res.status(201).json({ message: "User registered successfully" });
+
+    } catch (error) {
+        res.status(500).json({ message: "Error registering user", error: error.message });
+    }
+});
 
 
 module.exports = router;
