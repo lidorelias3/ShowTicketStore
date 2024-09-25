@@ -1,3 +1,50 @@
-<div class="container flex">
-    <img id="logo" src="../../../assets/cart.png">
+<div class="container">
+  <h2>Your Cart</h2>
+
+  <div *ngIf="cartItems.length > 0; else emptyCart">
+    <div class="card-group">
+      <div
+        *ngFor="let item of cartItems"
+        class="card m-2 rounded-card"
+        style="min-width: 18rem"
+      >
+        <div class="card-body">
+          <h5 class="card-title">{{ item.name }}</h5>
+          <p class="card-text">
+            Price: ${{ item.price }} <br />
+            Quantity: {{ item.quantity }} <br />
+            Total: ${{ item.price * item.quantity }}
+          </p>
+          <button class="btn btn-danger" (click)="removeItem(item.id)">
+            Remove
+          </button>
+          <button
+            class="btn btn-secondary"
+            (click)="decreaseItem(item.id)"
+            [disabled]="item.quantity <= 1"
+          >
+            -
+          </button>
+          <button class="btn btn-secondary" (click)="addToCart(item)">+</button>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="mt-4">Total Cost: ${{ totalCost }}</h3>
+
+    <div class="d-flex mt-4">
+      <button class="btn btn-warning" (click)="clearCart()">Clear Cart</button>
+      <button
+        class="btn btn-success ml-auto"
+        (click)="pay()"
+        [disabled]="cartItems.length === 0"
+      >
+        Pay ${{ totalCost }}
+      </button>
+    </div>
+  </div>
+
+  <ng-template #emptyCart>
+    <p>Your cart is empty.</p>
+  </ng-template>
 </div>

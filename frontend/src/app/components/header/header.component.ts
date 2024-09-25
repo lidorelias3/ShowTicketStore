@@ -10,6 +10,8 @@ export class HeaderComponent {
     {title: 'כניסה', route: '/login'},
     {title: 'הרשמה', route: '/register'},
     {title: 'דף ניהול', route: '/managment-page'},
-    {title: 'העגלה שלי', route: '/my-cart'}
+    {title: 'העגלה שלי', route: '/my-cart'},
+    {title: 'בית', route: ''}
+
   ]
 }
