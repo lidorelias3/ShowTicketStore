@@ -26,19 +26,18 @@ router.post('/login', RegisterValidator, async (req, res) => {
         // Find user by email
         const user = await User.findOne({ email });
         if (!user) {
-            return res.status(404).json({ message: "User not found" });
+            return handleResponse(res, 404, false, "User not found");
         }
 
         // Compare the provided password with the hashed password stored in the db
         const isMatch = await bcrypt.compare(password, user.hashedPassword);
         if (!isMatch) {
-            return res.status(401).json({ message: "Invalid credentials" });
+            return handleResponse(res, 404, false, "Invalid credentials");
         }
 
-        res.status(200).json({ message: "Login successful" });
-
+        return handleResponse(res, 200, false, "Login successful");
     } catch (error) {
-        res.status(500).json({ message: "Error logging in", error: error.message });
+        return handleResponse(res, 500, false, "Error logging in", error.message);
     }
 });
 
