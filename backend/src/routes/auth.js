@@ -8,13 +8,11 @@ const router = express.Router();
 
 const handleResponse = require('../utils/responseHandler');
 
-
 // Middleware for validating user input
 const RegisterValidator = [
     body('email').isEmail().withMessage('Must be a valid email address'),
     body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long')
 ];
-
 
 router.post('/login', RegisterValidator, async (req, res) => {
     const errors = validationResult(req);
@@ -28,24 +26,20 @@ router.post('/login', RegisterValidator, async (req, res) => {
         // Find user by email
         const user = await User.findOne({ email });
         if (!user) {
-            return res.status(404).json({ message: "User not found" });
+            return handleResponse(res, 404, false, "User not found");
         }
 
         // Compare the provided password with the hashed password stored in the db
         const isMatch = await bcrypt.compare(password, user.hashedPassword);
         if (!isMatch) {
-            return res.status(401).json({ message: "Invalid credentials" });
+            return handleResponse(res, 404, false, "Invalid credentials");
         }
 
-        res.status(200).json({ message: "Login successful" });
-
+        return handleResponse(res, 200, false, "Login successful");
     } catch (error) {
-        res.status(500).json({ message: "Error logging in", error: error.message });
+        return handleResponse(res, 500, false, "Error logging in", error.message);
     }
 });
-
-
-
 
 router.post('/register', RegisterValidator, async (req, res) => {
     const errors = validationResult(req);
@@ -59,7 +53,7 @@ router.post('/register', RegisterValidator, async (req, res) => {
         // Check if the email already exists
         const existingUser = await User.findOne({ email });
         if (existingUser) {
-            return res.status(409).json({ message: "Email already in use" });
+            return handleResponse(res, 409, false, "Email already in use");
         }
 
         // Create a new user
@@ -72,10 +66,10 @@ router.post('/register', RegisterValidator, async (req, res) => {
 
         // Save the user to the database
         await newUser.save();
-        res.status(201).json({ message: "User registered successfully" });
+        return handleResponse(res, 201, true, "User registered successfully");
 
     } catch (error) {
-        res.status(500).json({ message: "Error registering user", error: error.message });
+        return handleResponse(res, 500, false, "Error registering user", error.message);
     }
 });
 
