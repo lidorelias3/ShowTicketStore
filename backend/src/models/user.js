@@ -3,12 +3,22 @@ const bcrypt = require("bcrypt");
 
 // Define the user Schema
 const userSchema = new mongoose.Schema({
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
+  firstName: { type: String, required: true, minlength: 2, maxlength: 50 },
+  lastName: { type: String, required: true, minlength: 2, maxlength: 50 },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    minlength: 2,
+    maxlength: 100,
+  },
   hashedPassword: { type: String, required: true },
-  gender: { type: String, required: true },
-  age: { type: Int16Array, required: true },
+  gender: {
+    type: String,
+    required: true,
+    enum: ["Male", "male", "Female", "female", "Other", "other"],
+  },
+  age: { type: Number, required: true, min: 0, max: 120 },
   isAdmin: { type: Boolean, required: true },
   createdAt: { type: Date, default: Date.now }, // Timestamp when the venue was added
   updatedAt: { type: Date, default: Date.now }, // Timestamp when the venue was last updated

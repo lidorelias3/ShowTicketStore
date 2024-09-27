@@ -4,14 +4,15 @@ const mongoose = require("mongoose");
 const eventSchema = new mongoose.Schema({
   name: { type: String, required: true }, // Name of the event
   date: { type: Date, required: true }, // Date of the  when the venue was added
-  prices: [
+  tickets: [
     {
       ticketType: { type: String, required: true }, // Ticket type (vip, regular)
-      price: { type: Int32Array, required: true }, // Price for that ticket
+      price: { type: Number, required: true }, // Price for that ticket
+      remaining: { type: Number, required: true, default: 0 },
     },
   ],
   venueName: { type: String, required: true }, // The name of the venue
-  minimumAge: { type: Int16Array, default: -1 }, // The minimum age to enter the event (-1 indicates there is no minimum)
+  minimumAge: { type: Number, default: -1 }, // The minimum age to enter the event (-1 indicates there is no minimum)
   description: { type: String }, // Description for the event
   profileImage: { type: String }, // Path to the main profile image of the event
   imagesPaths: [
