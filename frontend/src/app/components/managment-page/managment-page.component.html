@@ -1,56 +1,158 @@
-<div class="container mt-5">
-  <h2>Ticket Management</h2>
-
-  <!-- Form to add new tickets -->
-  <form (ngSubmit)="addTicket()" #ticketForm="ngForm">
+<div class="container">
+  <h3>Create New Event</h3>
+  <form (submit)="addTicket()" #eventForm="ngForm">
+    <!-- Name -->
     <div class="form-group">
-      <label for="ticketName">Ticket Name</label>
+      <label for="eventName">Event Name</label>
       <input
         type="text"
         class="form-control"
-        id="ticketName"
-        name="ticketName"
+        id="eventName"
+        [(ngModel)]="newEvent.name"
+        name="name"
         required
-        [(ngModel)]="newTicket.name"
       />
     </div>
 
+    <!-- Date -->
     <div class="form-group">
-      <label for="ticketPrice">Ticket Price</label>
+      <label for="eventDate">Date</label>
+      <input
+        type="date"
+        class="form-control"
+        id="eventDate"
+        [(ngModel)]="newEvent.date"
+        name="date"
+        required
+      />
+    </div>
+
+    <!-- Venue Name -->
+    <div class="form-group">
+      <label for="venueName">Venue Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="venueName"
+        [(ngModel)]="newEvent.venueName"
+        name="venueName"
+        required
+      />
+    </div>
+
+    <!-- Minimum Age -->
+    <div class="form-group">
+      <label for="minimumAge">Minimum Age</label>
       <input
         type="number"
         class="form-control"
-        id="ticketPrice"
-        name="ticketPrice"
+        id="minimumAge"
+        [(ngModel)]="newEvent.minimumAge"
+        name="minimumAge"
         required
-        [(ngModel)]="newTicket.price"
       />
+    </div>
+
+    <!-- Description -->
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea
+        class="form-control"
+        id="description"
+        [(ngModel)]="newEvent.description"
+        name="description"
+        required
+      ></textarea>
+    </div>
+
+    <!-- Ticket List (Multiple Ticket Types) -->
+    <h5>Tickets</h5>
+    <div
+      *ngFor="let ticket of newEvent.tickets; let i = index"
+      class="form-group"
+    >
+      <label>Ticket Type {{ i + 1 }}</label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Ticket Name"
+        [(ngModel)]="ticket.name"
+        [name]="'ticketName' + i"
+        required
+      />
+      <input
+        type="number"
+        class="form-control mt-2"
+        placeholder="Ticket Price"
+        [(ngModel)]="ticket.price"
+        [name]="'ticketPrice' + i"
+        required
+      />
+      <input
+        type="number"
+        class="form-control mt-2"
+        placeholder="Quantity"
+        [(ngModel)]="ticket.quantity"
+        [name]="'ticketQuantity' + i"
+        required
+      />
+      <button
+        type="button"
+        class="btn btn-danger mt-2"
+        (click)="removeTicket(i)"
+      >
+        Remove Ticket
+      </button>
+    </div>
+    <button
+      type="button"
+      class="btn btn-secondary mt-2"
+      (click)="addTicketType()"
+    >
+      Add Another Ticket Type
+    </button>
+
+    <!-- Profile Image Upload -->
+    <div class="form-group mt-4">
+      <label for="profileImage">Profile Image</label>
+      <input
+        type="file"
+        class="form-control-file"
+        id="profileImage"
+        (change)="onProfileImageSelected($event)"
+      />
+      <img
+        *ngIf="profileImagePreview"
+        [src]="profileImagePreview"
+        class="img-thumbnail mt-2"
+        width="200"
+      />
+    </div>
+
+    <!-- Images Paths (Multiple Image Upload) -->
+    <div class="form-group mt-4">
+      <label for="imagesPaths">Event Images</label>
+      <input
+        type="file"
+        class="form-control-file"
+        id="imagesPaths"
+        (change)="onImagesSelected($event)"
+        multiple
+      />
+      <div *ngIf="imagesPreviews.length > 0" class="mt-3">
+        <h6>Image Previews:</h6>
+        <div *ngFor="let img of imagesPreviews" class="d-inline-block">
+          <img [src]="img" class="img-thumbnail m-1" width="100" />
+        </div>
+      </div>
     </div>
 
     <button
       type="submit"
-      class="btn btn-primary mt-3"
-      [disabled]="!ticketForm.valid"
+      class="btn btn-primary mt-4"
+      [disabled]="!eventForm.valid"
     >
-      Add Ticket
+      Add Event
     </button>
   </form>
-
-  <!-- List of available tickets -->
-  <h3 class="mt-5">Available Tickets</h3>
-  <ul *ngIf="tickets.length > 0; else noTickets" class="list-group">
-    <li
-      *ngFor="let ticket of tickets"
-      class="list-group-item d-flex justify-content-between align-items-center"
-    >
-      {{ ticket.name }} - ${{ ticket.price }}
-      <button class="btn btn-danger" (click)="removeTicket(ticket.id)">
-        Remove
-      </button>
-    </li>
-  </ul>
-
-  <ng-template #noTickets>
-    <p>No tickets available. Add some tickets to the store.</p>
-  </ng-template>
 </div>

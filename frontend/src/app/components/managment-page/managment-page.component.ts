@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { TicketsService } from '../../tickets.service';
 
 @Component({
@@ -6,36 +6,82 @@ import { TicketsService } from '../../tickets.service';
   templateUrl: './managment-page.component.html',
   styleUrls: ['./managment-page.component.scss']
 })
-export class ManagmentPageComponent implements OnInit {
-  newTicket = {
+export class ManagmentPageComponent {
+  newEvent = {
     name: '',
-    price: 0
+    date: '',
+    tickets: [{ name: '', price: 0, quantity: 0 }], // Start with one ticket type
+    venueName: '',
+    minimumAge: 0,
+    description: '',
+    profileImage: '',
+    imagesPaths: [] // List of additional images
   };
-  tickets: any[] = [];
+
+  profileImagePreview: string | ArrayBuffer | null = null;
+  imagesPreviews: string[] = [];
 
   constructor(private ticketsService: TicketsService) {}
 
-  ngOnInit(): void {
-    this.ticketsService.currentTickets.subscribe(tickets => {
-      this.tickets = tickets;
-    });
+  // Add another ticket type
+  addTicketType() {
+    this.newEvent.tickets.push({ name: '', price: 0, quantity: 0 });
   }
 
-  // Load the current list of tickets
-  loadTickets() {
-    this.tickets = this.ticketsService.getTickets();
+  // Remove a specific ticket type
+  removeTicket(index: number) {
+    this.newEvent.tickets.splice(index, 1);
   }
 
-  // Add a new ticket
+  // Handle profile image selection and preview
+  onProfileImageSelected(event: Event): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.profileImagePreview = reader.result;
+        this.newEvent.profileImage = reader.result as string; // Save the image data as base64 string
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  // Handle multiple images selection for `imagesPaths`
+  onImagesSelected(event: Event): void {
+    const files = (event.target as HTMLInputElement).files;
+    if (files) {
+      this.imagesPreviews = [];
+      this.newEvent.imagesPaths = [];
+      Array.from(files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.imagesPreviews.push(reader.result as string);
+          // this.newEvent.imagesPaths.push(reader.result as string); // Save as base64 string
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+  }
+
+  // Add new event to the service
   addTicket() {
-    this.ticketsService.addTicket(this.newTicket);
-    this.newTicket = { name: '', price: 0 };  // Reset form
-    this.loadTickets();  // Reload the ticket list
+    this.ticketsService.addTicket(this.newEvent);
+    this.resetForm();
   }
 
-  // Remove a ticket by ID
-  removeTicket(ticketId: number) {
-    this.ticketsService.removeTicket(ticketId);
-    this.loadTickets();  // Reload the ticket list
+  // Reset form after submission
+  resetForm() {
+    this.newEvent = {
+      name: '',
+      date: '',
+      tickets: [{ name: '', price: 0, quantity: 0 }],
+      venueName: '',
+      minimumAge: 0,
+      description: '',
+      profileImage: '',
+      imagesPaths: []
+    };
+    this.profileImagePreview = null;
+    this.imagesPreviews = [];
   }
 }
