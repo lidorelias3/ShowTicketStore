@@ -155,4 +155,22 @@
       Add Event
     </button>
   </form>
+
+  <!-- List of available tickets -->
+  <h3 class="mt-5">Available Tickets</h3>
+  <ul *ngIf="eventsList.length > 0; else noEvents" class="list-group">
+    <li
+      *ngFor="let event of eventsList"
+      class="list-group-item d-flex justify-content-between align-items-center"
+    >
+      {{ event.name }} - ${{ event.price }}
+      <button class="btn btn-danger" (click)="removeEvent(event.id)">
+        Remove
+      </button>
+    </li>
+  </ul>
+
+  <ng-template #noEvents>
+    <p>No events available. Add some events to the store.</p>
+  </ng-template>
 </div>

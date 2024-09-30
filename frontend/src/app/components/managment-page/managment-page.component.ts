@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TicketsService } from '../../tickets.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { TicketsService } from '../../tickets.service';
   templateUrl: './managment-page.component.html',
   styleUrls: ['./managment-page.component.scss']
 })
-export class ManagmentPageComponent {
+export class ManagmentPageComponent implements OnInit {
   newEvent = {
     name: '',
     date: '',
@@ -20,8 +20,20 @@ export class ManagmentPageComponent {
 
   profileImagePreview: string | ArrayBuffer | null = null;
   imagesPreviews: string[] = [];
+  eventsList: any[] = [];  // To store the list of events
 
   constructor(private ticketsService: TicketsService) {}
+
+  ngOnInit(): void {
+    this.loadEvents();
+  }
+
+  // Fetch events from the TicketsService
+  loadEvents() {
+    this.ticketsService.currentTickets.subscribe(events => {
+      this.eventsList = events;
+    });
+  }
 
   // Add another ticket type
   addTicketType() {
@@ -29,8 +41,14 @@ export class ManagmentPageComponent {
   }
 
   // Remove a specific ticket type
-  removeTicket(index: number) {
-    this.newEvent.tickets.splice(index, 1);
+  removeTicket(id: number) {
+    //TODO: change this function
+    this.ticketsService.removeTicket(id);
+  }
+
+  // Remove a specific event
+  removeEvent(id: number) {
+    this.ticketsService.removeTicket(id);
   }
 
   // Handle profile image selection and preview
