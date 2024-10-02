@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
   constructor(private ticketsService: TicketsService) {}
 
   ngOnInit(): void {
-    this.ticketsService.currentTickets.subscribe((events) => {
+    this.ticketsService.currentEvents.subscribe((events) => {
       this.events = events;
     });
   }

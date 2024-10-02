@@ -26,6 +26,7 @@ export class MyCartComponent implements OnInit {
 
   removeItem(eventName: any, ticketType: any) {
     this.ticketsService.removeFromCart(eventName, ticketType);
+    this.cartItems = this.ticketsService.getCartItems();
   }
 
   decreaseItem(eventName: any, ticketType: any) {

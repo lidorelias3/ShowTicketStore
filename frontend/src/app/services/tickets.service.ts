@@ -1,18 +1,15 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TicketsService {
-  private apiUrl = 'http://localhost:3000/api/'; // Your backend API URL
-
   // Tickets and cart observables
-  private ticketsSource = new BehaviorSubject<any[]>(
+  private eventsSource = new BehaviorSubject<any[]>(
     this.loadTicketsFromLocalStorage()
   );
-  currentTickets = this.ticketsSource.asObservable();
+  currentEvents = this.eventsSource.asObservable();
   private cartSource = new BehaviorSubject<any[]>(
     this.loadCartFromLocalStorage()
   );
@@ -42,26 +39,26 @@ export class TicketsService {
     localStorage.setItem('cart', JSON.stringify(cart));
   }
 
-  // Add a new ticket to the tickets array
-  addTicket(ticket: any) {
-    const tickets = this.ticketsSource.getValue();
+  // Add a new event to the events array
+  addEvent(ticket: any) {
+    const tickets = this.eventsSource.getValue();
     ticket.id = tickets.length > 0 ? tickets[tickets.length - 1].id + 1 : 1; // Generate unique ID
     tickets.push(ticket);
-    this.ticketsSource.next(tickets);
+    this.eventsSource.next(tickets);
     this.saveTicketsToLocalStorage(tickets);
   }
 
-  // Remove a ticket from the tickets array
-  removeTicket(ticketId: number) {
-    let tickets = this.ticketsSource.getValue();
-    tickets = tickets.filter((ticket) => ticket.id !== ticketId);
-    this.ticketsSource.next(tickets);
-    this.saveTicketsToLocalStorage(tickets);
+  // Remove a event from the events array
+  removeEvent(eventName: any) {
+    let events = this.eventsSource.getValue();
+    events = events.filter((event) => event.name !== eventName);
+    this.eventsSource.next(events);
+    this.saveTicketsToLocalStorage(events);
   }
 
-  // Get all available tickets
-  getTickets() {
-    return this.ticketsSource.getValue();
+  // Get all available events
+  getEvents() {
+    return this.eventsSource.getValue();
   }
 
   // Add ticket to cart
@@ -83,12 +80,13 @@ export class TicketsService {
     this.saveCartToLocalStorage(cart);
   }
 
-  // Remove a specific ticket from the cart by its ID
+  // Remove a specific ticket from the cart by event's name and ticket type
   removeFromCart(eventName: any, ticketType: any) {
     let cart = this.cartSource.getValue();
+    // TODO- Not working good
     cart = cart.filter(
       (item) =>
-        item.event.name !== eventName && item.ticketType.name != ticketType
+        item.event.name !== eventName || item.ticketType.name !== ticketType
     );
     this.cartSource.next(cart);
     this.saveCartToLocalStorage(cart);
@@ -124,7 +122,6 @@ export class TicketsService {
 
   // Check if the cart is empty
   isCartEmpty(): boolean {
-    let flag = this.cartSource.getValue().length === 0;
-    return flag;
+    return this.cartSource.getValue().length === 0;
   }
 }

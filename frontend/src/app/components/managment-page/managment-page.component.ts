@@ -30,7 +30,7 @@ export class ManagmentPageComponent implements OnInit {
 
   // Fetch events from the TicketsService
   loadEvents() {
-    this.ticketsService.currentTickets.subscribe((events) => {
+    this.ticketsService.currentEvents.subscribe((events) => {
       this.eventsList = events;
     });
   }
@@ -48,8 +48,8 @@ export class ManagmentPageComponent implements OnInit {
   }
 
   // Remove a specific event
-  removeEvent(id: number) {
-    this.ticketsService.removeTicket(id);
+  removeEvent(eventName: any) {
+    this.ticketsService.removeEvent(eventName);
   }
 
   // Handle profile image selection and preview
@@ -98,7 +98,7 @@ export class ManagmentPageComponent implements OnInit {
     }
 
     // Proceed with adding the event if the name is not taken
-    this.ticketsService.addTicket(this.newEvent);
+    this.ticketsService.addEvent(this.newEvent);
     this.resetForm();
   }
 
