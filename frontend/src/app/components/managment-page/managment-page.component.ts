@@ -41,9 +41,8 @@ export class ManagmentPageComponent implements OnInit {
   }
 
   // Remove a specific ticket type
-  removeTicket(id: number) {
-    //TODO: change this function
-    this.ticketsService.removeTicket(id);
+  removeTicket(name: string) {
+    this.newEvent.tickets = this.newEvent.tickets.filter((item) => item.name != name);
   }
 
   // Remove a specific event
