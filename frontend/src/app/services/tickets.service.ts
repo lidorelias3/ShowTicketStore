@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TicketsService {
+  private apiUrl = 'http://localhost:3000/api/'; // Your backend API URL
+
   // Tickets and cart observables
   private ticketsSource = new BehaviorSubject<any[]>(
     this.loadTicketsFromLocalStorage()
@@ -81,9 +84,12 @@ export class TicketsService {
   }
 
   // Remove a specific ticket from the cart by its ID
-  removeFromCart(ticketId: number) {
+  removeFromCart(eventName: any, ticketType: any) {
     let cart = this.cartSource.getValue();
-    cart = cart.filter((item) => item.id !== ticketId);
+    cart = cart.filter(
+      (item) =>
+        item.event.name !== eventName && item.ticketType.name != ticketType
+    );
     this.cartSource.next(cart);
     this.saveCartToLocalStorage(cart);
   }
@@ -99,14 +105,17 @@ export class TicketsService {
     localStorage.removeItem('cart');
   }
 
-  decreaseQuantity(ticketId: number) {
+  decreaseQuantity(eventName: any, ticketType: any) {
     const cart = this.cartSource.getValue();
-    const ticket = cart.find((item) => item.id === ticketId);
+    const ticket = cart.find(
+      (item) =>
+        item.event.name === eventName && item.ticketType.name === ticketType
+    );
 
     if (ticket && ticket.quantity > 1) {
       ticket.quantity -= 1;
     } else {
-      this.removeFromCart(ticketId);
+      this.removeFromCart(eventName, ticketType);
     }
 
     this.cartSource.next(cart);

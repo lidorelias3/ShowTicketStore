@@ -21,19 +21,21 @@ export class MyCartComponent implements OnInit {
 
   addToCart(event: any, ticketType: any) {
     this.ticketsService.addToCart(event, ticketType);
+    this.calculateTotalCost();
   }
 
-  removeItem(itemId: number) {
-    this.ticketsService.removeFromCart(itemId);
+  removeItem(eventName: any, ticketType: any) {
+    this.ticketsService.removeFromCart(eventName, ticketType);
   }
 
-  decreaseItem(itemId: number) {
-    this.ticketsService.decreaseQuantity(itemId);
+  decreaseItem(eventName: any, ticketType: any) {
+    this.ticketsService.decreaseQuantity(eventName, ticketType);
+    this.calculateTotalCost();
   }
 
   calculateTotalCost() {
     this.totalCost = this.cartItems.reduce(
-      (sum, item) => sum + item.price * item.quantity,
+      (sum, item) => sum + item.ticketType.price * item.quantity,
       0
     );
   }

@@ -16,12 +16,15 @@
             כמות כרטיסים: {{ item.quantity }} <br />
             סה"כ להופעה: ${{ item.ticketType.price * item.quantity }}
           </p>
-          <button class="btn btn-danger" (click)="removeItem(item.id)">
+          <button
+            class="btn btn-danger"
+            (click)="removeItem(item.event.name, item.ticketType.name)"
+          >
             Remove
           </button>
           <button
             class="btn btn-secondary"
-            (click)="decreaseItem(item.id)"
+            (click)="decreaseItem(item.event.name, item.ticketType.name)"
             [disabled]="item.quantity <= 1"
           >
             -
