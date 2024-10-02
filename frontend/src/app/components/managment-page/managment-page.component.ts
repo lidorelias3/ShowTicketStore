@@ -4,23 +4,23 @@ import { TicketsService } from '../../tickets.service';
 @Component({
   selector: 'app-managment-page',
   templateUrl: './managment-page.component.html',
-  styleUrls: ['./managment-page.component.scss']
+  styleUrls: ['./managment-page.component.scss'],
 })
 export class ManagmentPageComponent implements OnInit {
   newEvent = {
     name: '',
     date: '',
-    tickets: [{ name: '', price: 0, quantity: 0 }], // Start with one ticket type
+    tickets: [{ name: '', price: null, quantity: null }], // Start with one ticket type
     venueName: '',
     minimumAge: 0,
     description: '',
     profileImage: '',
-    imagesPaths: [] // List of additional images
+    imagesPaths: [], // List of additional images
   };
 
   profileImagePreview: string | ArrayBuffer | null = null;
   imagesPreviews: string[] = [];
-  eventsList: any[] = [];  // To store the list of events
+  eventsList: any[] = []; // To store the list of events
 
   constructor(private ticketsService: TicketsService) {}
 
@@ -30,19 +30,21 @@ export class ManagmentPageComponent implements OnInit {
 
   // Fetch events from the TicketsService
   loadEvents() {
-    this.ticketsService.currentTickets.subscribe(events => {
+    this.ticketsService.currentTickets.subscribe((events) => {
       this.eventsList = events;
     });
   }
 
   // Add another ticket type
   addTicketType() {
-    this.newEvent.tickets.push({ name: '', price: 0, quantity: 0 });
+    this.newEvent.tickets.push({ name: '', price: null, quantity: null });
   }
 
   // Remove a specific ticket type
   removeTicket(name: string) {
-    this.newEvent.tickets = this.newEvent.tickets.filter((item) => item.name != name);
+    this.newEvent.tickets = this.newEvent.tickets.filter(
+      (item) => item.name != name
+    );
   }
 
   // Remove a specific event
@@ -69,7 +71,7 @@ export class ManagmentPageComponent implements OnInit {
     if (files) {
       this.imagesPreviews = [];
       this.newEvent.imagesPaths = [];
-      Array.from(files).forEach(file => {
+      Array.from(files).forEach((file) => {
         const reader = new FileReader();
         reader.onload = () => {
           this.imagesPreviews.push(reader.result as string);
@@ -80,8 +82,22 @@ export class ManagmentPageComponent implements OnInit {
     }
   }
 
+  // Check if an event with the same name already exists
+  isEventNameTaken(name: string): boolean {
+    return this.eventsList.some(
+      (event) => event.name.toLowerCase() === name.toLowerCase()
+    );
+  }
+
   // Add new event to the service
   addTicket() {
+    // Check if the event name is already taken
+    if (this.isEventNameTaken(this.newEvent.name)) {
+      alert('Event name is already taken. Please choose a different name.');
+      return;
+    }
+
+    // Proceed with adding the event if the name is not taken
     this.ticketsService.addTicket(this.newEvent);
     this.resetForm();
   }
@@ -91,12 +107,12 @@ export class ManagmentPageComponent implements OnInit {
     this.newEvent = {
       name: '',
       date: '',
-      tickets: [{ name: '', price: 0, quantity: 0 }],
+      tickets: [{ name: '', price: null, quantity: null }],
       venueName: '',
       minimumAge: 0,
       description: '',
       profileImage: '',
-      imagesPaths: []
+      imagesPaths: [],
     };
     this.profileImagePreview = null;
     this.imagesPreviews = [];
