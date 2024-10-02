@@ -7,18 +7,18 @@ import { TicketsService } from '../../services/tickets.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  tickets: any[] = [];
+  events: any[] = [];
 
   constructor(private ticketsService: TicketsService) {}
 
   ngOnInit(): void {
-    this.ticketsService.currentTickets.subscribe((tickets) => {
-      this.tickets = tickets;
+    this.ticketsService.currentTickets.subscribe((events) => {
+      this.events = events;
     });
   }
 
-  addToCart(ticket: any) {
-    this.ticketsService.addToCart(ticket);
-    alert(`${ticket.name} added to cart!`);
+  addToCart(event: any, ticketType: any) {
+    this.ticketsService.addToCart(event, ticketType);
+    alert(`${event.name} - ${ticketType} added to cart!`);
   }
 }

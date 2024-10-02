@@ -2,13 +2,17 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TicketsService {
   // Tickets and cart observables
-  private ticketsSource = new BehaviorSubject<any[]>(this.loadTicketsFromLocalStorage());
+  private ticketsSource = new BehaviorSubject<any[]>(
+    this.loadTicketsFromLocalStorage()
+  );
   currentTickets = this.ticketsSource.asObservable();
-  private cartSource = new BehaviorSubject<any[]>(this.loadCartFromLocalStorage());
+  private cartSource = new BehaviorSubject<any[]>(
+    this.loadCartFromLocalStorage()
+  );
   currentCart = this.cartSource.asObservable();
 
   constructor() {}
@@ -38,7 +42,7 @@ export class TicketsService {
   // Add a new ticket to the tickets array
   addTicket(ticket: any) {
     const tickets = this.ticketsSource.getValue();
-    ticket.id = tickets.length > 0 ? tickets[tickets.length - 1].id + 1 : 1;  // Generate unique ID
+    ticket.id = tickets.length > 0 ? tickets[tickets.length - 1].id + 1 : 1; // Generate unique ID
     tickets.push(ticket);
     this.ticketsSource.next(tickets);
     this.saveTicketsToLocalStorage(tickets);
@@ -47,7 +51,7 @@ export class TicketsService {
   // Remove a ticket from the tickets array
   removeTicket(ticketId: number) {
     let tickets = this.ticketsSource.getValue();
-    tickets = tickets.filter(ticket => ticket.id !== ticketId);
+    tickets = tickets.filter((ticket) => ticket.id !== ticketId);
     this.ticketsSource.next(tickets);
     this.saveTicketsToLocalStorage(tickets);
   }
@@ -58,14 +62,18 @@ export class TicketsService {
   }
 
   // Add ticket to cart
-  addToCart(ticket: any) {
+  addToCart(event: any, ticketType: any) {
     const cart = this.cartSource.getValue();
-    const existingTicket = cart.find(item => item.id === ticket.id);
+    const existingTicket = cart.find(
+      (item) =>
+        item.event.name === event.name &&
+        item.ticketType.name === ticketType.name
+    );
 
     if (existingTicket) {
-      existingTicket.quantity += 1;  // Increment quantity if the same ticket exists
+      existingTicket.quantity += 1; // Increment quantity if the same ticket exists
     } else {
-      cart.push({ ...ticket, quantity: 1 });  // Add new ticket to cart
+      cart.push({ event, ticketType, quantity: 1 }); // Add new ticket to cart
     }
 
     this.cartSource.next(cart);
@@ -75,7 +83,7 @@ export class TicketsService {
   // Remove a specific ticket from the cart by its ID
   removeFromCart(ticketId: number) {
     let cart = this.cartSource.getValue();
-    cart = cart.filter(item => item.id !== ticketId);
+    cart = cart.filter((item) => item.id !== ticketId);
     this.cartSource.next(cart);
     this.saveCartToLocalStorage(cart);
   }
@@ -93,7 +101,7 @@ export class TicketsService {
 
   decreaseQuantity(ticketId: number) {
     const cart = this.cartSource.getValue();
-    const ticket = cart.find(item => item.id === ticketId);
+    const ticket = cart.find((item) => item.id === ticketId);
 
     if (ticket && ticket.quantity > 1) {
       ticket.quantity -= 1;
@@ -107,6 +115,7 @@ export class TicketsService {
 
   // Check if the cart is empty
   isCartEmpty(): boolean {
-    return this.cartSource.getValue().length === 0;
+    let flag = this.cartSource.getValue().length === 0;
+    return flag;
   }
 }

@@ -90,7 +90,7 @@ export class ManagmentPageComponent implements OnInit {
   }
 
   // Add new event to the service
-  addTicket() {
+  addEvent() {
     // Check if the event name is already taken
     if (this.isEventNameTaken(this.newEvent.name)) {
       alert('Event name is already taken. Please choose a different name.');
