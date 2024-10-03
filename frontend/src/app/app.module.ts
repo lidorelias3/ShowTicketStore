@@ -12,6 +12,8 @@ import { MyCartComponent } from './components/my-cart/my-cart.component';
 import { ManagmentPageComponent } from './components/managment-page/managment-page.component';
 import { HomeComponent } from './components/home/home.component';
 import { PayPageComponent } from './components/pay-page/pay-page.component';
+import { HttpClientModule } from '@angular/common/http';
+import { CallbackPipe } from './pipes/callback.pipe';
 
 
 @NgModule({
@@ -25,12 +27,14 @@ import { PayPageComponent } from './components/pay-page/pay-page.component';
     MyCartComponent,
     ManagmentPageComponent,
     HomeComponent,
-    PayPageComponent
+    PayPageComponent,
+    CallbackPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

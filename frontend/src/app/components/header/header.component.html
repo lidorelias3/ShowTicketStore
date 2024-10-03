@@ -1,8 +1,12 @@
 <div class="container flex">
     <img id="logo" src="../../../assets/site-logo.png">
-    <!-- TODO: issue number 12 -->
     <img class="menu" src="../../../assets/menu.png" />
     <nav class="font-xl">
-        <div *ngFor="let button of buttons" [routerLink]="button.route">{{button.title}}</div>
+        <div *ngIf="!isLoggedIn()" routerLink='/login'>התחברות</div>
+        <div *ngIf="!isLoggedIn()" routerLink='/register'>הרשמה</div>
+        <div *ngIf="isLoggedIn()" (click)="logout()">התנתקות</div>
+        <div *ngIf="isAdmin()" routerLink='/management-page'>דך ניהול</div>
+        <div routerLink='/my-cart'>העגלה שלי</div>
+        <div routerLink=''>בית</div>
     </nav>
 </div>

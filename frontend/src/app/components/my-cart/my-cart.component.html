@@ -1,50 +1,36 @@
 <div class="container">
-  <h2>Your Cart</h2>
+  <h2>העגלה שלי</h2>
 
   <div *ngIf="cartItems.length > 0; else emptyCart">
     <div class="card-group">
-      <div
-        *ngFor="let item of cartItems"
-        class="card m-2 rounded-card"
-        style="min-width: 18rem"
-      >
+      <div *ngFor="let item of cartItems" class="card m-2 rounded-card" style="min-width: 18rem">
         <div class="card-body">
           <h5 class="card-title">{{ item.name }}</h5>
           <p class="card-text">
-            Price: ${{ item.price }} <br />
-            Quantity: {{ item.quantity }} <br />
-            Total: ${{ item.price * item.quantity }}
+            מחיר לכרטיס: ${{ item.price }} <br />
+            כמות כרטיסים: {{ item.quantity }} <br />
+            סה"כ להופעה: ${{ item.price * item.quantity }}
           </p>
-          <button class="btn btn-danger" (click)="removeItem(item.id)">
-            Remove
-          </button>
-          <button
-            class="btn btn-secondary"
-            (click)="decreaseItem(item.id)"
-            [disabled]="item.quantity <= 1"
-          >
-            -
-          </button>
+
+          <button class="btn btn-secondary" (click)="decreaseItem(item.id)" [disabled]="item.quantity <= 1">-</button>
           <button class="btn btn-secondary" (click)="addToCart(item)">+</button>
+          <button class="btn btn-danger" (click)="removeItem(item.id)">
+            בטל רכישת כרטיסים
+          </button>
         </div>
       </div>
     </div>
 
-    <h3 class="mt-4">Total Cost: ${{ totalCost }}</h3>
+    <h4 class="mt-4">סה"כ מחיר לכלל ההופעות שנבחרו ${{ totalCost }}</h4>
 
     <div class="d-flex mt-4">
-      <button class="btn btn-warning" (click)="clearCart()">Clear Cart</button>
-      <button
-        class="btn btn-success ml-auto"
-        (click)="pay()"
-        [disabled]="cartItems.length === 0"
-      >
-        Pay ${{ totalCost }}
-      </button>
+      <button class="btn btn-success ml-auto" (click)="pay()" [disabled]="cartItems.length === 0">לתשלום</button>
+      <button class="btn btn-warning" (click)="clearCart()">בטל רכישה</button>
+
     </div>
   </div>
 
   <ng-template #emptyCart>
-    <p>Your cart is empty.</p>
+    <p>העגלה שלך ריקה, יש לבחור כרטיסים לפני שניתן להמשיך</p>
   </ng-template>
 </div>
