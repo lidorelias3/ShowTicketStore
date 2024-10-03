@@ -8,15 +8,14 @@ const PORT = 3000;
 const authRoutes = require("./src/routes/auth");
 const venueRoutes = require("./src/routes/venue");
 const eventRoutes = require("./src/routes/event");
-
+const cors = require("cors")
 app.use(express.json()); // For parsing application/json
 app.use(express.urlencoded({ extended: true }));
-
+app.use(cors())
 // MongoDB connection
 mongoose
   .connect(config.mongo_uri, {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
   })
   .then(() => {
     console.log("Successfully connected to MongoDB");

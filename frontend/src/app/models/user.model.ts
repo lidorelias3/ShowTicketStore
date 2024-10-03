@@ -1,9 +1,13 @@
 export interface User {
     id: number;
     
-    username: string;
+    email: string;
     password: string;
-    name: string;
 
+    firstName: string;
+    lastName: string;
+    gender: "Male" | "male" | "Female" | "female" | "Other" | "other";
+    age: number;
+    
     isAdmin: boolean;
 }

@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { User } from 'src/app/models/user.model';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-registration',
@@ -7,4 +10,9 @@ import { Component } from '@angular/core';
 })
 export class RegistrationComponent {
 
+  constructor(private userService: UserService) {}
+
+  register(user: User) {
+    this.userService.register(user)
+  }
 }

@@ -12,7 +12,7 @@ import { MyCartComponent } from './components/my-cart/my-cart.component';
 import { ManagmentPageComponent } from './components/managment-page/managment-page.component';
 import { HomeComponent } from './components/home/home.component';
 import { PayPageComponent } from './components/pay-page/pay-page.component';
-
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -30,7 +30,8 @@ import { PayPageComponent } from './components/pay-page/pay-page.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

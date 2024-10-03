@@ -4,9 +4,13 @@
             <img src="../../../assets/avatar.png"/>
         </div>
         <div class="form flex col">
-            <input *ngIf="isRegistration" type="text" class="form-control" id="username" required [(ngModel)]="user.name" placeholder="שם מלא">
-            <input type="text" class="form-control" id="username" required [(ngModel)]="user.username" placeholder="שם משתמש">
-            <input type="text" class="form-control" id="username" required [(ngModel)]="user.password" placeholder="סיסמה">
+            <input *ngIf="isRegistration" type="text" class="form-control" id="firstname" required [(ngModel)]="user.firstName" placeholder="שם פרטי">
+            <input *ngIf="isRegistration" type="text" class="form-control" id="lastname" required [(ngModel)]="user.lastName" placeholder="שם משפחה">
+            <input type="email" class="form-control" id="email" required [(ngModel)]="user.email" placeholder="אימייל">
+            <input type="password" class="form-control" id="password" required [(ngModel)]="user.password" placeholder="סיסמה">
+
+            <input *ngIf="isRegistration" type="text" class="form-control" id="age" required [(ngModel)]="user.age" placeholder="גיל">
+            <input *ngIf="isRegistration" type="text" class="form-control" id="gender" required [(ngModel)]="user.gender" placeholder="מין">
 
             <div *ngIf="helpText.length > 0" class="help-text">{{helpText}}</div>
             <div *ngIf="link && linkText && linkText.length > 0" class="link" [routerLink]="link">{{linkText}}</div>

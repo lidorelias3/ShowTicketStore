@@ -37,7 +37,9 @@ router.post("/login", RegisterValidator, async (req, res) => {
       return handleResponse(res, 404, false, "Invalid credentials");
     }
 
-    return handleResponse(res, 200, false, "Login successful");
+    user.hashedPassword = ''
+
+    return handleResponse(res, 200, true, user);
   } catch (error) {
     return handleResponse(res, 500, false, "Error logging in", error.message);
   }

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { TicketsService } from '../../tickets.service';
+import { TicketsService } from '../../services/tickets.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-cart',
   templateUrl: './my-cart.component.html',
-  styleUrls: ['./my-cart.component.css']
+  styleUrls: ['./my-cart.component.scss']
 })
 export class MyCartComponent implements OnInit {
   cartItems: any[] = [];
