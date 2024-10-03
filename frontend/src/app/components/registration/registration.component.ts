@@ -13,7 +13,6 @@ export class RegistrationComponent {
   constructor(private userService: UserService) {}
 
   register(user: User) {
-    console.log(user)
     this.userService.register(user)
   }
 }

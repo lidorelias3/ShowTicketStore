@@ -31,13 +31,13 @@ export class UserService implements OnDestroy {
     this.authService.login(user).subscribe(res => {
       if (res) {
         this.currentUser = res.message;
-        alert(this.currentUser.age)
         this.router.navigate([''])
+      } else {
+        this.currentUser = undefined
       }
     })
   }
 
-  // this is not working yet, i need to make this a subject to make the changes noticeable
   isAdmin(): boolean {
     return this.currentUser !== undefined && this.currentUser.isAdmin
   }

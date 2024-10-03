@@ -1,4 +1,4 @@
-import { ActivatedRouteSnapshot, CanActivateFn, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { inject } from '@angular/core';
 
@@ -7,7 +7,8 @@ export const isAdminGuard: CanActivateFn = (
   state: RouterStateSnapshot,
 ): boolean => {
   if(!inject(UserService).isAdmin()) {
-    return false;
+    inject(Router).navigate([''])
+    return false
   }
 
   return true;

@@ -5,7 +5,7 @@
         <div *ngIf="!isLoggedIn()" routerLink='/login'>התחברות</div>
         <div *ngIf="!isLoggedIn()" routerLink='/register'>הרשמה</div>
         <div *ngIf="isLoggedIn()" (click)="logout()">התנתקות</div>
-        <div *ngIf="isAdmin()" routerLink='/management-page'>דך ניהול</div>
+        <div *ngIf="isAdmin()" routerLink='/management-page'>דף ניהול</div>
         <div routerLink='/my-cart'>העגלה שלי</div>
         <div routerLink=''>בית</div>
     </nav>

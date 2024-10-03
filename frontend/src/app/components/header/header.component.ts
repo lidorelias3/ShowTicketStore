@@ -18,6 +18,6 @@ export class HeaderComponent {
   }
 
   isAdmin(): boolean {
-    return this.isAdmin();
+    return this.userService.isAdmin();
   }
 }
