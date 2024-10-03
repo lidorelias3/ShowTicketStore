@@ -13,8 +13,6 @@ import { ManagmentPageComponent } from './components/managment-page/managment-pa
 import { HomeComponent } from './components/home/home.component';
 import { PayPageComponent } from './components/pay-page/pay-page.component';
 import { HttpClientModule } from '@angular/common/http';
-import { CallbackPipe } from './pipes/callback.pipe';
-
 
 @NgModule({
   declarations: [
@@ -27,8 +25,7 @@ import { CallbackPipe } from './pipes/callback.pipe';
     MyCartComponent,
     ManagmentPageComponent,
     HomeComponent,
-    PayPageComponent,
-    CallbackPipe
+    PayPageComponent
   ],
   imports: [
     BrowserModule,

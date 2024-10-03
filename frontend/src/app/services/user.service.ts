@@ -37,6 +37,7 @@ export class UserService implements OnDestroy {
     })
   }
 
+  // this is not working yet, i need to make this a subject to make the changes noticeable
   isAdmin(): boolean {
     return this.currentUser !== undefined && this.currentUser.isAdmin
   }
