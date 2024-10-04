@@ -13,6 +13,7 @@ import { ManagmentPageComponent } from './components/managment-page/managment-pa
 import { HomeComponent } from './components/home/home.component';
 import { PayPageComponent } from './components/pay-page/pay-page.component';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -25,9 +26,15 @@ import { HttpClientModule } from '@angular/common/http';
     MyCartComponent,
     ManagmentPageComponent,
     HomeComponent,
-    PayPageComponent,
+    PayPageComponent
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

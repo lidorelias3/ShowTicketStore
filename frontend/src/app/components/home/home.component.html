@@ -1,21 +1,15 @@
-<div class="container">
-  <h2>Available Tickets</h2>
-  <div class="card-group">
-    <div *ngFor="let event of events" class="card m-2 rounded-card">
-      <div class="card-body">
-        <h5 class="card-title">{{ event.name }}</h5>
-        <div *ngFor="let ticketType of event.tickets">
-          <p class="card-text">
-            Type: {{ ticketType.name }} - Price: ${{ ticketType.price }}
-          </p>
-          <button
-            class="btn btn-primary"
-            (click)="addToCart(event, ticketType)"
-          >
-            Add to Cart
-          </button>
+<div class="home">
+  <section (click)="scroll(-1)" [@opacity]="showRightArrow">⟨</section>
+  <div #galery id="galery" (scroll)="updateArrowsState($event)">
+    <div *ngFor="let ticket of tickets" class="show-frame">
+      <div class="show-body">
+        <h3 class="date">{{ticket.date}}</h3>
+        <h5 class="location">{{ticket.name}}</h5>
+        <div class="font-xl tickets">
+          כרטיסים ⟫
         </div>
       </div>
     </div>
   </div>
+  <section (click)="scroll(1)" [@opacity]="showLeftArrow">⟩</section>
 </div>
