@@ -15,6 +15,7 @@ import { PayPageComponent } from './components/pay-page/pay-page.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GaleryComponent } from './components/galery/galery.component';
+import { ShowComponent } from './components/show/show.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { GaleryComponent } from './components/galery/galery.component';
     ManagmentPageComponent,
     HomeComponent,
     PayPageComponent,
-    GaleryComponent
+    GaleryComponent,
+    ShowComponent
   ],
   imports: [
     BrowserModule,

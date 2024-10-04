@@ -1,5 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { ShowsService } from 'src/app/services/shows.service';
 
 @Component({
   selector: 'app-galery',
@@ -25,17 +26,11 @@ export class GaleryComponent {
 
   private scroll_size = 200;
 
-  tickets = [
-    { id: 1, name: 'אמפי שוני', date: '21.9.2024' },
-    { id: 2, name: 'מועדון הברבי', date: '23.9.2024' },
-    { id: 2, name: 'מועדון הברבי', date: '23.9.2024' },
-    { id: 2, name: 'מועדון הברבי', date: '23.9.2024' },
-    { id: 2, name: 'מועדון הברבי', date: '23.9.2024' },
-    { id: 2, name: 'מועדון הברבי', date: '23.9.2024' },
-    { id: 3, name: 'הצוללת', date: '24.9.2024' }
-  ];
+  shows: any[]
 
-  constructor() { }
+  constructor(private showsService: ShowsService) { 
+    this.shows = showsService.getAllShows()
+  }
 
   scroll(times: number) {
     var element = this.galery.nativeElement;
