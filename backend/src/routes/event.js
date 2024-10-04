@@ -151,12 +151,16 @@ router.put(
   })
 );
 
-// Delete an event by ID
+// Delete an event by Name
 router.delete(
-  "/:id",
+  "/:name",
   asyncHandler(async (req, res) => {
-    const event = await Event.findByIdAndDelete(req.params.id);
-    if (!event) {
+    const result = await Event.deleteOne({ name: req.params.name });
+    if (!result.acknowledged) {
+      return handleResponse(res, 500, false, "Error during deletion");
+    }
+
+    if (result.deletedCount === 0) {
       return handleResponse(res, 404, false, "Event not found");
     }
 
