@@ -1,8 +1,13 @@
-<div class="home">
-  <video autoplay loop>
-    <source src="../../../assets/videoplayback.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-
+<div class="home" #scrollElement>
+  <div class="intro">
+    <div class="info">
+      <section>אלווין והצ'יפמנקס האתר הרשמי</section>
+      <section class="arrow" (click)="scrolldown()">⟩</section>
+    </div>
+    <video autoplay loop>
+      <source src="../../../assets/videoplayback.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
   <app-galery></app-galery>
 </div>

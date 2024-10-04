@@ -1,6 +1,4 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { TicketsService } from '../../services/tickets.service';
-import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-home',
@@ -8,4 +6,13 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
+  @ViewChild('scrollElement', { static: false }) scrollElement: ElementRef;
+
+  scrolldown() {
+    this.scrollElement.nativeElement.scroll({
+      top: this.scrollElement.nativeElement.scrollHeight,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }
 }

@@ -18,7 +18,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
   ]
 })
 export class GaleryComponent {
-  @ViewChild('galery', {static: false}) galery: ElementRef;
+  @ViewChild('galery', { static: false }) galery: ElementRef;
 
   showLeftArrow: boolean = true;
   showRightArrow: boolean = false;
@@ -41,7 +41,7 @@ export class GaleryComponent {
     var element = this.galery.nativeElement;
     if (element) {
       var x = element.scrollLeft
-      element.scroll({left: x-times*this.scroll_size, behavior: 'smooth'})
+      element.scroll({ left: x - times * this.scroll_size, behavior: 'smooth' })
       this.updateArrowsState()
     }
   }

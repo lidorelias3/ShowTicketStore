@@ -1,15 +1,15 @@
 <div class="galery-container">
-    <section (click)="scroll(-1)" [@opacity]="showRightArrow">⟨</section>
-    <div #galery id="galery" (scroll)="updateArrowsState($event)">
-      <div *ngFor="let ticket of tickets" class="show-frame">
-        <div class="show-body">
-          <h3 class="date">{{ticket.date}}</h3>
-          <h5 class="location">{{ticket.name}}</h5>
-          <div class="font-xl tickets">
-            כרטיסים ⟫
-          </div>
+  <section (click)="scroll(-1)" [@opacity]="showRightArrow">⟨</section>
+  <div #galery id="galery" (scroll)="updateArrowsState($event)">
+    <div *ngFor="let ticket of tickets" class="show-frame">
+      <div class="show-body">
+        <h3 class="date">{{ticket.date}}</h3>
+        <h5 class="location">{{ticket.name}}</h5>
+        <div class="font-xl tickets">
+          כרטיסים ⟫
         </div>
       </div>
     </div>
-    <section (click)="scroll(1)" [@opacity]="showLeftArrow">⟩</section>
   </div>
+  <section (click)="scroll(1)" [@opacity]="showLeftArrow">⟩</section>
+</div>
