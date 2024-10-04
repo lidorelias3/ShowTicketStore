@@ -14,6 +14,7 @@ import { HomeComponent } from './components/home/home.component';
 import { PayPageComponent } from './components/pay-page/pay-page.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { GaleryComponent } from './components/galery/galery.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MyCartComponent,
     ManagmentPageComponent,
     HomeComponent,
-    PayPageComponent
+    PayPageComponent,
+    GaleryComponent
   ],
   imports: [
     BrowserModule,

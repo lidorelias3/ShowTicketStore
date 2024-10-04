@@ -1,15 +1,8 @@
 <div class="home">
-  <section (click)="scroll(-1)" [@opacity]="showRightArrow">⟨</section>
-  <div #galery id="galery" (scroll)="updateArrowsState($event)">
-    <div *ngFor="let ticket of tickets" class="show-frame">
-      <div class="show-body">
-        <h3 class="date">{{ticket.date}}</h3>
-        <h5 class="location">{{ticket.name}}</h5>
-        <div class="font-xl tickets">
-          כרטיסים ⟫
-        </div>
-      </div>
-    </div>
-  </div>
-  <section (click)="scroll(1)" [@opacity]="showLeftArrow">⟩</section>
+  <video autoplay loop>
+    <source src="../../../assets/videoplayback.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <app-galery></app-galery>
 </div>
