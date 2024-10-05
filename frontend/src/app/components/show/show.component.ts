@@ -14,6 +14,7 @@ export class ShowComponent {
   show: Event;
 
   selectedType: string = '';
+  amount = 1
 
   constructor(private route: ActivatedRoute, private eventsService: EventsService,
     private ticketsService: TicketsService, private router: Router
@@ -37,11 +38,14 @@ export class ShowComponent {
 
     this.ticketsService.addToCart(
       this.show,
-      this.show.tickets.filter(it => it.ticketType == this.selectedType)[0]
+      this.show.tickets.filter(it => it.ticketType == this.selectedType)[0],
+      this.amount
     )
 
-    alert(this.show.tickets.filter(it => it.ticketType == this.selectedType)[0].price)
-
     this.router.navigate([""])
+  }
+
+  increaseAmount(by: number) {
+    this.amount += 1 * by
   }
 }

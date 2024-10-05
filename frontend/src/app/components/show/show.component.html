@@ -10,7 +10,11 @@
     <div class="tickets-container">
         <section class="amount-section">
             <h3>1. בחר כמות כרטיסים</h3>
-            <div>amount</div>
+            <div class="amount">
+                <div class="amount-button" (click)="increaseAmount(1)">+</div>
+                {{amount}}
+                <div class="amount-button" (click)="increaseAmount(-1)">-</div>
+            </div>
         </section>
 
         <h3>2. בחר סוג כרטיס</h3>

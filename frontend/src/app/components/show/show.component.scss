@@ -33,6 +33,20 @@
             border-bottom: 1px var(--light-text-color) solid;
         }
 
+        .amount {
+            width: 15%;
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        .amount-button {
+            border: 1px var(--light-text-color) solid;
+            border-radius: 7px;
+            text-align: center;
+            width: 25px;
+            margin: 0 10px;
+        }
+
         label {
             padding-right: 4%;
             font-size: 1.3em;
@@ -46,7 +60,6 @@
             justify-content: space-evenly;
             border: 1px var(--light-text-color) solid;
             border-radius: 30px;
-            box-shadow: 2px 3px 13px 1px rgba(64, 64, 64, 0.7);
             position: relative;
             right: 75%;
             align-items: center;
