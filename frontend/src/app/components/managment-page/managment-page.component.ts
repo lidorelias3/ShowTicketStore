@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TicketsService } from '../../services/tickets.service';
 import { EventsService } from 'src/app/services/events.service';
 import { Event } from 'src/app/models/event.model';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-managment-page',
@@ -25,6 +25,7 @@ export class ManagmentPageComponent implements OnInit {
   imagesPreviews: string[] = [];
   eventsList: any[] = []; // To store the list of events
   editFlag = false;
+  getEventsSubscription = new Subscription();
 
   constructor(private eventsService: EventsService) {}
 
@@ -34,10 +35,11 @@ export class ManagmentPageComponent implements OnInit {
 
   // Fetch events from the TicketsService
   loadEvents() {
-    let ans = this.eventsService.getEvents();
-    ans.subscribe((res) => {
-      this.eventsList = res.message;
-    });
+    this.getEventsSubscription = this.eventsService
+      .getEvents()
+      .subscribe((res) => {
+        this.eventsList = res.message;
+      });
   }
 
   // Remove a specific event
@@ -134,7 +136,10 @@ export class ManagmentPageComponent implements OnInit {
   editEvent() {
     this.eventsService
       .updateExistingEvent(this.newEvent.name, this.newEvent)
-      .subscribe();
+      .subscribe()
+      .unsubscribe();
+
+    this.getEventsSubscription.unsubscribe();
     this.loadEvents();
   }
 }
