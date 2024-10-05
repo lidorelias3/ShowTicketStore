@@ -8,6 +8,8 @@ import { MyCartComponent } from './components/my-cart/my-cart.component';
 import { PayPageComponent } from './components/pay-page/pay-page.component';
 import { isAdminGuard } from './guards/is-admin.guard';
 import { ShowComponent } from './components/show/show.component';
+import { ManageModelsComponent } from './components/admin-page/manage-models/manage-models.component';
+import { ManageEventsComponent } from './components/admin-page/manage-events/manage-events.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -16,7 +18,7 @@ const routes: Routes = [
   { path: 'shows/:id', component: ShowComponent},
   { path: 'my-cart', component: MyCartComponent },
   { path: 'pay', component: PayPageComponent },
-  { path: '', component: HomeComponent }
+  { path: '', component: ManageEventsComponent }
 ];
 
 @NgModule({

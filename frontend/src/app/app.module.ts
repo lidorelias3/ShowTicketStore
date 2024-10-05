@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,6 +16,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GaleryComponent } from './components/galery/galery.component';
 import { ShowComponent } from './components/show/show.component';
+import { ManageModelsComponent } from './components/admin-page/manage-models/manage-models.component';
+import { ManageEventsComponent } from './components/admin-page/manage-events/manage-events.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { ShowComponent } from './components/show/show.component';
     HomeComponent,
     PayPageComponent,
     GaleryComponent,
-    ShowComponent
+    ShowComponent,
+    ManageModelsComponent,
+    ManageEventsComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +43,8 @@ import { ShowComponent } from './components/show/show.component';
     HttpClientModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

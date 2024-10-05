@@ -1,0 +1,14 @@
+<div class="models-container container">
+    <div class="flex">
+        <h1>ניהול {{title}}</h1>
+        <button (click)="add()">{{buttonTitle}}</button>
+    </div>
+    <table>
+        <tr *ngFor="let row of models">
+            <td>{{row.name}}</td>
+            <td *ngIf="row.date">{{row.date | date:'dd.MM.yyyy'}}</td>
+            <td (click)="edit(row.id)" class="button">ערוך הופעה</td>
+            <td (click)="delete(row.id)" class="button">מחק הופעה</td>
+        </tr>
+    </table>
+</div>
