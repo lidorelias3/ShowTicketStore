@@ -25,7 +25,7 @@ export class ShowsService {
   getShow(id: number) {
     var filtered = this.shows.filter(it => it.id == id)
 
-    if (filtered.length != 1) {
+    if (filtered.length == 0) {
       throw NotFoundError
     }
 

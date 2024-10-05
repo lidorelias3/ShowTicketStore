@@ -24,6 +24,10 @@ section {
     :not(:last-child) {
         margin-left: 10%;
     }
+
+    .tickets:hover {
+        cursor: pointer;
+    }
 }
 
 *::-webkit-scrollbar {
