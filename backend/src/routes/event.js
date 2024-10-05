@@ -127,7 +127,10 @@ router.put(
           (zone) => zone.name === ticket.ticketType
         );
         if (!zone) {
-          throw new Error(
+          return handleResponse(
+            res,
+            404,
+            false,
             `Zone ${ticket.ticketType} not found in venue ${venueName}`
           );
         }

@@ -24,6 +24,7 @@ export class ManagmentPageComponent implements OnInit {
   profileImagePreview: string | ArrayBuffer | null = null;
   imagesPreviews: string[] = [];
   eventsList: any[] = []; // To store the list of events
+  editFlag = false;
 
   constructor(private eventsService: EventsService) {}
 
@@ -94,11 +95,15 @@ export class ManagmentPageComponent implements OnInit {
 
   // Add new event to the service
   async addEvent() {
-    let res = await this.eventsService.addEvent(this.newEvent);
-
-    if (res !== 'success') {
-      alert(res);
-      return;
+    if (this.editFlag) {
+      this.editEvent();
+      this.editFlag = false;
+    } else {
+      let res = await this.eventsService.addEvent(this.newEvent);
+      if (res !== 'success') {
+        alert(res);
+        return;
+      }
     }
     this.resetForm();
   }
@@ -118,6 +123,18 @@ export class ManagmentPageComponent implements OnInit {
     this.profileImagePreview = null;
     this.imagesPreviews = [];
 
+    this.loadEvents();
+  }
+
+  showEditEvent(event: Event) {
+    this.newEvent = event;
+    this.editFlag = true;
+  }
+
+  editEvent() {
+    this.eventsService
+      .updateExistingEvent(this.newEvent.name, this.newEvent)
+      .subscribe();
     this.loadEvents();
   }
 }

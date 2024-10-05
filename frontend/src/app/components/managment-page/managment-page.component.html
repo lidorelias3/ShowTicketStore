@@ -75,7 +75,7 @@
       <input
         type="text"
         class="form-control"
-        placeholder="Ticket Name"
+        placeholder="Ticket Type"
         [(ngModel)]="ticket.ticketType"
         [name]="'ticketName' + i"
         required
@@ -144,7 +144,7 @@
       class="btn btn-primary mt-4"
       [disabled]="!eventForm.valid"
     >
-      Add Event
+      {{ editFlag ? "Edit Event" : "Add Event" }}
     </button>
   </form>
 
@@ -158,6 +158,11 @@
       {{ event.name }}
       <button class="btn btn-danger" (click)="removeEvent(event.name)">
         Remove
+      </button>
+
+      <!-- Edit button with image -->
+      <button class="btn btn-secondary" (click)="showEditEvent(event)">
+        <img src="../../../assets/edit.png" alt="Edit" width="20" height="20" />
       </button>
     </li>
   </ul>
