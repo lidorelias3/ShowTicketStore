@@ -1,21 +1,39 @@
 <div class="container">
   <h2>העגלה שלי</h2>
 
-  <div *ngIf="cartItems.length > 0; else emptyCart">
+  <div *ngIf="!isCartEmpty(); else emptyCart">
     <div class="card-group">
-      <div *ngFor="let item of cartItems" class="card m-2 rounded-card" style="min-width: 18rem">
+      <div
+        *ngFor="let item of cartItems"
+        class="card m-2 rounded-card"
+        style="min-width: 18rem"
+      >
         <div class="card-body">
-          <h5 class="card-title">{{ item.name }}</h5>
+          <h5 class="card-title">{{ item.event.name }}</h5>
           <p class="card-text">
-            מחיר לכרטיס: ${{ item.price }} <br />
+            סוג כרטיס: {{ item.ticketType.name }} <br />
+            מחיר לכרטיס: ${{ item.ticketType.price }} <br />
             כמות כרטיסים: {{ item.quantity }} <br />
-            סה"כ להופעה: ${{ item.price * item.quantity }}
+            סה"כ להופעה: ${{ item.ticketType.price * item.quantity }}
           </p>
-
-          <button class="btn btn-secondary" (click)="decreaseItem(item.id)" [disabled]="item.quantity <= 1">-</button>
-          <button class="btn btn-secondary" (click)="addToCart(item)">+</button>
-          <button class="btn btn-danger" (click)="removeItem(item.id)">
-            בטל רכישת כרטיסים
+          <button
+            class="btn btn-danger"
+            (click)="removeItem(item.event.name, item.ticketType.name)"
+          >
+            Remove
+          </button>
+          <button
+            class="btn btn-secondary"
+            (click)="decreaseItem(item.event.name, item.ticketType.name)"
+            [disabled]="item.quantity <= 1"
+          >
+            -
+          </button>
+          <button
+            class="btn btn-secondary"
+            (click)="addToCart(item.event, item.ticketType)"
+          >
+            +
           </button>
         </div>
       </div>
@@ -24,9 +42,14 @@
     <h4 class="mt-4">סה"כ מחיר לכלל ההופעות שנבחרו ${{ totalCost }}</h4>
 
     <div class="d-flex mt-4">
-      <button class="btn btn-success ml-auto" (click)="pay()" [disabled]="cartItems.length === 0">לתשלום</button>
+      <button
+        class="btn btn-success ml-auto"
+        (click)="pay()"
+        [disabled]="cartItems.length === 0"
+      >
+        לתשלום
+      </button>
       <button class="btn btn-warning" (click)="clearCart()">בטל רכישה</button>
-
     </div>
   </div>
 

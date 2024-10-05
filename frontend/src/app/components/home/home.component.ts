@@ -1,22 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TicketsService } from '../../services/tickets.service';
+import { EventsService } from 'src/app/services/events.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent {
-  tickets = [
-    { id: 1, name: 'Concert Ticket', price: 100 },
-    { id: 2, name: 'Movie Ticket', price: 50 },
-    { id: 3, name: 'Sports Ticket', price: 150 }
-  ];
+export class HomeComponent implements OnInit {
+  events: any[] = [];
 
-  constructor(private ticketsService: TicketsService) { }
+  constructor(
+    private ticketsService: TicketsService,
+    private eventsService: EventsService
+  ) {}
 
-  addToCart(ticket: any) {
-    this.ticketsService.addToCart(ticket);
-    alert(`${ticket.name} added to cart!`);
+  ngOnInit(): void {
+    this.eventsService.getEvents().subscribe((events) => {
+      this.events = events;
+    });
+    console.log(this.events);
+  }
+
+  addToCart(event: any, ticketType: any) {
+    this.ticketsService.addToCart(event, ticketType);
+    alert(`${event.name} - ${ticketType} added to cart!`);
   }
 }
