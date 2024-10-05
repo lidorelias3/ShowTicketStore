@@ -13,10 +13,6 @@ export class EventAPIService {
     return this.httpClient.get<any>('http://127.0.0.1:3000/api/event');
   }
 
-  getEventById(id: Text): Observable<any> {
-    return this.httpClient.get<any>('http://127.0.0.1:3000/api/event/' + id);
-  }
-
   createEvent(event: Event): Observable<any> {
     var body = JSON.stringify({
       name: event.name,
@@ -40,13 +36,13 @@ export class EventAPIService {
     );
   }
 
-  deleteEvent(name: Text) {
+  deleteEvent(name: string) {
     return this.httpClient.delete<any>(
-      'http://127.0.0.1:3000/api/event/' + name
+      `http://127.0.0.1:3000/api/event/${name}`
     );
   }
 
-  updateExistingEvent(existEventName: Text, event: Event) {
+  updateExistingEvent(existEventName: string, event: Event) {
     var body = JSON.stringify({
       name: event.name,
       date: event.date,
@@ -63,7 +59,7 @@ export class EventAPIService {
     };
 
     return this.httpClient.put<any>(
-      'http://127.0.0.1:3000/api/event' + existEventName,
+      `http://127.0.0.1:3000/api/event/${existEventName}`,
       body,
       httpOptions
     );

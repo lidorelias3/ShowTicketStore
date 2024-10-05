@@ -25,10 +25,7 @@ export class ManagmentPageComponent implements OnInit {
   imagesPreviews: string[] = [];
   eventsList: any[] = []; // To store the list of events
 
-  constructor(
-    private ticketsService: TicketsService,
-    private eventsService: EventsService
-  ) {}
+  constructor(private eventsService: EventsService) {}
 
   ngOnInit(): void {
     this.loadEvents();
@@ -37,16 +34,16 @@ export class ManagmentPageComponent implements OnInit {
   // Fetch events from the TicketsService
   loadEvents() {
     let ans = this.eventsService.getEvents();
-    console.log(ans);
     ans.subscribe((res) => {
       this.eventsList = res.message;
     });
-    console.log(this.eventsList);
   }
 
   // Remove a specific event
-  removeEvent(eventName: Text) {
-    this.eventsService.removeEvent(eventName);
+  removeEvent(eventName: string) {
+    this.eventsService
+      .removeEvent(eventName)
+      .subscribe((data) => this.loadEvents());
   }
 
   // Add another ticket type
@@ -85,7 +82,10 @@ export class ManagmentPageComponent implements OnInit {
         const reader = new FileReader();
         reader.onload = () => {
           this.imagesPreviews.push(reader.result as string);
-          // this.newEvent.imagesPaths.push(reader.result as string); // Save as base64 string
+          this.newEvent.imagesPaths.push({
+            path: reader.result as string,
+            description: '',
+          }); // Save as base64 string
         };
         reader.readAsDataURL(file);
       });
@@ -94,8 +94,6 @@ export class ManagmentPageComponent implements OnInit {
 
   // Add new event to the service
   async addEvent() {
-    console.log(this.newEvent);
-
     let res = await this.eventsService.addEvent(this.newEvent);
 
     if (res !== 'success') {

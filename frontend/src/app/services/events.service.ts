@@ -26,8 +26,8 @@ export class EventsService {
   }
 
   // Remove a event from the events array
-  removeEvent(eventName: Text) {
-    this.eventApiService.deleteEvent(eventName);
+  removeEvent(eventName: string) {
+    return this.eventApiService.deleteEvent(eventName);
   }
 
   // Get all available events
@@ -35,7 +35,7 @@ export class EventsService {
     return this.eventApiService.getAllEvents();
   }
 
-  updateExistingEvent(existEventName: Text, event: Event) {
+  updateExistingEvent(existEventName: string, event: Event) {
     return this.eventApiService.updateExistingEvent(existEventName, event);
   }
 }
