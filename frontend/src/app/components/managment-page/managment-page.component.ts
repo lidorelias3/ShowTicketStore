@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { TicketsService } from '../../services/tickets.service';
 import { EventsService } from 'src/app/services/events.service';
 import { Event } from 'src/app/models/event.model';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-managment-page',

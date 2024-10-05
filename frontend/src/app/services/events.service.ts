@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EventAPIService } from './api/events-api.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Event } from '../models/event.model';
 
 @Injectable({
@@ -37,5 +37,9 @@ export class EventsService {
 
   updateExistingEvent(existEventName: string, event: Event) {
     return this.eventApiService.updateExistingEvent(existEventName, event);
+  }
+
+  getEventByID(id: string): Observable<any> {
+    return this.eventApiService.getById(id)
   }
 }

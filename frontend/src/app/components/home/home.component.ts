@@ -1,29 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { TicketsService } from '../../services/tickets.service';
-import { EventsService } from 'src/app/services/events.service';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
-  events: any[] = [];
+export class HomeComponent {
+  @ViewChild('scrollElement', { static: false }) scrollElement: ElementRef;
 
-  constructor(
-    private ticketsService: TicketsService,
-    private eventsService: EventsService
-  ) {}
-
-  ngOnInit(): void {
-    this.eventsService.getEvents().subscribe((events) => {
-      this.events = events;
+  scrolldown() {
+    this.scrollElement.nativeElement.scroll({
+      top: this.scrollElement.nativeElement.scrollHeight,
+      left: 0,
+      behavior: 'smooth'
     });
-    console.log(this.events);
-  }
-
-  addToCart(event: any, ticketType: any) {
-    this.ticketsService.addToCart(event, ticketType);
-    alert(`${event.name} - ${ticketType} added to cart!`);
   }
 }
