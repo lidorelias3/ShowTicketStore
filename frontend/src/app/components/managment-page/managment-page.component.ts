@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TicketsService } from '../../services/tickets.service';
+import { EventsService } from 'src/app/services/events.service';
+import { Event } from 'src/app/models/event.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-managment-page',
@@ -7,10 +10,10 @@ import { TicketsService } from '../../services/tickets.service';
   styleUrls: ['./managment-page.component.scss'],
 })
 export class ManagmentPageComponent implements OnInit {
-  newEvent = {
+  newEvent: Event = {
     name: '',
-    date: '',
-    tickets: [{ name: '', price: null, quantity: null }], // Start with one ticket type
+    date: new Date(),
+    tickets: [{ ticketType: '', price: 0 }], // Start with one ticket type
     venueName: '',
     minimumAge: 0,
     description: '',
@@ -22,7 +25,10 @@ export class ManagmentPageComponent implements OnInit {
   imagesPreviews: string[] = [];
   eventsList: any[] = []; // To store the list of events
 
-  constructor(private ticketsService: TicketsService) {}
+  constructor(
+    private ticketsService: TicketsService,
+    private eventsService: EventsService
+  ) {}
 
   ngOnInit(): void {
     this.loadEvents();
@@ -30,30 +36,34 @@ export class ManagmentPageComponent implements OnInit {
 
   // Fetch events from the TicketsService
   loadEvents() {
-    this.ticketsService.currentEvents.subscribe((events) => {
-      this.eventsList = events;
+    let ans = this.eventsService.getEvents();
+    console.log(ans);
+    ans.subscribe((res) => {
+      this.eventsList = res.message;
     });
+    console.log(this.eventsList);
+  }
+
+  // Remove a specific event
+  removeEvent(eventName: Text) {
+    this.eventsService.removeEvent(eventName);
   }
 
   // Add another ticket type
   addTicketType() {
-    this.newEvent.tickets.push({ name: '', price: null, quantity: null });
+    this.newEvent.tickets.push({ ticketType: '', price: 0 });
   }
 
   // Remove a specific ticket type
-  removeTicket(name: string) {
+  removeTicket(ticketType: string) {
     this.newEvent.tickets = this.newEvent.tickets.filter(
-      (item) => item.name != name
+      (item) => item.ticketType != ticketType
     );
   }
 
-  // Remove a specific event
-  removeEvent(eventName: any) {
-    this.ticketsService.removeEvent(eventName);
-  }
-
   // Handle profile image selection and preview
-  onProfileImageSelected(event: Event): void {
+  // TODO - think what to do with the images
+  onProfileImageSelected(event: any): void {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
       const reader = new FileReader();
@@ -66,7 +76,7 @@ export class ManagmentPageComponent implements OnInit {
   }
 
   // Handle multiple images selection for `imagesPaths`
-  onImagesSelected(event: Event): void {
+  onImagesSelected(event: any): void {
     const files = (event.target as HTMLInputElement).files;
     if (files) {
       this.imagesPreviews = [];
@@ -82,23 +92,16 @@ export class ManagmentPageComponent implements OnInit {
     }
   }
 
-  // Check if an event with the same name already exists
-  isEventNameTaken(name: string): boolean {
-    return this.eventsList.some(
-      (event) => event.name.toLowerCase() === name.toLowerCase()
-    );
-  }
-
   // Add new event to the service
-  addEvent() {
-    // Check if the event name is already taken
-    if (this.isEventNameTaken(this.newEvent.name)) {
-      alert('Event name is already taken. Please choose a different name.');
+  async addEvent() {
+    console.log(this.newEvent);
+
+    let res = await this.eventsService.addEvent(this.newEvent);
+
+    if (res !== 'success') {
+      alert(res);
       return;
     }
-
-    // Proceed with adding the event if the name is not taken
-    this.ticketsService.addEvent(this.newEvent);
     this.resetForm();
   }
 
@@ -106,8 +109,8 @@ export class ManagmentPageComponent implements OnInit {
   resetForm() {
     this.newEvent = {
       name: '',
-      date: '',
-      tickets: [{ name: '', price: null, quantity: null }],
+      date: new Date(),
+      tickets: [{ ticketType: '', price: 0 }],
       venueName: '',
       minimumAge: 0,
       description: '',
@@ -116,5 +119,7 @@ export class ManagmentPageComponent implements OnInit {
     };
     this.profileImagePreview = null;
     this.imagesPreviews = [];
+
+    this.loadEvents();
   }
 }

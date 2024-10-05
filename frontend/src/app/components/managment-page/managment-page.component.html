@@ -76,7 +76,7 @@
         type="text"
         class="form-control"
         placeholder="Ticket Name"
-        [(ngModel)]="ticket.name"
+        [(ngModel)]="ticket.ticketType"
         [name]="'ticketName' + i"
         required
       />
@@ -88,18 +88,10 @@
         [name]="'ticketPrice' + i"
         required
       />
-      <input
-        type="number"
-        class="form-control mt-2"
-        placeholder="Quantity"
-        [(ngModel)]="ticket.quantity"
-        [name]="'ticketQuantity' + i"
-        required
-      />
       <button
         type="button"
         class="btn btn-danger mt-2"
-        (click)="removeTicket(ticket.name)"
+        (click)="removeTicket(ticket.ticketType)"
       >
         Remove Ticket
       </button>
