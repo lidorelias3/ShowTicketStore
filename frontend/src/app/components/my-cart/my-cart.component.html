@@ -11,7 +11,7 @@
         <div class="card-body">
           <h5 class="card-title">{{ item.event.name }}</h5>
           <p class="card-text">
-            סוג כרטיס: {{ item.ticketType.name }} <br />
+            סוג כרטיס: {{ item.ticketType.ticketType }} <br />
             מחיר לכרטיס: ${{ item.ticketType.price }} <br />
             כמות כרטיסים: {{ item.quantity }} <br />
             סה"כ להופעה: ${{ item.ticketType.price * item.quantity }}

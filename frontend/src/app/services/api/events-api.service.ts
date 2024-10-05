@@ -13,6 +13,10 @@ export class EventAPIService {
     return this.httpClient.get<any>('http://127.0.0.1:3000/api/event');
   }
 
+  getById(id: String): Observable<any> {
+    return this.httpClient.get<any>('http://127.0.0.1:3000/api/event/' + id);
+  }
+
   createEvent(event: Event): Observable<any> {
     var body = JSON.stringify({
       name: event.name,

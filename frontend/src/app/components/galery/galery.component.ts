@@ -1,6 +1,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { ShowsService } from 'src/app/services/shows.service';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Event } from 'src/app/models/event.model';
+import { EventsService } from 'src/app/services/events.service';
 
 @Component({
   selector: 'app-galery',
@@ -18,7 +19,7 @@ import { ShowsService } from 'src/app/services/shows.service';
     ])
   ]
 })
-export class GaleryComponent {
+export class GaleryComponent implements OnInit {
   @ViewChild('galery', { static: false }) galery: ElementRef;
 
   showLeftArrow: boolean = true;
@@ -26,10 +27,14 @@ export class GaleryComponent {
 
   private scroll_size = 200;
 
-  shows: any[]
+  shows: Event[]
 
-  constructor(private showsService: ShowsService) { 
-    this.shows = showsService.getAllShows()
+  constructor(private showsService: EventsService) {}
+  
+  ngOnInit(): void { 
+    this.showsService.getEvents().subscribe(res => {
+      this.shows = res.message;
+    })
   }
 
   scroll(times: number) {
@@ -54,5 +59,9 @@ export class GaleryComponent {
     } else {
       this.showLeftArrow = true;
     }
+  }
+
+  getDate() {
+    
   }
 }

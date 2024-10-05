@@ -25,7 +25,7 @@ export class TicketsService {
   }
 
   // Add ticket to cart
-  addToCart(event: any, ticketType: any) {
+  addToCart(event: any, ticketType: any, amount: number = 1) {
     const cart = this.cartSource.getValue();
     const existingTicket = cart.find(
       (item) =>
@@ -34,9 +34,9 @@ export class TicketsService {
     );
 
     if (existingTicket) {
-      existingTicket.quantity += 1; // Increment quantity if the same ticket exists
+      existingTicket.quantity += amount; // Increment quantity if the same ticket exists
     } else {
-      cart.push({ event, ticketType, quantity: 1 }); // Add new ticket to cart
+      cart.push({ event, ticketType, quantity: amount }); // Add new ticket to cart
     }
 
     this.cartSource.next(cart);

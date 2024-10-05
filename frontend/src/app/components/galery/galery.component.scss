@@ -21,7 +21,7 @@ section {
     padding: 0 2%;
     scrollbar-width: 0;
 
-    :not(:last-child) {
+    .show-frame:not(:last-child) {
         margin-left: 10%;
     }
 
@@ -43,4 +43,8 @@ section {
     padding: 2% 0;
     border-top: 1px var(--light-text-color) solid;
     height: fit-content;
+
+    .title {
+        text-wrap: nowrap;
+    }
 }
