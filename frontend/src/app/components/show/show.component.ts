@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Event } from 'src/app/models/event.model';
 import { EventsService } from 'src/app/services/events.service';
 import { TicketsService } from 'src/app/services/tickets.service';
+import { VenuesService } from 'src/app/services/venues.service';
+import { Loader } from '@googlemaps/js-api-loader';
 
 @Component({
   selector: 'app-show',
@@ -15,45 +17,74 @@ export class ShowComponent implements OnInit {
 
   selectedType: string = '';
   amount = 1;
-
-  // Map-related variables
-  center: google.maps.LatLngLiteral; // Google Maps center
-  zoom = 15; // Zoom level for the map
+  center: google.maps.LatLngLiteral; // For map center
+  map: google.maps.Map; // Google Map instance
 
   constructor(
     private route: ActivatedRoute,
     private eventsService: EventsService,
     private ticketsService: TicketsService,
+    private venuesService: VenuesService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    // Get the event by ID
-    this.route.params
-      .subscribe((params) => {
-        this.id = params['id'] || 0;
-      })
-      .unsubscribe();
+    this.route.params.subscribe((params) => {
+      this.id = params['id'] || 0;
+    });
 
     this.eventsService.getEventByID(this.id).subscribe((res) => {
       this.show = res.message;
-
-      // Set the map center (either static coordinates or fetched dynamically)
-      this.setMapCenter();
+      this.venuesService
+        .getVenueByName(this.show.venueName)
+        .subscribe((res) => {
+          this.initializeMap(res.message); // Initialize map once the show data is loaded
+        });
     });
   }
 
-  // Set static coordinates for now (replace with actual coordinates)
-  setMapCenter() {
-    this.center = {
-      lat: 40.73061, // Example latitude (replace with actual)
-      lng: -73.935242, // Example longitude (replace with actual)
-    };
+  initializeMap(venue: any) {
+    const loader = new Loader({
+      apiKey: 'AIzaSyDYJ2elwHMpMisrji9VBvbYHsMOs3Lsprg',
+      version: 'weekly',
+    });
+
+    loader.load().then(() => {
+      const fullAddress = `${venue.location.address}, ${venue.location.city}, ${venue.location.state}, ${venue.location.country}`;
+      console.log(`fullAddress ${fullAddress}`);
+
+      const geocoder = new google.maps.Geocoder();
+      geocoder.geocode({ address: fullAddress }, (results, status) => {
+        if (status === 'OK' && results && results.length > 0) {
+          // Check if results is not null and has elements
+          this.center = {
+            lat: results[0].geometry.location.lat(),
+            lng: results[0].geometry.location.lng(),
+          };
+
+          this.map = new google.maps.Map(
+            document.getElementById('map') as HTMLElement,
+            {
+              center: this.center,
+              zoom: 15,
+            }
+          );
+
+          new google.maps.Marker({
+            position: this.center,
+            map: this.map,
+            title: this.show.venueName,
+          });
+        } else {
+          console.error('Geocoding was not successful: ' + status);
+        }
+      });
+    });
   }
 
   addToCart() {
     if (this.selectedType === '') {
-      alert('אנא בחר סוג כרטיס');
+      alert('Please select a ticket type');
       return;
     }
 
@@ -67,6 +98,6 @@ export class ShowComponent implements OnInit {
   }
 
   increaseAmount(by: number) {
-    this.amount += by;
+    this.amount += 1 * by;
   }
 }
