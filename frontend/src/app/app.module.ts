@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,7 +12,12 @@ import { MyCartComponent } from './components/my-cart/my-cart.component';
 import { ManagmentPageComponent } from './components/managment-page/managment-page.component';
 import { HomeComponent } from './components/home/home.component';
 import { PayPageComponent } from './components/pay-page/pay-page.component';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { GaleryComponent } from './components/galery/galery.component';
+import { ShowComponent } from './components/show/show.component';
+import { ManageModelsComponent } from './components/admin-page/manage-models/manage-models.component';
+import { ManageEventsComponent } from './components/admin-page/manage-events/manage-events.component';
+import { ManageVenuesComponent } from './components/admin-page/manage-venues/manage-venues.component';
 
 @NgModule({
   declarations: [
@@ -25,14 +30,20 @@ import { PayPageComponent } from './components/pay-page/pay-page.component';
     MyCartComponent,
     ManagmentPageComponent,
     HomeComponent,
-    PayPageComponent
+    PayPageComponent,
+    GaleryComponent,
+    ShowComponent,
+    ManageModelsComponent,
+    ManageEventsComponent,
+    ManageVenuesComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

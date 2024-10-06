@@ -1,22 +1,18 @@
-import { Component } from '@angular/core';
-import { TicketsService } from '../../tickets.service';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  tickets = [
-    { id: 1, name: 'Concert Ticket', price: 100 },
-    { id: 2, name: 'Movie Ticket', price: 50 },
-    { id: 3, name: 'Sports Ticket', price: 150 }
-  ];
+  @ViewChild('scrollElement', { static: false }) scrollElement: ElementRef;
 
-  constructor(private ticketsService: TicketsService) { }
-
-  addToCart(ticket: any) {
-    this.ticketsService.addToCart(ticket);
-    alert(`${ticket.name} added to cart!`);
+  scrolldown() {
+    this.scrollElement.nativeElement.scroll({
+      top: this.scrollElement.nativeElement.scrollHeight,
+      left: 0,
+      behavior: 'smooth'
+    });
   }
 }

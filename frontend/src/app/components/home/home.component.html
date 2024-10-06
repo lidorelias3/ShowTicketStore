@@ -1,14 +1,13 @@
-<div class="container">
-  <h2>Available Tickets</h2>
-  <div class="card-group">
-    <div *ngFor="let ticket of tickets" class="card m-2 rounded-card">
-      <div class="card-body">
-        <h5 class="card-title">{{ ticket.name }}</h5>
-        <p class="card-text">Price: ${{ ticket.price }}</p>
-        <button class="btn btn-primary" (click)="addToCart(ticket)">
-          Add to Cart
-        </button>
-      </div>
+<div class="home" #scrollElement>
+  <div class="intro">
+    <div class="info">
+      <section>אלווין והצ'יפמנקס האתר הרשמי</section>
+      <section class="arrow" (click)="scrolldown()">⟩</section>
     </div>
+    <video autoplay loop>
+      <source src="../../../assets/videoplayback.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
   </div>
+  <app-galery></app-galery>
 </div>

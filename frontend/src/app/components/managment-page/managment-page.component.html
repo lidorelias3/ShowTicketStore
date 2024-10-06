@@ -1,1 +1,8 @@
-<p>managment-page works!</p>
+<div>
+  <section>
+    <button (click)="select('events')">ניהול אירועים</button>
+    <button (click)="select('venues')">ניהול אולמות</button>
+  </section>
+  <app-manage-events *ngIf="manage=='events'"></app-manage-events>
+  <app-manage-venues *ngIf="manage=='venues'"></app-manage-venues>
+</div>
