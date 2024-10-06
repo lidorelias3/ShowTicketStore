@@ -24,7 +24,7 @@ export class AuthService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
 
-    return this.httpClient.post<any>("http://127.0.0.1:3000/api/auth/register", body, httpOptions)
+    return this.httpClient.post<any>("http://localhost:3000/api/auth/register", body, httpOptions)
   }
 
 
@@ -38,6 +38,6 @@ export class AuthService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
 
-    return this.httpClient.post<any>("http://127.0.0.1:3000/api/auth/login", body, httpOptions)
+    return this.httpClient.post<any>("http://localhost:3000/api/auth/login", body, httpOptions)
   }
 }

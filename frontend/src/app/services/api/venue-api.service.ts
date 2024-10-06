@@ -11,15 +11,15 @@ export class VenueApiService {
   constructor(private httpClient: HttpClient) { }
 
   getAllEvents(): Observable<any> {
-    return this.httpClient.get<any>('http://127.0.0.1:3000/api/venue');
+    return this.httpClient.get<any>('http://localhost:3000/api/venue');
   }
 
   getById(id: string): Observable<any> {
-    return this.httpClient.get<any>('http://127.0.0.1:3000/api/venue/' + id);
+    return this.httpClient.get<any>('http://localhost:3000/api/venue/' + id);
   }
 
   getByName(name: string): Observable<any> {
-    return this.httpClient.get<any>('http://127.0.0.1:3000/api/venue/?name=' + encodeURI(name));
+    return this.httpClient.get<any>('http://localhost:3000/api/venue/?name=' + encodeURI(name));
   }
 
   createVenue(event: Venue): Observable<any> {
@@ -30,7 +30,7 @@ export class VenueApiService {
     };
 
     return this.httpClient.post<any>(
-      'http://127.0.0.1:3000/api/venue',
+      'http://localhost:3000/api/venue',
       body,
       httpOptions
     );
@@ -39,7 +39,7 @@ export class VenueApiService {
   
   deleteById(id: string) {
     return this.httpClient.delete<any>(
-      `http://127.0.0.1:3000/api/venue/${id}`
+      `http://localhost:3000/api/venue/${id}`
     );
   }
 
@@ -51,7 +51,7 @@ export class VenueApiService {
     };
 
     return this.httpClient.put<any>(
-      `http://127.0.0.1:3000/api/venue/${id}`,
+      `http://localhost:3000/api/venue/${id}`,
       body,
       httpOptions
     );
