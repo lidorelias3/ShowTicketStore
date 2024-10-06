@@ -20,6 +20,7 @@ import { ManageEventsComponent } from './components/admin-page/manage-events/man
 import { ManageVenuesComponent } from './components/admin-page/manage-venues/manage-venues.component';
 import { ManageUsersComponent } from './components/admin-page/manage-users/manage-users.component';
 import { PurchaseHistoryComponent } from './components/purchase-history/purchase-history.component';
+import { GoogleMapsModule } from '@angular/google-maps'; // Import Google Maps Module
 
 @NgModule({
   declarations: [
@@ -45,7 +46,9 @@ import { PurchaseHistoryComponent } from './components/purchase-history/purchase
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    BrowserAnimationsModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    GoogleMapsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
