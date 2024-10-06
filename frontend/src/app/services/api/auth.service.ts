@@ -37,7 +37,7 @@ export class AuthService {
   }
 
 
-  login(user: User): Observable<{ success: boolean, message: User, error: string }> {
+  login(user: User): Observable<{ success: boolean, detailes: any, error: string }> {
     var body = JSON.stringify({
       "email": user.email,
       "password": user.password,
@@ -59,4 +59,5 @@ export class AuthService {
     });
     return subject.asObservable()
   }
+
 }

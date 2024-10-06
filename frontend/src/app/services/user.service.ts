@@ -10,6 +10,7 @@ import {Location} from '@angular/common';
 export class UserService {
 
   private currentUser?: User = undefined;
+  private currentUserIsAdmin?: boolean = false;
 
   constructor(private authService: AuthService, private router: Router, private location: Location) { }
 
@@ -28,7 +29,9 @@ export class UserService {
   login(user: User) {
     this.authService.login(user).subscribe(res => {
       if (res) {
-        this.currentUser = res.message;
+        this.currentUser = res.detailes.userId;
+        this.currentUserIsAdmin = res.detailes.isAdmin;
+        localStorage.setItem('authorizationToken', res.detailes.token);
         this.router.navigate([''])
       } else {
         this.currentUser = undefined
@@ -37,7 +40,7 @@ export class UserService {
   }
 
   isAdmin(): boolean {
-    return this.currentUser !== undefined && this.currentUser.isAdmin
+    return this.currentUser !== undefined && this.currentUserIsAdmin == true
   }
 
   isLoggedIn(): boolean {
