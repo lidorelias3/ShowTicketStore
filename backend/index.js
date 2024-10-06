@@ -8,6 +8,7 @@ const PORT = 3000;
 const authRoutes = require("./src/routes/auth");
 const venueRoutes = require("./src/routes/venue");
 const eventRoutes = require("./src/routes/event");
+const userRoutes = require("./src/routes/user");
 
 app.use(express.json()); // For parsing application/json
 app.use(express.urlencoded({ extended: true }));
@@ -28,6 +29,7 @@ mongoose
 app.use("/api/auth", authRoutes);
 app.use("/api/venue", venueRoutes);
 app.use("/api/event", eventRoutes);
+app.use("/api/users", userRoutes);
 
 app.listen(PORT, (error) => {
   if (!error) console.log("Server is listening on port: " + PORT);
