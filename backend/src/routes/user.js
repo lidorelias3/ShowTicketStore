@@ -27,7 +27,7 @@ router.get("/:id", checkIsAdmin, async (req, res) => {
 });
 
 // Update user by ID
-router.put("/:id", async (req, res) => {
+router.put("/:id", checkIsAdminת async (req, res) => {
   const { firstName, lastName, email, password, age, gender, isAdmin } =
     req.body;
 
