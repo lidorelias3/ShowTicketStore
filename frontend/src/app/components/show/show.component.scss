@@ -74,9 +74,10 @@
 
 
 .map-container {
-  width: 350px; /* Set your desired width */
-  height: 350px; /* Set your desired height */
+  width: 250px; /* Set your desired width */
+  height: 250px; /* Set your desired height */
   /* Optional: Add styles to control layout, borders, etc. */
   border: 1px solid #ccc;
-  margin-top: 20px; /* Optional margin */
+  margin: 20px; /* Optional margin */
+  border-radius: 10px; /* Adjust this value for more or less rounding */
 }

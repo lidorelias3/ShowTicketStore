@@ -38,7 +38,7 @@ export class ShowComponent implements OnInit {
       this.venuesService
         .getVenueByName(this.show.venueName)
         .subscribe((res) => {
-          this.initializeMap(res.message); // Initialize map once the show data is loaded
+          this.initializeMap(res.message[0]); // Initialize map once the show data is loaded
         });
     });
   }
