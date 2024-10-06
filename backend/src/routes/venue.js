@@ -18,12 +18,12 @@ router.post("/", async (req, res) => {
 // Get all venues
 router.get("/", async (req, res) => {
   try {
-    if ('name' in req.query) {
-      const venues = await Venue.find({"name": String(req.query.name)}).exec();
-      return handleResponse(res, 200, true, venues)
+    if ("name" in req.query) {
+      const venues = await Venue.find().exec();
+      return handleResponse(res, 200, true, venues);
     } else {
       const venues = await Venue.find();
-      return handleResponse(res, 200, true, venues);  
+      return handleResponse(res, 200, true, venues);
     }
   } catch (error) {
     return handleResponse(res, 500, false, error.message);
