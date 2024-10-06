@@ -7,14 +7,12 @@ import {Location} from '@angular/common';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService implements OnDestroy {
+export class UserService {
 
   private currentUser?: User = undefined;
 
   constructor(private authService: AuthService, private router: Router, private location: Location) { }
-  ngOnDestroy(): void {
-    this.logout()
-  }
+
 
   register(user: User) {
     this.authService.register(user).subscribe(res => {

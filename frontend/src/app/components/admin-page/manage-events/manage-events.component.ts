@@ -103,7 +103,7 @@ export class ManageEventsComponent implements OnInit {
     this.currentEvent.date = new Date(this.dateString)
 
     if (this.isNew) {
-      this.eventsService.addEvent(this.currentEvent).then(_ => {
+      this.eventsService.addEvent(this.currentEvent).subscribe(_ => {
         this.loadEvents()
       })
     } else {

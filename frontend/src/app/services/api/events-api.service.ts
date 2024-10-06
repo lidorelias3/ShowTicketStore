@@ -1,77 +1,75 @@
 import { Injectable } from '@angular/core';
 import { Event } from 'src/app/models/event.model';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, Observer } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import * as $ from 'jquery';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EventAPIService {
-  constructor(private httpClient: HttpClient) {}
 
   getAllEvents(): Observable<any> {
-    return this.httpClient.get<any>('http://localhost:3000/api/event');
+    var subject = new Subject<any>()
+    $.get('http://localhost:3000/api/event/',
+      function (data, _) {
+        subject.next(data)
+      }
+    );
+
+    return subject.asObservable()
   }
 
   getById(id: String): Observable<any> {
-    return this.httpClient.get<any>('http://localhost:3000/api/event/' + id);
+    var subject = new Subject<any>()
+    $.get('http://localhost:3000/api/event/' + id,
+      function (data, _) {
+        subject.next(data)
+      }
+    );
+
+    return subject.asObservable()
   }
 
   createEvent(event: Event): Observable<any> {
-    var body = JSON.stringify({
-      name: event.name,
-      date: event.date,
-      venueName: event.venueName,
-      tickets: event.tickets,
-      minimumAge: event.minimumAge,
-      description: event.description,
-      profileImage: event.profileImage,
-      imagesPaths: event.imagesPaths,
-    });
-
-    var httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-    };
-
-    return this.httpClient.post<any>(
-      'http://localhost:3000/api/event',
-      body,
-      httpOptions
+    var subject = new Subject<any>()
+    $.post('http://localhost:3000/api/event', event,
+      function (data, _) {
+        subject.next(data)
+      }
     );
+
+    return subject.asObservable()
   }
 
   deleteEvent(name: string) {
-    return this.httpClient.delete<any>(
-      `http://localhost:3000/api/event/${name}`
-    );
+    var subject = new Subject<any>()
+    $.ajax({
+      url: `http://localhost:3000/api/event/${name}`  ,
+      type: 'DELETE',
+      async: true,
+      success: function (result) {
+        subject.next(result)
+      }
+    });
+    return subject.asObservable()
   }
 
-  deleteById(id: string) {
-    return this.httpClient.delete<any>(
-      `http://localhost:3000/api/event/id/${id}`
-    );
-  }
-
-  updateExistingEvent(existEventName: string, event: Event) {
-    var body = JSON.stringify({
-      name: event.name,
-      date: event.date,
-      venueName: event.venueName,
-      tickets: event.tickets,
-      minimumAge: event.minimumAge,
-      description: event.description,
-      profileImage: event.profileImage,
-      imagesPaths: event.imagesPaths,
+  updateExistingEvent(existEventName: string, event: Event): Observable<any> {
+    var subject = new Subject<any>()
+    $.ajax({
+      type: "PUT",
+      url: `http://localhost:3000/api/event/${encodeURI(existEventName)}`,
+      contentType: "application/json",
+      data: JSON.stringify(event),
+      async: true,
+      success: function (data) {
+        subject.next(data)
+      },
+      error: function(data) {
+        subject.next(data)
+      }
     });
 
-    var httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-    };
-
-    return this.httpClient.put<any>(
-      `http://localhost:3000/api/event/${encodeURI(existEventName)}`,
-      body,
-      httpOptions
-    );
+    return subject.asObservable()
   }
 }

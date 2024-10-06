@@ -1,59 +1,94 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Venue } from 'src/app/models/venue.model';
+import * as $ from 'jquery';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VenueApiService {
-
-  constructor(private httpClient: HttpClient) { }
-
   getAllEvents(): Observable<any> {
-    return this.httpClient.get<any>('http://localhost:3000/api/venue');
+    var subject = new Subject<any>()
+    $.get('http://localhost:3000/api/venue',
+      function (data, _) {
+        subject.next(data)
+      }
+    );
+
+    return subject.asObservable()
   }
 
   getById(id: string): Observable<any> {
-    return this.httpClient.get<any>('http://localhost:3000/api/venue/' + id);
+    var subject = new Subject<any>()
+    $.get(`http://localhost:3000/api/venue${id}`,
+      function (data, _) {
+        subject.next(data)
+      }
+    );
+
+    return subject.asObservable()
   }
 
   getByName(name: string): Observable<any> {
-    return this.httpClient.get<any>('http://localhost:3000/api/venue/?name=' + encodeURI(name));
+    var subject = new Subject<any>()
+    $.get(`http://localhost:3000/api/venue/?name=${encodeURI(name)}`,
+      function (data, _) {
+        subject.next(data)
+      }
+    );
+
+    return subject.asObservable()
   }
 
-  createVenue(event: Venue): Observable<any> {
-    var body = JSON.stringify(event);
+  createVenue(venue: Venue): Observable<any> {
+    var subject = new Subject<any>()
+    $.ajax({
+      type: "POST",
+      url: `http://localhost:3000/api/venue`,
+      contentType: "application/json",
+      data: JSON.stringify(venue),
+      async: true,
+      success: function (data) {
+        subject.next(data)
+      },
+      error: function(data) {
+        subject.next(data)
+      }
+    });
 
-    var httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-    };
-
-    return this.httpClient.post<any>(
-      'http://localhost:3000/api/venue',
-      body,
-      httpOptions
-    );
+    return subject.asObservable()
   }
 
   
   deleteById(id: string) {
-    return this.httpClient.delete<any>(
-      `http://localhost:3000/api/venue/${id}`
-    );
+    var subject = new Subject<any>()
+    $.ajax({
+      url: `http://localhost:3000/api/venue/${id}`,
+      type: 'DELETE',
+      async: true,
+      success: function (result) {
+        subject.next(result)
+      }
+    });
+    return subject.asObservable()
   }
 
   updateVenue(id: string, venue: Venue) {
-    var body = JSON.stringify(venue);
+    var subject = new Subject<any>()
+    $.ajax({
+      type: "PUT",
+      url: `http://localhost:3000/api/venue/${id}`,
+      contentType: "application/json",
+      data: JSON.stringify(venue),
+      async: true,
+      success: function (data) {
+        subject.next(data)
+      },
+      error: function(data) {
+        subject.next(data)
+      }
+    });
 
-    var httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-    };
-
-    return this.httpClient.put<any>(
-      `http://localhost:3000/api/venue/${id}`,
-      body,
-      httpOptions
-    );
+    return subject.asObservable()
   }
 }

@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 import { User } from 'src/app/models/user.model';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, Observer } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import * as $ from 'jquery';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
-  constructor(private httpClient: HttpClient) { }
-
   register(user: User): Observable<any> {
     var body = JSON.stringify({
       "email": user.email,
@@ -19,12 +17,23 @@ export class AuthService {
       "age": user.age,
       "gender": user.gender
     })
+  
+    var subject = new Subject<any>()
+    $.ajax({
+      type: "POST",
+      url: `http://localhost:3000/api/auth/register`,
+      contentType: "application/json",
+      data: body,
+      async: true,
+      success: function (data) {
+        subject.next(data)
+      },
+      error: function(data) {
+        subject.next(data)
+      }
+    });
 
-    var httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    };
-
-    return this.httpClient.post<any>("http://localhost:3000/api/auth/register", body, httpOptions)
+    return subject.asObservable()
   }
 
 
@@ -34,10 +43,20 @@ export class AuthService {
       "password": user.password,
     })
 
-    var httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    };
-
-    return this.httpClient.post<any>("http://localhost:3000/api/auth/login", body, httpOptions)
+    var subject = new Subject<any>()
+    $.ajax({
+      type: "POST",
+      url: `http://localhost:3000/api/auth/login`,
+      contentType: "application/json",
+      data: body,
+      async: true,
+      success: function (data) {
+        subject.next(data)
+      },
+      error: function(data) {
+        subject.next(data)
+      }
+    });
+    return subject.asObservable()
   }
 }
