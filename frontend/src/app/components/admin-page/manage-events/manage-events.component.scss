@@ -1,10 +1,15 @@
-input {
-    width: 270px;
-    height: 30px;
-    margin-bottom: 15px;
-    padding-right: 5%;
+.form {
+    overflow-y: scroll;
+    max-height: 90%;
 
-    background-color: #4F4F4F55;
-    color: var(--light-text-color);
-    border: none;
+    input {
+        width: 270px;
+        height: 30px;
+        margin-bottom: 15px;
+        padding-right: 5%;
+
+        background-color: #4F4F4F55;
+        color: var(--light-text-color);
+        border: none;
+    }
 }

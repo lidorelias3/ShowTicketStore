@@ -16,15 +16,7 @@ export class ManageModelsComponent {
   @Input() title: string
   @Input() buttonTitle: string
 
-  // shows: Event[]
-
-  constructor(private showsService: EventsService) { }
-
-  // ngOnInit(): void {
-  //   this.showsService.getEvents().subscribe(res => {
-  //     this.shows = res.message;
-  //   })
-  // }
+  constructor() { }
 
   delete(id?: string) {
     this.deleteEvent.emit(id)

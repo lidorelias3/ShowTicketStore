@@ -53,7 +53,6 @@ export class ManageEventsComponent implements OnInit {
     this.dateString = pipe.transform(this.currentEvent.date, 'dd-MM-yyyy')
   }
 
-
   newElement() {
     this.isNew = true;
     this.showList = false;

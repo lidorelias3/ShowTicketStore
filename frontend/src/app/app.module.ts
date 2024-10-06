@@ -45,8 +45,7 @@ import { ManageVenuesComponent } from './components/admin-page/manage-venues/man
     HttpClientModule,
     BrowserAnimationsModule
   ],
-  providers: [
-  ],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

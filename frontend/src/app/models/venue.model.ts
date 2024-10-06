@@ -2,16 +2,11 @@ export interface Venue {
   _id? : string;
   name: string;
   location: {
-    address: string, // Street address
-    city: string, // City
-    state: string, // State/Province
-    country: string, // Country
-  },
-  maxCapacity: number, // Seating capacity
-  zones: Array<
-    {
-      name: string,
-      capacity: number
-    }
-  >,
+    address: string,
+    city: string,
+    state: string,
+    country: string, 
+  };
+  maxCapacity: number;
+  zones: Array<{ name: string, capacity: number }>;
 }
