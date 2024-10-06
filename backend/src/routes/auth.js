@@ -1,12 +1,14 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
+const jwt = require("jsonwebtoken");
 
 const { body, validationResult } = require("express-validator");
 
 const router = express.Router();
 
 const handleResponse = require("../utils/responseHandler");
+const config = require("../configs/config");
 
 // Middleware for validating user input
 const RegisterValidator = [
@@ -19,7 +21,13 @@ const RegisterValidator = [
 router.post("/login", RegisterValidator, async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return handleResponse(res, 400, false, "Invalid arameters", errors.array());
+    return handleResponse(
+      res,
+      400,
+      false,
+      "Invalid parameters",
+      errors.array()
+    );
   }
 
   const { email, password } = req.body;
@@ -37,9 +45,19 @@ router.post("/login", RegisterValidator, async (req, res) => {
       return handleResponse(res, 404, false, "Invalid credentials");
     }
 
-    user.hashedPassword = ''
+    // Generate JWT token
+    const token = jwt.sign(
+      {
+        id: user._id,
+        isAdmin: user.isAdmin,
+      },
+      config.jwt_secret, // Your JWT secret key need to be from env
+      { expiresIn: "1h" }
+    );
 
-    return handleResponse(res, 200, true, user);
+    // Return success response with the token
+    return handleResponse(res, 200, true, "Login successful", { token });
+
   } catch (error) {
     return handleResponse(res, 500, false, "Error logging in", error.message);
   }
