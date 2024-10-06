@@ -101,7 +101,6 @@ export class ManageVenuesComponent implements OnInit {
         this.loadVenues()
     })
     } else {
-      alert("save")
       this.venuesService.upateVenue(this.currentVenue).subscribe(_ =>{
           this.loadVenues()
       })
