@@ -106,9 +106,8 @@ router.put(
       profileImage,
       imagesPaths,
     } = req.body;
-
     // Fetch the event and the venue (if the venue is updated)
-    const event = await Event.findOne({ name: req.params.name });
+    const event = await Event.findOne({ name: String(req.params.name) });
     if (!event) {
       return handleResponse(res, 404, false, "Event not found");
     }

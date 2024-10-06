@@ -30,6 +30,10 @@ export class EventsService {
     return this.eventApiService.deleteEvent(eventName);
   }
 
+  removeEventById(eventId: string) {
+    return this.eventApiService.deleteById(eventId);
+  }
+
   // Get all available events
   getEvents() {
     return this.eventApiService.getAllEvents();

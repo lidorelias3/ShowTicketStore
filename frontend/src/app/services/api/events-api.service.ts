@@ -46,6 +46,12 @@ export class EventAPIService {
     );
   }
 
+  deleteById(id: string) {
+    return this.httpClient.delete<any>(
+      `http://127.0.0.1:3000/api/event/id/${id}`
+    );
+  }
+
   updateExistingEvent(existEventName: string, event: Event) {
     var body = JSON.stringify({
       name: event.name,
@@ -63,7 +69,7 @@ export class EventAPIService {
     };
 
     return this.httpClient.put<any>(
-      `http://127.0.0.1:3000/api/event/${existEventName}`,
+      `http://127.0.0.1:3000/api/event/${encodeURI(existEventName)}`,
       body,
       httpOptions
     );

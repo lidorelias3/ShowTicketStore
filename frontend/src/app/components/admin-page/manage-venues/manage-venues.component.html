@@ -1,0 +1,38 @@
+<app-manage-models *ngIf="showList;else other_content" [title]="'אולמות'" [models]="VenuesTableObjects"
+    [buttonTitle]="'הוספת אולם חדש'" (deleteEvent)="delete($event)" (editEvent)="edit($event)"
+    (newEvent)="newElement()">
+</app-manage-models>
+
+<ng-template #other_content>
+    <h1>עריכת / יצירת אולם</h1>
+    <div class="form flex col">
+        <section>
+            שם אולם: <input type="text" class="form-control" id="name" required [(ngModel)]="currentVenue.name"
+                placeholder="שם אולם">
+        </section>
+        <section>
+            כתובת: <input type="text" class="form-control" id="address" required
+                [(ngModel)]="currentVenue.location.address" placeholder="כתובת">
+        </section>
+        <section>
+            עיר: <input type="text" class="form-control" id="city" required [(ngModel)]="currentVenue.location.city"
+                placeholder="עיר">
+        </section>
+        <section>
+            מחוז: <input type="text" class="form-control" id="state" required [(ngModel)]="currentVenue.location.state"
+                placeholder="מחוז">
+        </section>
+        <section>
+            מדינה: <input type="text" class="form-control" id="address" required
+                [(ngModel)]="currentVenue.location.country" placeholder="מדינה">
+        </section>
+        <section *ngFor="let zone of currentVenue.zones">
+            אזור: {{zone.name}}: <input type="number" class="form-control" required [(ngModel)]="zone.capacity"
+                placeholder="מחיר">
+        </section>
+        <section>
+            <button (click)="addZone()">הוסף אזור</button>
+            <button (click)="save()">שמור אולם</button>
+        </section>
+    </div>
+</ng-template>
