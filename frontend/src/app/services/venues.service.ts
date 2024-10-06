@@ -3,33 +3,32 @@ import { VenueApiService } from './api/venue-api.service';
 import { Venue } from '../models/venue.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class VenuesService {
-
-  constructor(private venuesApiService: VenueApiService) { }
+  constructor(private venuesApiService: VenueApiService) {}
 
   getVenueByID(id: string) {
-    return this.venuesApiService.getById(id)
+    return this.venuesApiService.getById(id);
   }
 
   getVenueByName(name: string) {
-    return this.venuesApiService.getByName(name)
+    return this.venuesApiService.getByName(name);
   }
 
   getAllVenues() {
-    return this.venuesApiService.getAllEvents()
+    return this.venuesApiService.getAllEvents();
   }
 
   newVenue(venue: Venue) {
-    return this.venuesApiService.createVenue(venue)
+    return this.venuesApiService.createVenue(venue);
   }
 
   upateVenue(venue: Venue) {
-    return this.venuesApiService.updateVenue(venue._id!, venue)
+    return this.venuesApiService.updateVenue(venue._id!, venue);
   }
 
   removeVenue(id: string) {
-    return this.venuesApiService.deleteById(id)
+    return this.venuesApiService.deleteById(id);
   }
 }
