@@ -6,11 +6,14 @@ import { HomeComponent } from './components/home/home.component';
 import { ManagmentPageComponent } from './components/managment-page/managment-page.component';
 import { MyCartComponent } from './components/my-cart/my-cart.component';
 import { PayPageComponent } from './components/pay-page/pay-page.component';
+import { isAdminGuard } from './guards/is-admin.guard';
+import { ShowComponent } from './components/show/show.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegistrationComponent },
-  { path: 'managment-page', component: ManagmentPageComponent },
+  { path: 'management-page', component: ManagmentPageComponent, canActivate: [isAdminGuard]},
+  { path: 'shows/:id', component: ShowComponent},
   { path: 'my-cart', component: MyCartComponent },
   { path: 'pay', component: PayPageComponent },
   { path: '', component: HomeComponent }

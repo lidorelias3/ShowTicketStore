@@ -1,0 +1,16 @@
+<div class="galery-container">
+  <section (click)="scroll(-1)" [@opacity]="showRightArrow">⟨</section>
+  <div #galery id="galery" (scroll)="updateArrowsState($event)">
+    <div *ngFor="let show of shows" class="show-frame">
+      <div class="show-body">
+        <h3 class="title">{{show.name}}</h3>
+        <h5 class="date">{{show.date | date:'dd.MM.YYYY'}}</h5>
+        <h5>{{show.venueName}}</h5>
+        <div class="font-xl tickets" [routerLink]="'/shows/' + show._id">
+          כרטיסים ⟫
+        </div>
+      </div>
+    </div>
+  </div>
+  <section (click)="scroll(1)" [@opacity]="showLeftArrow">⟩</section>
+</div>

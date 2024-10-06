@@ -1,0 +1,27 @@
+<app-manage-models *ngIf="showList;else other_content" [title]="'מופעים'" [models]="EventsTableObjects"
+    [buttonTitle]="'הוספת מופע חדש'" (deleteEvent)="delete($event)" (editEvent)="edit($event)"
+    (newEvent)="newElement()">
+</app-manage-models>
+
+<ng-template #other_content>
+    <h1>עריכת / יצירת מופע</h1>
+    <div class="form flex col">
+        <section>
+            שם מופע: <input type="text" class="form-control" id="name" required [(ngModel)]="currentEvent.name"
+                placeholder="שם מופע">
+        </section>
+        <section>
+            מיקום: <input type="text" class="form-control" id="venueName" required [(ngModel)]="currentEvent.venueName"
+                placeholder="אולם" (focusout)="getVenue()">
+        </section>
+        <section>
+            תאריך: <input type="date" class="form-control" id="date" required [(ngModel)]="dateString"
+                placeholder="תאריך">
+        </section>
+        <section *ngFor="let ticket of currentEvent.tickets">
+            מחיר לכרטיס מסוג {{ticket.ticketType}}: <input type="number" class="form-control" required [(ngModel)]="ticket.price"
+            placeholder="מחיר">
+        </section>
+        <button (click)="save()">שמור מופע</button>
+    </div>
+</ng-template>

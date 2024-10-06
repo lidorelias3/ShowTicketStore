@@ -1,17 +1,23 @@
 import { Component } from '@angular/core';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  buttons: {title: string, route: string}[] = [
-    {title: 'כניסה', route: '/login'},
-    {title: 'הרשמה', route: '/register'},
-    {title: 'דף ניהול', route: '/managment-page'},
-    {title: 'העגלה שלי', route: '/my-cart'},
-    {title: 'בית', route: ''}
+  constructor(private userService: UserService) {}
 
-  ]
+  logout() {
+    this.userService.logout();
+  }
+
+  isLoggedIn(): boolean {
+    return this.userService.isLoggedIn();
+  }
+
+  isAdmin(): boolean {
+    return this.userService.isAdmin();
+  }
 }
