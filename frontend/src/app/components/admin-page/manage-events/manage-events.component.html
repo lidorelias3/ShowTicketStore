@@ -1,7 +1,6 @@
 <app-manage-models *ngIf="showList;else other_content" [title]="'מופעים'" [models]="EventsTableObjects"
     [buttonTitle]="'הוספת מופע חדש'" (deleteEvent)="delete($event)" (editEvent)="edit($event)"
     (newEvent)="newElement()">
-    content here ...
 </app-manage-models>
 
 <ng-template #other_content>

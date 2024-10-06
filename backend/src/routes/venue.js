@@ -23,7 +23,7 @@ router.get("/", async (req, res) => {
       return handleResponse(res, 200, true, venues)
     } else {
       const venues = await Venue.find();
-      return handleResponse(res, 200, true, venues);
+      return handleResponse(res, 200, true, venues);  
     }
   } catch (error) {
     return handleResponse(res, 500, false, error.message);

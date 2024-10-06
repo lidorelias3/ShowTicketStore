@@ -8,10 +8,10 @@ export interface Venue {
     country: string, // Country
   },
   maxCapacity: number, // Seating capacity
-  zones: [
+  zones: Array<
     {
       name: string,
       capacity: number
     }
-  ],
+  >,
 }

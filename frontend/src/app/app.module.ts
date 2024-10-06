@@ -18,6 +18,7 @@ import { GaleryComponent } from './components/galery/galery.component';
 import { ShowComponent } from './components/show/show.component';
 import { ManageModelsComponent } from './components/admin-page/manage-models/manage-models.component';
 import { ManageEventsComponent } from './components/admin-page/manage-events/manage-events.component';
+import { ManageVenuesComponent } from './components/admin-page/manage-venues/manage-venues.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ManageEventsComponent } from './components/admin-page/manage-events/man
     GaleryComponent,
     ShowComponent,
     ManageModelsComponent,
-    ManageEventsComponent
+    ManageEventsComponent,
+    ManageVenuesComponent,
   ],
   imports: [
     BrowserModule,

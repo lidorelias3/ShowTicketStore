@@ -36,4 +36,24 @@ export class VenueApiService {
     );
   }
 
+  
+  deleteById(id: string) {
+    return this.httpClient.delete<any>(
+      `http://127.0.0.1:3000/api/venue/${id}`
+    );
+  }
+
+  updateVenue(id: string, venue: Venue) {
+    var body = JSON.stringify(venue);
+
+    var httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    };
+
+    return this.httpClient.put<any>(
+      `http://127.0.0.1:3000/api/venue/${id}`,
+      body,
+      httpOptions
+    );
+  }
 }
