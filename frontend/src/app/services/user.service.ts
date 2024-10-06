@@ -2,7 +2,6 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { AuthService } from './api/auth.service';
 import { User } from '../models/user.model';
 import { Router } from '@angular/router';
-import {Location} from '@angular/common';
 import { Observable } from 'rxjs';
 import { UsersApiService } from './api/users-api.service';
 

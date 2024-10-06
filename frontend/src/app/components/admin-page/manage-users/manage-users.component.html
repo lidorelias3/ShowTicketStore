@@ -6,24 +6,27 @@
     <h1>עריכת / יצירת משתמש</h1>
     <div class="form flex col">
         <section>
-            אימייל: <input type="text" class="form-control" id="name" required [(ngModel)]="currentUser.email"
+            אימייל: <input type="email" class="form-control" id="email" required [(ngModel)]="currentUser.email"
                 placeholder="אימייל">
         </section>
         <section>
-            שם פרטי: <input type="text" class="form-control" id="venueName" required [(ngModel)]="currentUser.firstName"
+            שם פרטי: <input type="text" class="form-control" id="firstName" required [(ngModel)]="currentUser.firstName"
                 placeholder="שם פרטי">
         </section>
         <section>
-            שם משפחה: <input type="text" class="form-control" id="venueName" required [(ngModel)]="currentUser.lastName"
+            שם משפחה: <input type="text" class="form-control" id="lastName" required [(ngModel)]="currentUser.lastName"
                 placeholder="שם משפחה">
         </section>
         <section>
-            מין: <input type="text" class="form-control" id="venueName" required [(ngModel)]="currentUser.gender"
+            מין: <input type="text" class="form-control" id="gender" required [(ngModel)]="currentUser.gender"
                 placeholder="מין">
         </section>
         <section>
-            גיל: <input type="number" class="form-control" id="venueName" required [(ngModel)]="currentUser.age"
+            גיל: <input type="number" class="form-control" id="age" required [(ngModel)]="currentUser.age"
                 placeholder="גיל">
+        </section>
+        <section>
+            האם מנהל: <input type="checkbox" class="form-control" id="isAdmin" required [(ngModel)]="currentUser.isAdmin">
         </section>
         <button (click)="save()">שמור מופע</button>
     </div>
