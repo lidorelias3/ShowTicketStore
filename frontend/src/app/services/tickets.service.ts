@@ -92,7 +92,7 @@ export class TicketsService {
 
   purchase(): Observable<any>{
     var success = new Subject()
-    var userID = this.userService.getCureentUserID()
+    var userID = this.userService.getCurrentUserID()
 
     if (userID == undefined) {
       alert("על מנת להמשיך ברכישה עליך להתחבר לאתר")

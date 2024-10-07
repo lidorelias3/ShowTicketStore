@@ -9,6 +9,7 @@ import { PayPageComponent } from './components/pay-page/pay-page.component';
 import { isAdminGuard } from './guards/is-admin.guard';
 import { ShowComponent } from './components/show/show.component';
 import { ManageUsersComponent } from './components/admin-page/manage-users/manage-users.component';
+import { PurchaseHistoryComponent } from './components/purchase-history/purchase-history.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'shows/:id', component: ShowComponent},
   { path: 'my-cart', component: MyCartComponent },
   { path: 'pay', component: PayPageComponent },
+  { path: 'history', component: PurchaseHistoryComponent },
   { path: '', component: HomeComponent }
 ];
 

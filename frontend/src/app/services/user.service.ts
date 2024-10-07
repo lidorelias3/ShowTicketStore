@@ -10,7 +10,7 @@ import { UsersApiService } from './api/users-api.service';
 })
 export class UserService {
 
-  private currentUser?: User = undefined;
+  private currentUser?: string = undefined;
   private currentUserIsAdmin?: boolean = false;
 
   constructor(private authService: AuthService, private router: Router, private userApiService: UsersApiService) { }
@@ -49,7 +49,7 @@ export class UserService {
   }
 
   getCurrentUserID(): string | undefined {
-    return this.currentUser?._id
+    return this.currentUser
   }
 
   logout() {
@@ -73,9 +73,5 @@ export class UserService {
 
   deleteUser(id: string) {
     return this.userApiService.deleteUser(id)
-  }
-
-  getCureentUserID() {
-    return this.currentUser
   }
 }
