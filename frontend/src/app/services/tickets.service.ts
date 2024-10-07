@@ -101,11 +101,12 @@ export class TicketsService {
 
     var elements = this.getCartItems().map(it=> {return {eventID: it.event._id, ticketType: it.ticketType, quantity: it.quantity}})
 
-    this.eventsApiService.purchase(userID, elements).subscribe(res => {
+    this.eventsApiService.purchase(elements).subscribe(res => {
       if (!res.success) {
         alert(`הבקשה נכשלה, אנא וודא את כל הפרמטרים. \n${res.error}`)
         success.next(false)
       } else {
+        this.clearCart()
         success.next(true)
       }
     })  

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { TicketsService } from 'src/app/services/tickets.service';
 
 @Component({
   selector: 'app-pay-page',
@@ -10,16 +11,16 @@ export class PayPageComponent {
   loading: boolean = false;
   paymentSuccess: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private ticketService: TicketsService) {}
 
   processPayment() {
     // Simulate payment processing
     this.loading = true;
-
-    setTimeout(() => {
-      this.loading = false;
-      this.paymentSuccess = true;
-    }, 3000); // Simulate 3 seconds payment process delay
+    this.ticketService.purchase()?.subscribe(res => {
+      alert(res.detailes)
+      this.loading = false
+      this.paymentSuccess = res.success
+    })
   }
 
   goBack() {

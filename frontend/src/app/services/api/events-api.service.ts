@@ -90,9 +90,8 @@ export class EventAPIService {
     return subject.asObservable()
   }
 
-  purchase(userID: string, tickets: Array<{eventID: string, ticketType: string, quantity: number}>): Observable<any> {
+  purchase(tickets: Array<{eventID: string, ticketType: string, quantity: number}>): Observable<any> {
     var body = JSON.stringify({
-      userID: userID,
       tickets: tickets
     })
     
