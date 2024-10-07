@@ -12,7 +12,8 @@ const checkIsAdmin = require("../middleware/isAdmin");
 
 // Create an event
 router.post(
-  "/", checkIsAdmin,
+  "/",
+  checkIsAdmin,
   asyncHandler(async (req, res) => {
     const {
       name,
@@ -67,13 +68,40 @@ router.post(
   })
 );
 
-// Get all events
 router.get(
   "/",
   asyncHandler(async (req, res) => {
-    const events = await Event.find();
+    try {
+      // Extract query parameters
+      const { maxprice, venue } = req.query;
 
-    return handleResponse(res, 200, true, events);
+      // Build query object dynamically
+      let query = {};
+
+      // Add max price filter if provided (checks ticket prices)
+      if (maxprice) {
+        query["tickets.price"] = { $lte: Number(maxprice) };
+      }
+
+      // Add venue filter if provided
+      if (venue) {
+        query.venueName = new RegExp(venue, "i"); // Case-insensitive search for venue name
+      }
+
+      // Execute the query using Mongoose
+      const events = await Event.find(query);
+
+      // Check if any events found
+      if (!events.length) {
+        return handleResponse(res, 404, false, "No events found matching");
+      }
+
+      // Return the filtered events
+      return handleResponse(res, 200, true, "Events found", events);
+    } catch (error) {
+      console.error(error);
+      return handleResponse(res, 500, false, "Server error");
+    }
   })
 );
 
