@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import * as $ from 'jquery';
 import { Observable, Subject } from 'rxjs';
 import { User } from 'src/app/models/user.model';
+import { authenticatedAjax } from './ajax.util';
 
 
 @Injectable({
@@ -13,34 +14,47 @@ export class UsersApiService {
 
   getAllUsers(): Observable<any> {
     var subject = new Subject<any>()
-    $.get('http://localhost:3000/api/users/',
-      function (data, _) {
+    authenticatedAjax({
+      type: 'GET',
+      url: 'http://localhost:3000/api/users/',
+      async: true,
+      success: function (data: any) {
+        subject.next(data)
+      },
+      error: function (data: any) {
         subject.next(data)
       }
-    );
-
+    });
     return subject.asObservable()
   }
 
   getUserByID(id: string): Observable<any> {
     var subject = new Subject<any>()
-    $.get(`http://localhost:3000/api/users/${id}`,
-      function (data, _) {
+    authenticatedAjax({
+      type: 'GET',
+      url: `http://localhost:3000/api/users/${id}`,
+      async: true,
+      success: function (data: any) {
+        subject.next(data)
+      },
+      error: function (data: any) {
         subject.next(data)
       }
-    );
-
+    });
     return subject.asObservable()
   }
 
   deleteUser(id: string) {
     var subject = new Subject<any>()
-    $.ajax({
-      url: `http://localhost:3000/api/users/${id}`  ,
+    authenticatedAjax({
       type: 'DELETE',
+      url: `http://localhost:3000/api/users/${id}`,
       async: true,
-      success: function (result) {
-        subject.next(result)
+      success: function (data: any) {
+        subject.next(data)
+      },
+      error: function (data: any) {
+        subject.next(data)
       }
     });
     return subject.asObservable()
@@ -48,16 +62,15 @@ export class UsersApiService {
 
   updateUser(user: User): Observable<any> {
     var subject = new Subject<any>()
-    $.ajax({
+    authenticatedAjax({
       type: "PUT",
-      url: `http://localhost:3000/api/users/${user.id}`,
-      contentType: "application/json",
-      data: JSON.stringify(user),
+      url: `http://localhost:3000/api/users/${user._id}`,
+      data: user,
       async: true,
-      success: function (data) {
+      success: function (data: any) {
         subject.next(data)
       },
-      error: function(data) {
+      error: function (data: any) {
         subject.next(data)
       }
     });

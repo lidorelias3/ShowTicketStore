@@ -13,10 +13,10 @@ export class ManageUsersComponent implements OnInit {
   usersTableObjects: any[] = []
   currentUser: User
 
-  constructor(private usersService: UserService) {}
+  constructor(private usersService: UserService) { }
 
   ngOnInit(): void {
-     this.loadUsers()
+    this.loadUsers()
   }
 
   loadUsers() {
@@ -24,10 +24,11 @@ export class ManageUsersComponent implements OnInit {
     this.usersTableObjects = []
     this.usersService.getAllUsers().subscribe(res => {
       this.users = res.message
-      this.usersTableObjects = this.users.map((it) => { return { 'id': it.id, 'name': it.firstName + ' ' + it.lastName } })
+      this.usersTableObjects = this.users.map((it) => { return { 'id': it._id, 'name': it.firstName + ' ' + it.lastName } })
     })
 
-    this.showList = true;  }
+    this.showList = true;
+  }
 
   delete(id: string) {
     this.usersService.deleteUser(id).subscribe(_ => {
@@ -37,8 +38,8 @@ export class ManageUsersComponent implements OnInit {
 
   edit(id: string) {
     this.showList = false;
-    this.currentUser = this.users.filter(it => it.id == id)[0];
-  } 
+    this.currentUser = this.users.filter(it => it._id == id)[0];
+  }
 
   save() {
     this.validateUser()
@@ -49,9 +50,9 @@ export class ManageUsersComponent implements OnInit {
   }
 
   validateUser() {
-    return !(this.currentUser.age < 0 
-      || this.currentUser.email == '' 
-      || this.currentUser.firstName == '' 
+    return !(this.currentUser.age < 0
+      || this.currentUser.email == ''
+      || this.currentUser.firstName == ''
       || this.currentUser.lastName == '')
   }
 }

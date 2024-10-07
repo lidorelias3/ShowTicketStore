@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'shows/:id', component: ShowComponent},
   { path: 'my-cart', component: MyCartComponent },
   { path: 'pay', component: PayPageComponent },
-  { path: '', component: ManageUsersComponent }
+  { path: '', component: HomeComponent }
 ];
 
 @NgModule({

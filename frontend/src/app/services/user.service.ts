@@ -48,8 +48,15 @@ export class UserService {
     return this.currentUser !== undefined && this.currentUser !== null
   }
 
+  getCurrentUserID(): string | undefined {
+    return this.currentUser?._id
+  }
+
   logout() {
     this.currentUser = undefined;
+    this.currentUserIsAdmin = false;
+    localStorage.removeItem("authorizationToken")
+    this.router.navigate([""])
   }
 
   getAllUsers(): Observable<any> {

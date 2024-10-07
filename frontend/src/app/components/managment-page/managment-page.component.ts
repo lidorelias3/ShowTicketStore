@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { EventsService } from 'src/app/services/events.service';
-import { Event } from 'src/app/models/event.model';
-import { Subscription } from 'rxjs';
+import { Component } from '@angular/core';
+
 
 @Component({
   selector: 'app-managment-page',

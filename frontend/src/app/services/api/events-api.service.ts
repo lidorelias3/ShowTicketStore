@@ -61,7 +61,7 @@ export class EventAPIService {
   deleteEvent(name: string) {
     var subject = new Subject<any>()
    authenticatedAjax({
-      url: `http://localhost:3000/api/event/${name}`  ,
+      url: `http://localhost:3000/api/event/${name}`,
       type: 'DELETE',
       async: true,
       success: function (result: any) {
