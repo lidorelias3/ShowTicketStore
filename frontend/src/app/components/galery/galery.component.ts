@@ -60,8 +60,4 @@ export class GaleryComponent implements OnInit {
       this.showLeftArrow = true;
     }
   }
-
-  getDate() {
-    
-  }
 }

@@ -89,4 +89,27 @@ export class EventAPIService {
 
     return subject.asObservable()
   }
+
+  purchase(tickets: Array<{eventId: string, ticketType: string, quantity: number}>): Observable<any> {
+    var body = JSON.stringify({
+      tickets: tickets
+    })
+    
+    var subject = new Subject<any>()
+    authenticatedAjax({
+      type: "POST",
+      url: `http://localhost:3000/api/event/purchase`,
+      contentType: "application/json",
+      data: body,
+      async: true,
+      success: function (data: any) {
+        subject.next(data)
+      },
+      error: function(data: any) {
+        subject.next(data)
+      }
+    });
+
+    return subject.asObservable()
+  }
 }

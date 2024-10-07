@@ -3,6 +3,7 @@ import { EventAPIService } from './api/events-api.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Event } from '../models/event.model';
 
+
 @Injectable({
   providedIn: 'root',
 })

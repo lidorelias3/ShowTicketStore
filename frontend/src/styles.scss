@@ -45,3 +45,7 @@ body {
     background: #818181;
     border-radius: 10px !important;
 }
+
+:root *::placeholder {
+    color: var(--light-text-color)
+}

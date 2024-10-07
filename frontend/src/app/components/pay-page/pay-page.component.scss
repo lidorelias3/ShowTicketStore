@@ -1,0 +1,16 @@
+.form {
+
+    input {
+        width: 270px;
+        height: 30px;
+        margin-bottom: 15px;
+        
+        background-color: #4F4F4F55;
+        color: var(--light-text-color);
+        border: none;
+    }
+
+    *::placeholder {
+        color: var(--light-text-color);
+    }
+}

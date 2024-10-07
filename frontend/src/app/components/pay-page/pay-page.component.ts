@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { TicketsService } from 'src/app/services/tickets.service';
 
 @Component({
   selector: 'app-pay-page',
@@ -8,22 +9,23 @@ import { Router } from '@angular/router';
 })
 export class PayPageComponent {
   loading: boolean = false;
-  paymentSuccess: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private ticketService: TicketsService) {}
 
   processPayment() {
     // Simulate payment processing
     this.loading = true;
+    this.ticketService.purchase().subscribe(res => {
+      if (res === false) {
+        this.loading = false
+        return
+      } 
 
-    setTimeout(() => {
-      this.loading = false;
-      this.paymentSuccess = true;
-    }, 3000); // Simulate 3 seconds payment process delay
-  }
-
-  goBack() {
-    // Navigate back to the cart
-    this.router.navigate(['/my-cart']);
+      this.loading = false
+      if(res) {
+        alert("הרכישה הסתיימה בהצלחה, נתראה ברכישה הבאה")
+        this.router.navigate(['']);
+      }
+    })
   }
 }

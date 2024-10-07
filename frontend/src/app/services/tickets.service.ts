@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { EventAPIService } from './api/events-api.service';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +13,7 @@ export class TicketsService {
   );
   currentCart = this.cartSource.asObservable();
 
-  constructor() {}
+  constructor(private eventsApiService: EventAPIService, private userService: UserService) {}
 
   // Load cart from localStorage (or initial empty list)
   private loadCartFromLocalStorage(): any[] {
@@ -86,5 +88,29 @@ export class TicketsService {
   // Check if the cart is empty
   isCartEmpty(): boolean {
     return this.cartSource.getValue().length === 0;
+  }
+
+  purchase(): Observable<any>{
+    var success = new Subject()
+    var userID = this.userService.getCureentUserID()
+
+    if (userID == undefined) {
+      alert("על מנת להמשיך ברכישה עליך להתחבר לאתר")
+      return new BehaviorSubject(false).asObservable()  
+    }
+
+    var elements = this.getCartItems().map(it=> {return {eventId: it.event._id, ticketType: it.ticketType.ticketType, quantity: it.quantity}})
+
+    this.eventsApiService.purchase(elements).subscribe(res => {
+      if (!res.success) {
+        alert(`הבקשה נכשלה, אנא וודא את כל הפרמטרים. \n${res.responseJSON.message}`)
+        success.next(false)
+      } else {
+        this.clearCart()
+        success.next(true)
+      }
+    })  
+
+    return success
   }
 }
