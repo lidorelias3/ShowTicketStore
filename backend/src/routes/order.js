@@ -36,9 +36,7 @@ router.get(
   "/:id",
   asyncHandler(async (req, res) => {
     try {
-      const order = await Order.findById(req.params.id)
-        .populate("userId eventId")
-        .exec();
+      const order = await Order.findById(req.params.id).exec();
 
       if (!order) {
         return handleResponse(res, 404, false, "Order not found");
