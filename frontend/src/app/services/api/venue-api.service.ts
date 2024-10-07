@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Venue } from 'src/app/models/venue.model';
 import * as $ from 'jquery';
+import { authenticatedAjax } from './ajax.util';
 
 @Injectable({
   providedIn: 'root'
@@ -9,49 +10,64 @@ import * as $ from 'jquery';
 export class VenueApiService {
   getAllEvents(): Observable<any> {
     var subject = new Subject<any>()
-    $.get('http://localhost:3000/api/venue',
-      function (data, _) {
+    authenticatedAjax({
+      type: 'GET',
+      url: 'http://localhost:3000/api/venue',
+      success: function (data: any) {
+        subject.next(data)
+      },
+      error: function(data: any) {
         subject.next(data)
       }
-    );
+    });
 
     return subject.asObservable()
   }
 
   getById(id: string): Observable<any> {
     var subject = new Subject<any>()
-    $.get(`http://localhost:3000/api/venue${id}`,
-      function (data, _) {
+    authenticatedAjax({
+      type: 'GET',
+      url: `http://localhost:3000/api/venue${id}`,
+      success: function (data: any) {
+        subject.next(data)
+      },
+      error: function(data: any) {
         subject.next(data)
       }
-    );
+    });
 
     return subject.asObservable()
   }
 
   getByName(name: string): Observable<any> {
     var subject = new Subject<any>()
-    $.get(`http://localhost:3000/api/venue/?name=${encodeURI(name)}`,
-      function (data, _) {
+    authenticatedAjax({
+      type: 'GET',
+      url: `http://localhost:3000/api/venue/?name=${encodeURI(name)}`,
+      success: function (data: any) {
+        subject.next(data)
+      },
+      error: function(data: any) {
         subject.next(data)
       }
-    );
+    });
 
     return subject.asObservable()
   }
 
   createVenue(venue: Venue): Observable<any> {
     var subject = new Subject<any>()
-    $.ajax({
+    authenticatedAjax({
       type: "POST",
       url: `http://localhost:3000/api/venue`,
       contentType: "application/json",
       data: JSON.stringify(venue),
       async: true,
-      success: function (data) {
+      success: function (data: any) {
         subject.next(data)
       },
-      error: function(data) {
+      error: function(data: any) {
         subject.next(data)
       }
     });
@@ -62,11 +78,11 @@ export class VenueApiService {
   
   deleteById(id: string) {
     var subject = new Subject<any>()
-    $.ajax({
+    authenticatedAjax({
       url: `http://localhost:3000/api/venue/${id}`,
       type: 'DELETE',
       async: true,
-      success: function (result) {
+      success: function (result: any) {
         subject.next(result)
       }
     });
@@ -75,16 +91,16 @@ export class VenueApiService {
 
   updateVenue(id: string, venue: Venue) {
     var subject = new Subject<any>()
-    $.ajax({
+    authenticatedAjax({
       type: "PUT",
       url: `http://localhost:3000/api/venue/${id}`,
       contentType: "application/json",
       data: JSON.stringify(venue),
       async: true,
-      success: function (data) {
+      success: function (data: any) {
         subject.next(data)
       },
-      error: function(data) {
+      error: function(data: any) {
         subject.next(data)
       }
     });

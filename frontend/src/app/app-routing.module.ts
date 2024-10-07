@@ -8,6 +8,7 @@ import { MyCartComponent } from './components/my-cart/my-cart.component';
 import { PayPageComponent } from './components/pay-page/pay-page.component';
 import { isAdminGuard } from './guards/is-admin.guard';
 import { ShowComponent } from './components/show/show.component';
+import { ManageUsersComponent } from './components/admin-page/manage-users/manage-users.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },

@@ -14,7 +14,7 @@ router.get("/:id", checkIsAdmin, async (req, res) => {
     if (!user) {
       return handleResponse(res, 404, false, "User not found");
     }
-    return handleResponse(res, 200, true, "User found", user);
+    return handleResponse(res, 200, true, user, "User found");
   } catch (error) {
     return handleResponse(
       res,
@@ -30,6 +30,8 @@ router.get("/:id", checkIsAdmin, async (req, res) => {
 router.put("/:id", checkIsAdmin, async (req, res) => {
   const { firstName, lastName, email, password, age, gender, isAdmin } =
     req.body;
+
+    console.log(JSON.stringify(req.body))
 
   try {
     const updateData = { firstName, lastName, email, age, gender, isAdmin };
@@ -54,8 +56,8 @@ router.put("/:id", checkIsAdmin, async (req, res) => {
       res,
       200,
       true,
-      "User updated successfully",
-      updatedUser
+      updatedUser,
+      "User updated successfully"
     );
   } catch (error) {
     return handleResponse(
@@ -95,8 +97,8 @@ router.get("/", checkIsAdmin, async (req, res) => {
       res,
       200,
       true,
-      "Users retrieved successfully",
-      users
+      users,
+      "Users retrieved successfully"
     );
   } catch (error) {
     return handleResponse(

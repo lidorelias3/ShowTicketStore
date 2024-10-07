@@ -56,7 +56,7 @@ router.post("/login", RegisterValidator, async (req, res) => {
     );
 
     // Return success response with the token
-    return handleResponse(res, 200, true, "Login successful", { token });
+    return handleResponse(res, 200, true, "Login successful", { token, userId: user._id, isAdmin: user.isAdmin});
 
   } catch (error) {
     return handleResponse(res, 500, false, "Error logging in", error.message);
