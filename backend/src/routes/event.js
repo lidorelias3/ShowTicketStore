@@ -1,11 +1,13 @@
 const express = require("express");
 const Event = require("../models/event");
 const Venue = require("../models/venue");
+const Order = require("../models/order");
 
 const router = express.Router();
 const asyncHandler = require("express-async-handler");
 
 const handleResponse = require("../utils/responseHandler");
+const authenticateToken = require("../middleware/isAuthenticated");
 const checkIsAdmin = require("../middleware/isAdmin");
 
 // Create an event
@@ -176,59 +178,135 @@ router.delete(
   })
 );
 
-// Buy tickets for an event
-router.put(
-  "/:id/purchase",
+// Buy tickets for an event [{eventID, ticketType, quantity}]
+router.post(
+  "/purchase",
+  authenticateToken,
   asyncHandler(async (req, res) => {
-    const { ticketType, amount } = req.body; // ticketType and amount to purchase
-    const eventId = req.params.id;
+    const body = req.body;
+    const userId = req.userId;
 
-    // Validate the amount
-    if (!amount || amount <= 0) {
-      return handleResponse(res, 400, false, "Invalid ticket amount");
-    }
+    const purchases = body.tickets.map((it) => {
+      return {
+        userId: userId,
+        eventId: it.eventId,
+        ticketType: it.ticketType,
+        quantity: it.quantity,
+      };
+    });
 
-    // Find the event by ID
-    const event = await Event.findById(eventId);
-    if (!event) {
-      return handleResponse(res, 404, false, "Event not found");
-    }
+    const validPurchases = [];
 
-    // Find the specific ticket type (zone) within the event
-    const ticket = event.tickets.find(
-      (ticket) => ticket.ticketType === ticketType
-    );
-    if (!ticket) {
-      return handleResponse(
-        res,
-        404,
-        false,
-        `Ticket type "${ticketType}" not found`
+    for (const purchase of purchases) {
+      // Validate the amount
+      if (!purchase.quantity || purchase.quantity <= 0) {
+        return handleResponse(res, 400, false, "Invalid ticket amount");
+      }
+
+      // Validate id is in 24 length
+      if (!purchase.eventId.match(/^[0-9a-fA-F]{24}$/)) {
+        return handleResponse(res, 400, false, "Event not found");
+      }
+      // Find the event by ID
+      const event = await Event.findById(purchase.eventId);
+      if (!event) {
+        return handleResponse(res, 404, false, "Event not found");
+      }
+
+      // Find the specific ticket type (zone) within the event
+      const ticket = event.tickets.find(
+        (ticket) => ticket.ticketType === purchase.ticketType
       );
+
+      if (!ticket) {
+        return handleResponse(
+          res,
+          404,
+          false,
+          `Ticket type "${purchase.ticketType}" not found`
+        );
+      }
+
+      // Check if there are enough remaining tickets for the requested amount
+      if (ticket.remaining < purchase.quantity) {
+        return handleResponse(
+          res,
+          400,
+          false,
+          `Only ${ticket.remaining} tickets remaining for ${purchase.ticketType}`
+        );
+      }
+
+      // Add the purchase to the valid purchases list
+      validPurchases.push(purchase);
     }
 
-    // Check if there are enough remaining tickets for the requested amount
-    if (ticket.remaining < amount) {
-      return handleResponse(
-        res,
-        400,
-        false,
-        `Only ${ticket.remaining} tickets remaining for ${ticketType}`
-      );
+    if (validPurchases.length === 0) {
+      return handleResponse(res, 400, false, "No valid purchases found.");
     }
 
-    // Decrease the remaining ticket count
-    ticket.remaining -= amount;
+    // Group purchases by eventId
+    const purchasesPerEvent = validPurchases.reduce((acc, purchase) => {
+      if (!acc[purchase.eventId]) {
+        acc[purchase.eventId] = [];
+      }
+      acc[purchase.eventId].push(purchase);
+      return acc;
+    }, {});
 
-    // Save the updated event
-    await event.save();
+    // Process each event's purchases
+    const orderPromises = Object.keys(purchasesPerEvent).map(
+      async (eventId) => {
+        const totalPricePromises = purchasesPerEvent[eventId].map(
+          async (purchase) => {
+            const event = await Event.findById(purchase.eventId); // Find the event to get the ticket price
+            const ticket = event.tickets.find(
+              (ticket) => ticket.ticketType === purchase.ticketType
+            );
+            return ticket.price * purchase.quantity; // Return the total price for this purchase
+          }
+        );
 
-    return handleResponse(
-      res,
-      200,
-      true,
-      `Successfully purchased ${amount} ${ticketType} tickets. RemainingTickets: ${ticket.remaining}`
+        // Wait for all promises to resolve
+        const totalPrices = await Promise.all(totalPricePromises);
+
+        // Sum up the total prices
+        const totalPrice = totalPrices.reduce(
+          (total, price) => total + price,
+          0
+        );
+
+        // Simplified tickets for the order
+        const simplifiedTickets = purchasesPerEvent[eventId].map((item) => ({
+          ticketType: item.ticketType,
+          quantity: item.quantity,
+        }));
+
+        // Create the order
+        const order = new Order({
+          userId,
+          eventId,
+          tickets: simplifiedTickets,
+          totalPrice,
+        });
+        await order.save();
+
+        // Decrease remaining tickets for each purchase
+        for (const purchase of purchasesPerEvent[eventId]) {
+          const event = await Event.findById(purchase.eventId);
+          const ticket = event.tickets.find(
+            (ticket) => ticket.ticketType === purchase.ticketType
+          );
+          ticket.remaining -= purchase.quantity;
+          await event.save();
+        }
+      }
     );
+
+    // Wait for all orders to be processed before sending a response
+    await Promise.all(orderPromises);
+
+    return handleResponse(res, 200, true, `Successfully purchased tickets.`);
   })
 );
 
