@@ -97,7 +97,7 @@ router.get(
       }
 
       // Return the filtered events
-      return handleResponse(res, 200, true, "Events found", events);
+      return handleResponse(res, 200, true, events, "Events found",);
     } catch (error) {
       console.error(error);
       return handleResponse(res, 500, false, "Server error");

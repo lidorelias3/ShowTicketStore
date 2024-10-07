@@ -76,6 +76,6 @@ export class UserService {
   }
 
   getCureentUserID() {
-    return this.currentUser?._id
+    return this.currentUser
   }
 }

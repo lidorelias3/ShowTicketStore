@@ -90,20 +90,20 @@ export class TicketsService {
     return this.cartSource.getValue().length === 0;
   }
 
-  purchase(): Observable<any> | undefined{
+  purchase(): Observable<any>{
     var success = new Subject()
     var userID = this.userService.getCureentUserID()
 
     if (userID == undefined) {
       alert("על מנת להמשיך ברכישה עליך להתחבר לאתר")
-      return 
+      return new BehaviorSubject(false).asObservable()  
     }
 
-    var elements = this.getCartItems().map(it=> {return {eventID: it.event._id, ticketType: it.ticketType, quantity: it.quantity}})
+    var elements = this.getCartItems().map(it=> {return {eventId: it.event._id, ticketType: it.ticketType.ticketType, quantity: it.quantity}})
 
     this.eventsApiService.purchase(elements).subscribe(res => {
       if (!res.success) {
-        alert(`הבקשה נכשלה, אנא וודא את כל הפרמטרים. \n${res.error}`)
+        alert(`הבקשה נכשלה, אנא וודא את כל הפרמטרים. \n${res.responseJSON.message}`)
         success.next(false)
       } else {
         this.clearCart()

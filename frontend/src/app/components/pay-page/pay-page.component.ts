@@ -9,22 +9,23 @@ import { TicketsService } from 'src/app/services/tickets.service';
 })
 export class PayPageComponent {
   loading: boolean = false;
-  paymentSuccess: boolean = false;
 
   constructor(private router: Router, private ticketService: TicketsService) {}
 
   processPayment() {
     // Simulate payment processing
     this.loading = true;
-    this.ticketService.purchase()?.subscribe(res => {
-      alert(res.detailes)
-      this.loading = false
-      this.paymentSuccess = res.success
-    })
-  }
+    this.ticketService.purchase().subscribe(res => {
+      if (res === false) {
+        this.loading = false
+        return
+      } 
 
-  goBack() {
-    // Navigate back to the cart
-    this.router.navigate(['/my-cart']);
+      this.loading = false
+      if(res) {
+        alert("הרכישה הסתיימה בהצלחה, נתראה ברכישה הבאה")
+        this.router.navigate(['']);
+      }
+    })
   }
 }
