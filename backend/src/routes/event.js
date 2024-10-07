@@ -6,10 +6,11 @@ const router = express.Router();
 const asyncHandler = require("express-async-handler");
 
 const handleResponse = require("../utils/responseHandler");
+const checkIsAdmin = require("../middleware/isAdmin");
 
 // Create an event
 router.post(
-  "/",
+  "/", checkIsAdmin,
   asyncHandler(async (req, res) => {
     const {
       name,
@@ -95,6 +96,7 @@ router.get(
 // Update an event by Name
 router.put(
   "/:name",
+  checkIsAdmin,
   asyncHandler(async (req, res) => {
     const {
       name,
@@ -159,6 +161,7 @@ router.put(
 // Delete an event by Name
 router.delete(
   "/:name",
+  checkIsAdmin,
   asyncHandler(async (req, res) => {
     const result = await Event.deleteOne({ name: req.params.name });
     if (!result.acknowledged) {

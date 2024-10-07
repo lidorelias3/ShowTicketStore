@@ -3,9 +3,10 @@ const Venue = require("../models/venue");
 
 const router = express.Router();
 const handleResponse = require("../utils/responseHandler");
+const checkIsAdmin = require("../middleware/isAdmin");
 
 // Add a new venue
-router.post("/", async (req, res) => {
+router.post("/", checkIsAdmin, async (req, res) => {
   try {
     const venue = new Venue(req.body);
     await venue.save();
@@ -44,7 +45,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // Update a venue
-router.put("/:id", async (req, res) => {
+router.put("/:id", checkIsAdmin,  async (req, res) => {
   try {
     const venue = await Venue.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -60,7 +61,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // Delete a venue
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", checkIsAdmin, async (req, res) => {
   try {
     const venue = await Venue.findByIdAndDelete(req.params.id);
     if (!venue) {

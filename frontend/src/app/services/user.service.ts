@@ -2,7 +2,8 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { AuthService } from './api/auth.service';
 import { User } from '../models/user.model';
 import { Router } from '@angular/router';
-import {Location} from '@angular/common';
+import { Observable } from 'rxjs';
+import { UsersApiService } from './api/users-api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class UserService {
   private currentUser?: User = undefined;
   private currentUserIsAdmin?: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router, private location: Location) { }
+  constructor(private authService: AuthService, private router: Router, private userApiService: UsersApiService) { }
 
 
   register(user: User) {
@@ -47,7 +48,30 @@ export class UserService {
     return this.currentUser !== undefined && this.currentUser !== null
   }
 
+  getCurrentUserID(): string | undefined {
+    return this.currentUser?._id
+  }
+
   logout() {
     this.currentUser = undefined;
+    this.currentUserIsAdmin = false;
+    localStorage.removeItem("authorizationToken")
+    this.router.navigate([""])
+  }
+
+  getAllUsers(): Observable<any> {
+    return this.userApiService.getAllUsers()
+  }
+
+  getUserByID(id: string) {
+    return this.userApiService.getUserByID(id)
+  }
+
+  updateUser(user: User) {
+    return this.userApiService.updateUser(user)
+  }
+
+  deleteUser(id: string) {
+    return this.userApiService.deleteUser(id)
   }
 }

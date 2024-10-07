@@ -1,7 +1,7 @@
 <div class="models-container container">
     <div class="flex">
         <h1>ניהול {{title}}</h1>
-        <button (click)="add()">{{buttonTitle}}</button>
+        <button *ngIf="buttonTitle" (click)="add()">{{buttonTitle}}</button>
     </div>
     <table>
         <tr *ngFor="let row of models">
