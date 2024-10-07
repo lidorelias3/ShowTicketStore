@@ -74,4 +74,8 @@ export class UserService {
   deleteUser(id: string) {
     return this.userApiService.deleteUser(id)
   }
+
+  getCureentUserID() {
+    return this.currentUser?._id
+  }
 }
