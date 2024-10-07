@@ -45,7 +45,7 @@ export class EventAPIService {
     authenticatedAjax({
       type: 'POST',
       url: 'http://localhost:3000/api/event',
-      data: event,
+      data: JSON.stringify(event),
       contentType: "application/json",
       success: function (data: any) {
         subject.next(data)
