@@ -1,5 +1,18 @@
 <div class="container">
-    <div *ngFor="let order of orders">
-        <section >מזהה משתמש: {{order.userId}}</section>
+    <h1>היסטוריית הזמנות: </h1>
+    <div class="orders">
+        <div *ngFor="let obj of ordersEvents" class="flex purchase">
+            <div *ngIf="watchAll" class="user">{{obj.user?.firstName}} {{obj.user?.lastName}}</div>
+            <div>
+                <section class="eventName">{{obj.event.name}}</section>
+                <section class="eventDate">{{obj.event.date | date: 'dd.MM.yyyy HH:mm'}}</section>
+            </div>
+            <div *ngFor="let ticket of obj.order.tickets">
+                <section class="ticketType">סוג כרטיס: {{ticket.ticketType}}</section>
+                <section class="amount">כמות: {{ticket.quantity}}</section>
+            </div>
+            <section class="totalPrice">{{obj.order.totalPrice}} ש"ח</section>
+            <div (click)="delete(obj.order._id)" *ngIf="watchAll">מחיקה</div>
+        </div>
     </div>
 </div>

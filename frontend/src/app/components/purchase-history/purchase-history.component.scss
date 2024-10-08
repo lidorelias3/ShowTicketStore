@@ -1,0 +1,15 @@
+.purchase {
+    justify-content: space-around;
+    border-bottom: 1px var(--light-text-color) solid;
+    padding: 10px;
+    height: 12%;
+}
+
+.container {
+    height: 100%;
+}
+
+.orders {
+    overflow-y: scroll;
+    height: 80%;
+}

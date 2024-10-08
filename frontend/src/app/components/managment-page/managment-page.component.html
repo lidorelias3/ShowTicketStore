@@ -3,8 +3,10 @@
     <button (click)="select('events')">ניהול אירועים</button>
     <button (click)="select('venues')">ניהול אולמות</button>
     <button (click)="select('users')">ניהול משתמשים</button>
+    <button (click)="select('purchases')">ניהול הזמנות</button>
   </section>
   <app-manage-events *ngIf="manage=='events'"></app-manage-events>
   <app-manage-venues *ngIf="manage=='venues'"></app-manage-venues>
   <app-manage-users *ngIf="manage=='users'"></app-manage-users>
+  <app-purchase-history [watchAll]="true" *ngIf="manage=='purchases'"></app-purchase-history>
 </div>

@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Event } from 'src/app/models/event.model';
 import { Order } from 'src/app/models/order.model';
+import { User } from 'src/app/models/user.model';
 import { OrdersApiService } from 'src/app/services/api/orders-api.service';
+import { EventsService } from 'src/app/services/events.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -11,40 +14,71 @@ import { UserService } from 'src/app/services/user.service';
 export class PurchaseHistoryComponent implements OnInit {
   @Input() watchAll: boolean = false
 
-  orders: Order[] = []
-  constructor(private userService: UserService, private ordersApiService: OrdersApiService) { }
+  ordersEvents: { event: Event, order: Order, user?: User }[] = []
+  events: Event[] = []
+  users: User[] = []
+  constructor(private userService: UserService, private ordersApiService: OrdersApiService,
+    private eventsService: EventsService
+  ) { }
 
   ngOnInit(): void {
     this.loadOrders()
   }
 
   loadOrders() {
-    if (this.watchAll) {
-      this.ordersApiService.getAll().subscribe(res => {
-        if (!res.success) {
-          alert(res.responseJSON.message)
-          alert(res.responseJSON.detailes)
-          return
-        }
+    this.eventsService.getEvents().subscribe(events => {
+      this.events = events.message;
 
-        this.orders = res.message
-      })
 
-      return
-    }
-
-    var id = this.userService.getCurrentUserID()
-
-    if (id === undefined) {
-      alert("אנא התחבר כדי לצפות בהיטוריית ההזמנות שלך")
-    }
-    this.ordersApiService.getById(id!).subscribe(res => {
-      if (!res.success) {
-        alert(res.responseJSON.message)
+      if (this.watchAll) {
+        this.userService.getAllUsers().subscribe(users=> {
+          this.users = users.message;
+          this.ordersApiService.getAll().subscribe(res => {
+            if (!res.success) {
+              alert(res.responseJSON.message)
+              alert(res.responseJSON.detailes)
+              return
+            }
+  
+            this.ordersEvents = res.message.map((it: Order) => { return { 
+              event: this.events.filter(e => e._id == it.eventId)[0], 
+              order: it,
+              user: this.users.filter(u => u._id == it.userId)[0]  
+            } })
+          })
+  
+        })
+        
         return
       }
 
-      this.orders = res.message
+      var id = this.userService.getCurrentUserID()
+
+      if (id === undefined) {
+        alert("אנא התחבר כדי לצפות בהיטוריית ההזמנות שלך")
+        return
+      }
+
+      this.ordersApiService.getById(id!).subscribe(res => {
+        if (!res.success) {
+          alert(res.responseJSON.message)
+          return
+        }
+
+        this.ordersEvents = res.message.map((it: Order) => { return { event: this.events.filter(e => e._id == it.eventId)[0], order: it } })
+      })
+    })
+  }
+
+  delete(id: string) {
+    this.ordersApiService.delete(id).subscribe(res=> {
+      if (res.success) {
+        alert("ההזמנה נמחקה בהצלחה") 
+        this.loadOrders()
+        return
+      }
+
+      alert(`התרחשה תקלה בעת מחיקת ההזמנה. פירוט: ${res.responseJSON.message}`)
     })
   }
 }

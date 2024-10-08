@@ -7,7 +7,7 @@
         <div *ngIf="isLoggedIn()" (click)="logout()">התנתקות</div>
         <div *ngIf="isAdmin()" routerLink='/management-page'>דף ניהול</div>
         <div routerLink='/my-cart'>העגלה שלי</div>
+        <div *ngIf="isLoggedIn()" routerLink="history">רכישות</div>
         <div routerLink=''>בית</div>
-        <div routerLink="history">רכישות עבר</div>
     </nav>
 </header>
