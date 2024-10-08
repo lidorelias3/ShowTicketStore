@@ -73,7 +73,7 @@ router.get(
   asyncHandler(async (req, res) => {
     try {
       // Extract query parameters
-      const { maxprice, venue } = req.query;
+      const { maxprice, venue, minage } = req.query;
 
       // Build query object dynamically
       let query = {};
@@ -83,6 +83,9 @@ router.get(
         query["tickets.price"] = { $lte: Number(maxprice) };
       }
 
+      if (minage) {
+        query.minimumAge = { $gt: Number(minage) };
+      }
       // Add venue filter if provided
       if (venue) {
         query.venueName = new RegExp(venue, "i"); // Case-insensitive search for venue name
@@ -93,11 +96,11 @@ router.get(
 
       // Check if any events found
       if (!events.length) {
-        return handleResponse(res, 404, false, "No events found matching");
+        return handleResponse(res, 404, false, "No events matching found");
       }
 
       // Return the filtered events
-      return handleResponse(res, 200, true, events, "Events found",);
+      return handleResponse(res, 200, true, events, "Events found");
     } catch (error) {
       console.error(error);
       return handleResponse(res, 500, false, "Server error");
