@@ -10,4 +10,5 @@ export interface Event {
   description: string;
   profileImage: string;
   imagesPaths: Array<{ path: string; description: string }>;
+  weather?: {temp: number, code: string};
 }
