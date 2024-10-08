@@ -4,40 +4,132 @@
     <form (ngSubmit)="processPayment()" #paymentForm="ngForm" class="form">
       <div class="form-group">
         <label for="cardNumber">מספר כרטיס</label>
-        <input type="text" class="form-control" id="cardNumber" name="cardNumber" required ngModel
-          placeholder="מספר כרטיס" />
+        <input
+          type="text"
+          class="form-control"
+          id="cardNumber"
+          name="cardNumber"
+          required
+          minlength="16"
+          maxlength="16"
+          pattern="^[0-9]+$"
+          ngModel
+          #cardNumber="ngModel"
+          placeholder="מספר כרטיס"
+        />
+        <div
+          *ngIf="cardNumber.invalid && cardNumber.touched"
+          class="text-danger"
+        >
+          <small *ngIf="cardNumber.errors?.['required']">מספר כרטיס נדרש</small>
+          <small
+            *ngIf="cardNumber.errors?.['minlength'] || cardNumber.errors?.['maxlength']"
+            >הכנס 16 ספרות</small
+          >
+          <small *ngIf="cardNumber.errors?.['pattern']">הכנס ספרות בלבד</small>
+        </div>
       </div>
 
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="expiration">תאריך תפוגה</label>
-          <input type="text" class="form-control" id="expiration" name="expiration" placeholder="MM/YY" required
-            ngModel />
+          <input
+            type="text"
+            class="form-control"
+            id="expiration"
+            name="expiration"
+            placeholder="MM/YY"
+            required
+            pattern="^(0[1-9]|1[0-2])\/?([0-9]{2})$"
+            ngModel
+            #expiration="ngModel"
+          />
+          <div
+            *ngIf="expiration.invalid && expiration.touched"
+            class="text-danger"
+          >
+            <small *ngIf="expiration.errors?.['required']"
+              >תאריך תפוגה נדרש</small
+            >
+            <small *ngIf="expiration.errors?.['pattern']"
+              >פורמט לא תקין (MM/YY)</small
+            >
+          </div>
         </div>
 
         <div class="form-group col-md-6">
           <label for="securityCode">קוד אבטחה (CVV)</label>
-          <input type="text" class="form-control" id="securityCode" name="securityCode" required ngModel
-            placeholder="CVV" />
+          <input
+            type="text"
+            class="form-control"
+            id="securityCode"
+            name="securityCode"
+            required
+            minlength="3"
+            maxlength="4"
+            pattern="^[0-9]{3,4}$"
+            ngModel
+            #securityCode="ngModel"
+            placeholder="CVV"
+          />
+          <div
+            *ngIf="securityCode.invalid && securityCode.touched"
+            class="text-danger"
+          >
+            <small *ngIf="securityCode.errors?.['required']"
+              >קוד אבטחה נדרש</small
+            >
+            <small
+              *ngIf="
+                securityCode.errors?.['minlength'] || securityCode.errors?.['maxlength']
+              "
+              >הכנס 3 או 4 ספרות</small
+            >
+            <small *ngIf="securityCode.errors?.['pattern']"
+              >הכנס ספרות בלבד</small
+            >
+          </div>
         </div>
       </div>
 
       <div class="form-group">
         <label for="cardHolder">שם בעל הכרטיס</label>
-        <input type="text" class="form-control" id="cardHolder" name="cardHolder" required ngModel
-          placeholder="שם בעל הכרטיס" />
+        <input
+          type="text"
+          class="form-control"
+          id="cardHolder"
+          name="cardHolder"
+          required
+          ngModel
+          #cardHolder="ngModel"
+          placeholder="שם בעל הכרטיס"
+        />
+        <div
+          *ngIf="cardHolder.invalid && cardHolder.touched"
+          class="text-danger"
+        >
+          <small *ngIf="cardHolder.errors?.['required']"
+            >שם בעל הכרטיס נדרש</small
+          >
+        </div>
       </div>
 
-      <button type="submit" class="btn btn-primary mt-3" [disabled]="!paymentForm.valid || !canPurchase">
+      <button
+        type="submit"
+        class="btn btn-primary mt-3"
+        [disabled]="!paymentForm.valid || !canPurchase"
+      >
         אישור תשלום
       </button>
     </form>
+
     <div class="flex signature">
       נא לחתום לאישור ההזמנה:
       <canvas #canvas class="signature-pad"></canvas>
       <button (click)="clear()">נקה חתימה</button>
     </div>
   </div>
+
   <div *ngIf="loading" class="mt-4">
     <p>הבקשה בעיבוד, אנא המתן</p>
     <div class="spinner-border" role="status">
