@@ -17,6 +17,7 @@ const authenticateToken = (req, res, next) => {
     }
 
     req.userId = user.id; // Assuming your token payload includes the user ID
+    req.isAdmin = user.isAdmin;
     next(); // Proceed to the next middleware or route handler
   });
 };

@@ -4,6 +4,7 @@ const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 
 const { body, validationResult } = require("express-validator");
+const authenticateToken = require("../middleware/isAuthenticated");
 
 const router = express.Router();
 
@@ -101,6 +102,11 @@ router.post("/register", RegisterValidator, async (req, res) => {
       error.message
     );
   }
+});
+
+
+router.get("/validateAuthorization", authenticateToken, async (req, res) => {
+  return handleResponse(res, 200, true, "Token valid", {userId: req.userId, isAdmin: req.isAdmin});
 });
 
 module.exports = router;
