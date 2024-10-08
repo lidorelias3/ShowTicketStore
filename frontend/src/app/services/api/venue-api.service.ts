@@ -28,7 +28,7 @@ export class VenueApiService {
     var subject = new Subject<any>()
     authenticatedAjax({
       type: 'GET',
-      url: `http://localhost:3000/api/venue${id}`,
+      url: `http://localhost:3000/api/venue/id/${id}`,
       success: function (data: any) {
         subject.next(data)
       },
@@ -44,7 +44,7 @@ export class VenueApiService {
     var subject = new Subject<any>()
     authenticatedAjax({
       type: 'GET',
-      url: `http://localhost:3000/api/venue/?name=${encodeURI(name)}`,
+      url: `http://localhost:3000/api/venue/name/${encodeURI(name)}`,
       success: function (data: any) {
         subject.next(data)
       },
