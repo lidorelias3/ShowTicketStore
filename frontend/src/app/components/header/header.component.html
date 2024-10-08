@@ -1,4 +1,4 @@
-<div class="container flex">
+<header class="container flex">
     <img id="logo" src="../../../assets/site-logo.png">
     <img class="menu" src="../../../assets/menu.png" />
     <nav class="font-xl">
@@ -7,6 +7,7 @@
         <div *ngIf="isLoggedIn()" (click)="logout()">התנתקות</div>
         <div *ngIf="isAdmin()" routerLink='/management-page'>דף ניהול</div>
         <div routerLink='/my-cart'>העגלה שלי</div>
+        <div *ngIf="isLoggedIn()" routerLink="history">רכישות</div>
         <div routerLink=''>בית</div>
     </nav>
-</div>
+</header>

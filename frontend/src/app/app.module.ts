@@ -19,6 +19,7 @@ import { ManageModelsComponent } from './components/admin-page/manage-models/man
 import { ManageEventsComponent } from './components/admin-page/manage-events/manage-events.component';
 import { ManageVenuesComponent } from './components/admin-page/manage-venues/manage-venues.component';
 import { ManageUsersComponent } from './components/admin-page/manage-users/manage-users.component';
+import { PurchaseHistoryComponent } from './components/purchase-history/purchase-history.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { ManageUsersComponent } from './components/admin-page/manage-users/manag
     ManageEventsComponent,
     ManageVenuesComponent,
     ManageUsersComponent,
+    PurchaseHistoryComponent,
   ],
   imports: [
     BrowserModule,
