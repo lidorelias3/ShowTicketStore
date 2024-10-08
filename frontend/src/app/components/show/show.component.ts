@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Event } from 'src/app/models/event.model';
 import { EventsService } from 'src/app/services/events.service';
@@ -26,13 +26,15 @@ export class ShowComponent implements OnInit {
     private eventsService: EventsService,
     private ticketsService: TicketsService,
     private venuesService: VenuesService,
-    private router: Router
+    private router: Router,
+    private renderer: Renderer2
   ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.id = params['id'] || 0;
     });
+    this.loadGoogleMapsScript();
 
     this.eventsService.getEventByID(this.id).subscribe((res) => {
       this.show = res.message;
@@ -42,6 +44,14 @@ export class ShowComponent implements OnInit {
           this.initializeMap(res.message[0]); // Initialize map once the show data is loaded
         });
     });
+  }
+
+  loadGoogleMapsScript() {
+    const script = this.renderer.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsApiKey}`;
+    script.async = true;
+    script.defer = true;
+    this.renderer.appendChild(document.head, script);
   }
 
   initializeMap(venue: any) {
