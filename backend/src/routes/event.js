@@ -89,12 +89,11 @@ router.get(
         query.venueName = new RegExp(venue, "i"); // Case-insensitive search for venue name
       }
 
-      // Execute the query using Mongoose
-      let events = await Event.find(query);
-
-      events.forEach(event => {
-        tryPredictWeather(event);
-      });
+      // Execute the query using Mongoose and jsonify before modifications
+      let events = JSON.parse(JSON.stringify(await Event.find(query)));
+      for (let i=0; i < events.length; ++i) {
+        await tryPredictWeather(events[i]);
+      }
 
       // Check if any events found
       if (!events.length) {
