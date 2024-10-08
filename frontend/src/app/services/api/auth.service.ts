@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { Observable, Subject } from 'rxjs';
 import * as $ from 'jquery';
+import { authenticatedAjax } from './ajax.util';
 
 
 @Injectable({
@@ -54,6 +55,23 @@ export class AuthService {
         subject.next(data)
       },
       error: function(data) {
+        subject.next(data)
+      }
+    });
+    return subject.asObservable()
+  }
+
+  testAuthentication(token: string): Observable<{ success: boolean, detailes: any, error: string }> {
+
+    var subject = new Subject<any>()
+    authenticatedAjax({
+      type: "GET",
+      url: `http://localhost:3000/api/auth/validateAuthorization`,
+      async: true,
+      success: function (data: any) {
+        subject.next(data)
+      },
+      error: function(data: any) {
         subject.next(data)
       }
     });

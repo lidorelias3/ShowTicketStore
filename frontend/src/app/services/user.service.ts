@@ -13,7 +13,17 @@ export class UserService {
   private currentUser?: string = undefined;
   private currentUserIsAdmin?: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router, private userApiService: UsersApiService) { }
+  constructor(private authService: AuthService, private router: Router, private userApiService: UsersApiService) { 
+    const token = localStorage.getItem("authorizationToken");
+    if (token) {
+      this.authService.testAuthentication(token).subscribe(res => {
+        if (res.success) {
+          this.currentUser = res.detailes.userId;
+          this.currentUserIsAdmin = res.detailes.isAdmin;
+        }
+      })
+    }
+  }
 
 
   register(user: User) {
