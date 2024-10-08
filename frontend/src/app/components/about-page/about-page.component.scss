@@ -1,0 +1,24 @@
+img {
+    width: 200px;
+    object-fit: contain;
+    float: left;
+}
+
+p {
+    text-align: justify;
+}
+
+#history {
+    column-count: 2;
+}
+
+div {
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 100%;
+    overflow: scroll;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
