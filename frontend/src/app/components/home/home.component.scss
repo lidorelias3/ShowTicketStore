@@ -37,6 +37,11 @@
       animation-duration: 1s;
       animation-iteration-count: infinite;
       animation-direction: alternate;
+      width: 100px;
+      height: 100px;
+      align-self: center;
+      position: relative;
+      right: 50px;
     }
 
     .arrow:hover {
@@ -55,10 +60,10 @@
 
 @keyframes move {
   0% {
-    transform: translateY(0%) rotate(-90deg);
+    transform: translateY(0%) rotate(-90deg) translateX(-5%);
   }
 
   100% {
-    transform: translateY(-20%) rotate(-90deg);
+    transform: translateY(-20%) rotate(-90deg) translateX(-5%);
   }
 }

@@ -1,20 +1,36 @@
-<div class="galery-container">
-  <section (click)="scroll(-1)" [@opacity]="showRightArrow">⟨</section>
-  <div #galery id="galery" (scroll)="updateArrowsState($event)">
-    <div *ngFor="let show of shows" class="show-frame">
-      <div class="show-body">
-        <h3 class="title">{{show.name}}</h3>
-        <h5 class="date">{{show.date | date:'dd.MM.YYYY'}}</h5>
-        <h5>{{show.venueName}}</h5>
-        <div *ngIf="show.weather" class="weather flex flex-row align-items-center justify-content-center">
-          <h6><span>{{show.weather.temp}}°</span></h6>
-          <img src="https://openweathermap.org/img/wn/{{show.weather.code}}@2x.png"/>
-        </div>
-        <div class="font-xl tickets" [routerLink]="'/shows/' + show._id">
-          כרטיסים ⟫
+<div class="main-container">
+  <div class="search-bar flex">
+    <div>
+      גיל מינימלי:<br/>
+      <input type="number" min="0" [(ngModel)]="minAge" (focusout)="reload()">
+    </div>
+    <div>
+      סכום לכרטיס:<br/>
+      <input type="number" min="0" [(ngModel)]="maxPrice" (focusout)="reload()">
+    </div>
+    <div>
+      שם אולם:<br/>
+      <input type="string" [(ngModel)]="venueName" (focusout)="reload()" (ngModelChange)="reloadOnChange()">
+    </div>
+  </div>
+  <div class="galery-container">
+    <section (click)="scroll(-1)" [@opacity]="showRightArrow">⟨</section>
+    <div #galery id="galery" (scroll)="updateArrowsState($event)">
+      <div *ngFor="let show of shows" class="show-frame">
+        <div class="show-body">
+          <h3 class="title">{{show.name}}</h3>
+          <h5 class="date">{{show.date | date:'dd.MM.YYYY'}}</h5>
+          <h5>{{show.venueName}}</h5>
+          <div *ngIf="show.weather" class="weather flex flex-row align-items-center justify-content-center">
+            <h6><span>{{show.weather.temp}}°</span></h6>
+            <img src="https://openweathermap.org/img/wn/{{show.weather.code}}@2x.png" />
+          </div>
+          <div class="font-xl tickets" [routerLink]="'/shows/' + show._id">
+            כרטיסים ⟫
+          </div>
         </div>
       </div>
     </div>
+    <section (click)="scroll(1)" [@opacity]="showLeftArrow">⟩</section>
   </div>
-  <section (click)="scroll(1)" [@opacity]="showLeftArrow">⟩</section>
 </div>

@@ -21,10 +21,10 @@ export class EventsService {
     return this.eventApiService.deleteEvent(eventName);
   }
 
-  // Get all available events
-  getEvents() {
-    return this.eventApiService.getAllEvents();
+  getEvents(minAge?: number, maxPrice?: number, venueName?: string) {
+    return this.eventApiService.getAllEvents(minAge, maxPrice, venueName);
   }
+
 
   updateExistingEvent(existEventName: string, event: Event) {
     return this.eventApiService.updateExistingEvent(existEventName, event);
