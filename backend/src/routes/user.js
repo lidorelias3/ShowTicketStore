@@ -28,11 +28,10 @@ router.get("/:id", checkIsAdmin, async (req, res) => {
 
 router.get("/", checkIsAdmin, async (req, res) => {
   try {
-
     let queryValid = true;
     // Check that every GET parameter passed to the url is in the Modle's schema
     Object.keys(req.query).forEach((key) => {
-      if (! Object.keys(User.schema.paths).includes(key)) {
+      if (!Object.keys(User.schema.paths).includes(key)) {
         queryValid = false;
       }
     });
@@ -47,7 +46,6 @@ router.get("/", checkIsAdmin, async (req, res) => {
     }
 
     return handleResponse(res, 200, true, user, "User found");
-
   } catch (error) {
     console.log(error);
     return handleResponse(
@@ -60,13 +58,12 @@ router.get("/", checkIsAdmin, async (req, res) => {
   }
 });
 
-
 // Update user by ID
 router.put("/:id", checkIsAdmin, async (req, res) => {
   const { firstName, lastName, email, password, age, gender, isAdmin } =
     req.body;
 
-    console.log(JSON.stringify(req.body))
+  console.log(JSON.stringify(req.body));
 
   try {
     const updateData = { firstName, lastName, email, age, gender, isAdmin };

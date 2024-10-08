@@ -10,7 +10,6 @@ const venueRoutes = require("./src/routes/venue");
 const eventRoutes = require("./src/routes/event");
 const userRoutes = require("./src/routes/user");
 const ordersRoutes = require("./src/routes/order");
-const facebookRoutes = require("./src/routes/facebook");
 
 const cors = require("cors");
 
@@ -34,7 +33,6 @@ app.use("/api/venue", venueRoutes);
 app.use("/api/event", eventRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/orders", ordersRoutes);
-app.use("/api/facebook", facebookRoutes);
 
 app.listen(PORT, (error) => {
   if (!error) console.log("Server is listening on port: " + PORT);

@@ -57,8 +57,11 @@ router.post("/login", RegisterValidator, async (req, res) => {
     );
 
     // Return success response with the token
-    return handleResponse(res, 200, true, "Login successful", { token, userId: user._id, isAdmin: user.isAdmin});
-
+    return handleResponse(res, 200, true, "Login successful", {
+      token,
+      userId: user._id,
+      isAdmin: user.isAdmin,
+    });
   } catch (error) {
     return handleResponse(res, 500, false, "Error logging in", error.message);
   }
@@ -104,9 +107,11 @@ router.post("/register", RegisterValidator, async (req, res) => {
   }
 });
 
-
 router.get("/validateAuthorization", authenticateToken, async (req, res) => {
-  return handleResponse(res, 200, true, "Token valid", {userId: req.userId, isAdmin: req.isAdmin});
+  return handleResponse(res, 200, true, "Token valid", {
+    userId: req.userId,
+    isAdmin: req.isAdmin,
+  });
 });
 
 module.exports = router;

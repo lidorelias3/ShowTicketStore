@@ -91,11 +91,12 @@ router.get(
       // Build query object dynamically
       let query = {};
 
-      // Add max price filter if provided (checks ticket prices)
+      // Add max price filter if provided
       if (maxPrice) {
         query["tickets.price"] = { $lte: Number(maxPrice) };
       }
 
+      // Add minimum age filter if provided
       if (minAge) {
         query.minimumAge = { $gt: Number(minAge) };
       }
