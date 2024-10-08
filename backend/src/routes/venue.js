@@ -19,7 +19,32 @@ router.post("/", checkIsAdmin, async (req, res) => {
 // Get all venues
 router.get("/", async (req, res) => {
   try {
-    const venues = await Venue.find();
+    const { minCapacity, zoneName, city } = req.query;
+
+    let query = {};
+
+    // Add maximum capacity filter if provided
+    if (minCapacity) {
+      query.maxCapacity = { $gt: Number(minCapacity) };
+    }
+
+    // Add city filter if provided
+    if (city) {
+      query["location.city"] = new RegExp(city, "i");
+    }
+
+    // Add zone name filter if provided
+    if (zoneName) {
+      query["zones.name"] = new RegExp(zoneName, "i");
+    }
+
+    const venues = await Venue.find(query);
+    // Check if any events found
+    if (!venues.length) {
+      return handleResponse(res, 404, false, "No events matching found");
+    }
+
+    // Return the filtered events
     return handleResponse(res, 200, true, venues);
   } catch (error) {
     return handleResponse(res, 500, false, error.message);
@@ -42,7 +67,7 @@ router.get("/id/:id", async (req, res) => {
 // Get a single venue by ID
 router.get("/name/:name", async (req, res) => {
   try {
-    const venue = await Venue.find({name: req.params.name});
+    const venue = await Venue.find({ name: req.params.name });
     if (!venue) {
       return handleResponse(res, 404, false, "Venue not found");
     }
@@ -53,7 +78,7 @@ router.get("/name/:name", async (req, res) => {
 });
 
 // Update a venue
-router.put("/:id", checkIsAdmin,  async (req, res) => {
+router.put("/:id", checkIsAdmin, async (req, res) => {
   try {
     const venue = await Venue.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
