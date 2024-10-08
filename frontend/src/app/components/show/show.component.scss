@@ -4,30 +4,47 @@
   height: 100%;
   align-items: start;
 
-    aside {
-        box-shadow: inset -7px 1px 1px -5px #bcbad3;
+  aside {
+    box-shadow: inset -7px 1px 1px -5px #bcbad3;
+  }
 
+  .info {
+    justify-content: start;
+    flex-direction: column;
+    width: 25%;
+
+    .weather {
+      height: 30px;
+      width: 100%;
+
+      img {
+        height: 30px;
+      }
+
+      h6 {
+        margin-top: 10px;
+        padding-right: 5px;
+      }
     }
+  }
 
-    .info {
-        justify-content: start;
-        flex-direction: column;
-        width: 25%;
+  .tickets-container {
+    height: fit-content;
+    width: 60%;
+    background-color: var(--dark-gray);
+    border-radius: 50px;
+    flex-direction: column;
+    justify-self: center;
+    position: relative;
+    padding: 1% 0;
 
-
-        .weather {
-            height: 30px;
-            width: 100%;
-
-            img {
-                height: 30px;
-            }
-
-            h6 {
-                margin-top: 10px;
-                padding-right: 5px;
-            }
-        }
+    > * {
+      height: 6vh;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 3% 6%;
     }
 
     > :not(:last-child) {
@@ -71,8 +88,7 @@
       box-shadow: 2px 3px 13px 1px rgba(64, 64, 64, 0.7);
     }
   }
-
-
+}
 .map-container {
   width: 250px; /* Set your desired width */
   height: 250px; /* Set your desired height */
