@@ -1,18 +1,33 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Venue } from 'src/app/models/venue.model';
-import * as $ from 'jquery';
 import { authenticatedAjax } from './ajax.util';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VenueApiService {
-  getAllEvents(): Observable<any> {
+  getAllEvents(city?: string, minCapacity?: number, zoneName?: string): Observable<any> {
+    var params: string[] = []
+
+    if (minCapacity !== undefined && minCapacity > 0) {
+      params.push(`minCapacity=${encodeURIComponent(minCapacity)}`);
+    }
+
+    if (city !== undefined && city.length >= 3) {
+      params.push(`city=${encodeURIComponent(city)}`);
+    }
+
+    if (zoneName !== undefined && zoneName.length >= 3) {
+      params.push(`zoneName=${encodeURIComponent(zoneName)}`);
+    }
+
+    var url = 'http://localhost:3000/api/venue?' + params.join('&')
+
     var subject = new Subject<any>()
     authenticatedAjax({
       type: 'GET',
-      url: 'http://localhost:3000/api/venue',
+      url: url,
       success: function (data: any) {
         subject.next(data)
       },

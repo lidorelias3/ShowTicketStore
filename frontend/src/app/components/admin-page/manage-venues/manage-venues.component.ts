@@ -16,6 +16,10 @@ export class ManageVenuesComponent implements OnInit {
   currentVenue: Venue
   originalName: string
 
+  zoneName: string
+  minCapacity: number
+  city: string
+
   constructor(private eventsService: EventsService, private venuesService: VenuesService) { }
 
   ngOnInit(): void {
@@ -53,7 +57,7 @@ export class ManageVenuesComponent implements OnInit {
       name: '',
       location: {
         address: '',
-        city: '', 
+        city: '',
         state: '',
         country: '',
       },
@@ -65,7 +69,17 @@ export class ManageVenuesComponent implements OnInit {
   loadVenues() {
     this.venues = []
     this.VenuesTableObjects = []
-    this.venuesService.getAllVenues().subscribe(res => {
+    var searchZone = this.zoneName
+    var searchCity = this.city
+    if (this.zoneName === undefined || this.zoneName.length < 3) {
+      searchZone = ''
+    }
+
+    if (this.city === undefined || this.city.length < 3) {
+      searchCity = ''
+    }
+
+    this.venuesService.getAllVenues(searchCity, this.minCapacity, searchZone).subscribe(res => {
       this.venues = res.message
       this.VenuesTableObjects = this.venues.map((it) => { return { 'id': it._id, 'name': it.name } })
     })
@@ -75,11 +89,11 @@ export class ManageVenuesComponent implements OnInit {
 
   addZone() {
     var zoneName = prompt("הכנס שם של אזור חדש")
-    
-    if (zoneName == null ) {
+
+    if (zoneName == null) {
       return
     }
-    this.currentVenue.zones.push({name: zoneName, capacity: 0})
+    this.currentVenue.zones.push({ name: zoneName, capacity: 0 })
   }
 
   save() {
@@ -88,7 +102,7 @@ export class ManageVenuesComponent implements OnInit {
       return
     }
 
-    var totalZonesCapacity = this.currentVenue.zones.reduce((sum, it) =>  sum + it.capacity, 0)
+    var totalZonesCapacity = this.currentVenue.zones.reduce((sum, it) => sum + it.capacity, 0)
     this.currentVenue.maxCapacity = totalZonesCapacity
 
     if (this.currentVenue.maxCapacity < 1) {
@@ -97,13 +111,27 @@ export class ManageVenuesComponent implements OnInit {
     }
 
     if (this.isNew) {
-      this.venuesService.newVenue(this.currentVenue).subscribe(_ =>{
+      this.venuesService.newVenue(this.currentVenue).subscribe(_ => {
         this.loadVenues()
-    })
+      })
     } else {
-      this.venuesService.upateVenue(this.currentVenue).subscribe(_ =>{
-          this.loadVenues()
+      this.venuesService.upateVenue(this.currentVenue).subscribe(_ => {
+        this.loadVenues()
       })
     }
+  }
+
+  reloadOnZoneChange() {
+    if (this.zoneName === undefined || this.zoneName.length < 3)
+      return
+
+    this.loadVenues()
+  }
+
+  reloadOnCityChange() {
+    if (this.city === undefined || this.city.length < 3)
+      return
+
+    this.loadVenues()
   }
 }

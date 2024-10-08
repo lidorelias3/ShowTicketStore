@@ -1,3 +1,18 @@
+<div class="search-bar flex">
+    <div>
+      קיבולת מינימלית:<br/>
+      <input type="number" min="0" [(ngModel)]="minCapacity" (focusout)="loadVenues()">
+    </div>
+    <div>
+      עיר:<br/>
+      <input type="text" min="0" [(ngModel)]="city" (focusout)="loadVenues()" (ngModelChange)="reloadOnCityChange()">
+    </div>
+    <div>
+      שם אזור ישיבה נדרש:<br/>
+      <input type="text" [(ngModel)]="zoneName" (focusout)="loadVenues()" (ngModelChange)="reloadOnZoneChange()">
+    </div>
+  </div>
+
 <app-manage-models *ngIf="showList;else other_content" [title]="'אולמות'" [models]="VenuesTableObjects"
     [buttonTitle]="'הוספת אולם חדש'" (deleteEvent)="delete($event)" (editEvent)="edit($event)"
     (newEvent)="newElement()">
