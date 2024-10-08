@@ -1,14 +1,20 @@
 const express = require("express");
+const asyncHandler = require("express-async-handler");
+const FB = require("fb");
+
+const config = require("../configs/config");
+
 const Event = require("../models/event");
 const Venue = require("../models/venue");
 const Order = require("../models/order");
 
 const router = express.Router();
-const asyncHandler = require("express-async-handler");
 
 const handleResponse = require("../utils/responseHandler");
 const authenticateToken = require("../middleware/isAuthenticated");
 const checkIsAdmin = require("../middleware/isAdmin");
+
+FB.setAccessToken(config.fb_access_token);
 
 // Create an event
 router.post(
@@ -64,6 +70,12 @@ router.post(
 
     await newEvent.save();
 
+    // Post event on FB
+    const message = `🎉 Exciting News – A New Show is Coming! 🎉\n\nWe’re thrilled to announce our upcoming show at ${venueName} on ${date}! Don’t miss out on an unforgettable experience.\n\n🎟️ Get your tickets now on our official website: http://127.0.0.1:4200`;
+    const response = await FB.api("/476945235492720/feed", "POST", {
+      message,
+    });
+
     return handleResponse(res, 201, true, newEvent);
   })
 );
@@ -97,7 +109,7 @@ router.get(
       }
 
       // Return the filtered events
-      return handleResponse(res, 200, true, events, "Events found",);
+      return handleResponse(res, 200, true, events, "Events found");
     } catch (error) {
       console.error(error);
       return handleResponse(res, 500, false, "Server error");

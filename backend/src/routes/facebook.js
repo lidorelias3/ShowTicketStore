@@ -6,7 +6,6 @@ const FB = require("fb");
 
 const config = require("../configs/config");
 const handleResponse = require("../utils/responseHandler");
-const authenticateToken = require("../middleware/isAuthenticated");
 const checkIsAdmin = require("../middleware/isAdmin");
 
 FB.setAccessToken(config.fb_access_token);
