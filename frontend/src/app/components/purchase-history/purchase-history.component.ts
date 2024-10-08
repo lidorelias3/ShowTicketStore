@@ -66,7 +66,6 @@ export class PurchaseHistoryComponent implements OnInit {
         return
       }
 
-      console.log('asdasd', this.searchedPrice);
       this.ordersApiService.getById(id!, this.searchedPrice).subscribe(res => {
         if (!res.success) {
           alert(res.responseJSON.message)
