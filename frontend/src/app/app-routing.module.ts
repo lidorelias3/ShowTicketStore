@@ -9,6 +9,7 @@ import { PayPageComponent } from './components/pay-page/pay-page.component';
 import { isAdminGuard } from './guards/is-admin.guard';
 import { ShowComponent } from './components/show/show.component';
 import { PurchaseHistoryComponent } from './components/purchase-history/purchase-history.component';
+import { AboutPageComponent } from './components/about-page/about-page.component';
 import { isAuthenticatedGuard } from './guards/is-authenticated.guard';
 
 const routes: Routes = [
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'my-cart', component: MyCartComponent },
   { path: 'pay', component: PayPageComponent },
   { path: 'history', component: PurchaseHistoryComponent, canActivate: [isAuthenticatedGuard]},
+  { path: 'about', component: AboutPageComponent },
   { path: '', component: HomeComponent }
 ];
 

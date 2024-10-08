@@ -2,6 +2,7 @@
     <img id="logo" src="../../../assets/site-logo.png">
     <img class="menu" src="../../../assets/menu.png" />
     <nav class="font-xl">
+        <div routerLink='/about'>אודות</div>
         <div *ngIf="!isLoggedIn()" routerLink='/login'>התחברות</div>
         <div *ngIf="!isLoggedIn()" routerLink='/register'>הרשמה</div>
         <div *ngIf="isLoggedIn()" (click)="logout()">התנתקות</div>
