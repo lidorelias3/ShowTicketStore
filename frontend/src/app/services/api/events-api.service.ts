@@ -13,7 +13,7 @@ export class EventAPIService {
     var params: string[] = []
 
     if (minAge !== undefined && minAge > 0) {
-      params.push(`minage=${encodeURIComponent(minAge)}`);
+      params.push(`minAge=${encodeURIComponent(minAge)}`);
     }
 
     if (maxPrice !== undefined && maxPrice > 0) {

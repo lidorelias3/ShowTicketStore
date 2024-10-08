@@ -33,9 +33,9 @@ export class GaleryComponent implements OnInit {
   maxPrice: number
   venueName: string
 
-  constructor(private showsService: EventsService) {}
-  
-  ngOnInit(): void { 
+  constructor(private showsService: EventsService) { }
+
+  ngOnInit(): void {
     this.reload()
   }
 
@@ -85,7 +85,9 @@ export class GaleryComponent implements OnInit {
 
   reloadOnChange() {
     if (this.venueName === undefined || this.venueName.length <= 2 || this.minAge < 0 || this.maxPrice < 0) {
-      alert("אנא דאג שהמחיר המקסימלי לכרטיס או שהגיל המינימלי ללקוח הוא אי שלילי")
+      if (this.minAge < 0 || this.maxPrice < 0) {
+        alert("אנא דאג שהמחיר המקסימלי לכרטיס או שהגיל המינימלי ללקוח הוא אי שלילי")
+      }
       return
     }
 
