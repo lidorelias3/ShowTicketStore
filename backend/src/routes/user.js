@@ -26,6 +26,41 @@ router.get("/:id", checkIsAdmin, async (req, res) => {
   }
 });
 
+router.get("/", checkIsAdmin, async (req, res) => {
+  try {
+
+    let queryValid = true;
+    // Check that every GET parameter passed to the url is in the Modle's schema
+    Object.keys(req.query).forEach((key) => {
+      if (! Object.keys(User.schema.paths).includes(key)) {
+        queryValid = false;
+      }
+    });
+
+    if (!queryValid) {
+      return handleResponse(res, 404, false, "User not found");
+    }
+
+    const user = await User.find(req.query);
+    if (!user) {
+      return handleResponse(res, 404, false, "User not found");
+    }
+
+    return handleResponse(res, 200, true, user, "User found");
+
+  } catch (error) {
+    console.log(error);
+    return handleResponse(
+      res,
+      500,
+      false,
+      "Error retrieving user",
+      error.message
+    );
+  }
+});
+
+
 // Update user by ID
 router.put("/:id", checkIsAdmin, async (req, res) => {
   const { firstName, lastName, email, password, age, gender, isAdmin } =
