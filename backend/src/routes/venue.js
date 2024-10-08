@@ -19,22 +19,30 @@ router.post("/", checkIsAdmin, async (req, res) => {
 // Get all venues
 router.get("/", async (req, res) => {
   try {
-    if ("name" in req.query) {
-      const venues = await Venue.find().exec();
-      return handleResponse(res, 200, true, venues);
-    } else {
-      const venues = await Venue.find();
-      return handleResponse(res, 200, true, venues);
-    }
+    const venues = await Venue.find();
+    return handleResponse(res, 200, true, venues);
   } catch (error) {
     return handleResponse(res, 500, false, error.message);
   }
 });
 
 // Get a single venue by ID
-router.get("/:id", async (req, res) => {
+router.get("/id/:id", async (req, res) => {
   try {
     const venue = await Venue.findById(req.params.id);
+    if (!venue) {
+      return handleResponse(res, 404, false, "Venue not found");
+    }
+    return handleResponse(res, 200, true, venue);
+  } catch (error) {
+    return handleResponse(res, 500, false, error.message);
+  }
+});
+
+// Get a single venue by ID
+router.get("/name/:name", async (req, res) => {
+  try {
+    const venue = await Venue.find({name: req.params.name});
     if (!venue) {
       return handleResponse(res, 404, false, "Venue not found");
     }

@@ -9,6 +9,7 @@ const asyncHandler = require("express-async-handler");
 const handleResponse = require("../utils/responseHandler");
 const authenticateToken = require("../middleware/isAuthenticated");
 const checkIsAdmin = require("../middleware/isAdmin");
+const tryPredictWeather = require("../utils/predictWeather");
 
 // Create an event
 router.post(
@@ -88,8 +89,11 @@ router.get(
         query.venueName = new RegExp(venue, "i"); // Case-insensitive search for venue name
       }
 
-      // Execute the query using Mongoose
-      const events = await Event.find(query);
+      // Execute the query using Mongoose and jsonify before modifications
+      let events = JSON.parse(JSON.stringify(await Event.find(query)));
+      for (let i=0; i < events.length; ++i) {
+        await tryPredictWeather(events[i]);
+      }
 
       // Check if any events found
       if (!events.length) {
@@ -112,14 +116,15 @@ router.get(
     const eventId = req.params.id;
 
     // Find the event by ID
-    const event = await Event.findById(eventId);
-    if (!event) {
+    const match = await Event.findById(eventId);
+    if (!match) {
       return handleResponse(res, 404, false, "Event not found");
     }
 
+    let event = JSON.parse(JSON.stringify(match));
+    await tryPredictWeather(event);
     return handleResponse(res, 200, true, event);
 
-    res.json(event);
   })
 );
 

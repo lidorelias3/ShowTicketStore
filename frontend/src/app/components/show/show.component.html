@@ -1,12 +1,16 @@
 <div class="show-container flex">
-    <div class="info flex">
+    <aside class="info flex">
         <h1 class="date">{{show.name}}</h1>
         <h3>{{show.date | date:'dd.MM.yyyy'}}</h3>
         <h3 class="location">
             <img src="../../../assets/location.png">
             {{show.venueName}}
         </h3>
-    </div>
+        <div *ngIf="show.weather" class="weather flex flex-row justify-content-center">
+            <h6><span>{{show.weather.temp}}°</span></h6>
+            <img src="https://openweathermap.org/img/wn/{{show.weather.code}}@2x.png"/>
+        </div>
+    </aside>
     <div class="tickets-container">
         <section class="amount-section">
             <h3>1. בחר כמות כרטיסים</h3>
