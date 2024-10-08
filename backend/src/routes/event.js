@@ -86,18 +86,18 @@ router.get(
   asyncHandler(async (req, res) => {
     try {
       // Extract query parameters
-      const { maxprice, venue, minage } = req.query;
+      const { maxPrice, venue, minAge } = req.query;
 
       // Build query object dynamically
       let query = {};
 
       // Add max price filter if provided (checks ticket prices)
-      if (maxprice) {
-        query["tickets.price"] = { $lte: Number(maxprice) };
+      if (maxPrice) {
+        query["tickets.price"] = { $lte: Number(maxPrice) };
       }
 
-      if (minage) {
-        query.minimumAge = { $gt: Number(minage) };
+      if (minAge) {
+        query.minimumAge = { $gt: Number(minAge) };
       }
       // Add venue filter if provided
       if (venue) {
@@ -106,7 +106,7 @@ router.get(
 
       // Execute the query using Mongoose and jsonify before modifications
       let events = JSON.parse(JSON.stringify(await Event.find(query)));
-      for (let i=0; i < events.length; ++i) {
+      for (let i = 0; i < events.length; ++i) {
         await tryPredictWeather(events[i]);
       }
 
@@ -139,7 +139,6 @@ router.get(
     let event = JSON.parse(JSON.stringify(match));
     await tryPredictWeather(event);
     return handleResponse(res, 200, true, event);
-
   })
 );
 
