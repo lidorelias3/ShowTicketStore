@@ -54,7 +54,7 @@ router.get("/", async (req, res) => {
 // Get a single venue by ID
 router.get("/id/:id", async (req, res) => {
   try {
-    const venue = await Venue.findOne({ name: req.params.name });
+    const venue = await Venue.findById(req.params.id);
     if (!venue) {
       return handleResponse(res, 404, false, "Venue not found");
     }
