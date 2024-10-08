@@ -17,7 +17,7 @@ export class UserService {
     const token = localStorage.getItem("authorizationToken");
     if (token) {
       this.authService.testAuthentication(token).subscribe(res => {
-        if (res) {
+        if (res.success) {
           this.currentUser = res.detailes.userId;
           this.currentUserIsAdmin = res.detailes.isAdmin;
         }
