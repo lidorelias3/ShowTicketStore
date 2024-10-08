@@ -1,3 +1,4 @@
+import { ResourceLoader } from '@angular/compiler';
 import { Component, Input, OnInit } from '@angular/core';
 import { Event } from 'src/app/models/event.model';
 import { Order } from 'src/app/models/order.model';
@@ -17,6 +18,10 @@ export class PurchaseHistoryComponent implements OnInit {
   ordersEvents: { event: Event, order: Order, user?: User }[] = []
   events: Event[] = []
   users: User[] = []
+
+  searchedPrice: number
+
+
   constructor(private userService: UserService, private ordersApiService: OrdersApiService,
     private eventsService: EventsService
   ) { }
@@ -26,6 +31,8 @@ export class PurchaseHistoryComponent implements OnInit {
   }
 
   loadOrders() {
+
+
     this.eventsService.getEvents().subscribe(events => {
       this.events = events.message;
 
@@ -33,7 +40,7 @@ export class PurchaseHistoryComponent implements OnInit {
       if (this.watchAll) {
         this.userService.getAllUsers().subscribe(users=> {
           this.users = users.message;
-          this.ordersApiService.getAll().subscribe(res => {
+          this.ordersApiService.getAll(this.searchedPrice).subscribe(res => {
             if (!res.success) {
               alert(res.responseJSON.message)
               alert(res.responseJSON.detailes)
@@ -59,7 +66,8 @@ export class PurchaseHistoryComponent implements OnInit {
         return
       }
 
-      this.ordersApiService.getById(id!).subscribe(res => {
+      console.log('asdasd', this.searchedPrice);
+      this.ordersApiService.getById(id!, this.searchedPrice).subscribe(res => {
         if (!res.success) {
           alert(res.responseJSON.message)
           return
@@ -69,6 +77,7 @@ export class PurchaseHistoryComponent implements OnInit {
       })
     })
   }
+
 
   delete(id: string) {
     this.ordersApiService.delete(id).subscribe(res=> {
