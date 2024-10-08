@@ -1,17 +1,5 @@
 services:
 
-  # backend:
-  #   build: ./backend
-  #   ports:
-  #     - 3000:3000
-  #   depends_on:
-  #     mongo:
-  #       condition: service_healthy
-  
-  # frontend:
-  #   build: ./frontend
-  #   ports: 8080:8080
-  
   mongo:
     image: mongo
     restart: always
