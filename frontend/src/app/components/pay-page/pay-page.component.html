@@ -1,74 +1,46 @@
 <div class="container mt-5">
   <h2>Payment Details</h2>
-
-  <form (ngSubmit)="processPayment()" #paymentForm="ngForm" class="form">
-    <div class="form-group">
-      <label for="cardNumber">מספר כרטיס</label>
-      <input
-        type="text"
-        class="form-control"
-        id="cardNumber"
-        name="cardNumber"
-        required
-        ngModel
-        placeholder="מספר כרטיס"
-      />
-    </div>
-
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="expiration">תאריך תפוגה</label>
-        <input
-          type="text"
-          class="form-control"
-          id="expiration"
-          name="expiration"
-          placeholder="MM/YY"
-          required
-          ngModel
-        />
+  <div class="form-container flex">
+    <form (ngSubmit)="processPayment()" #paymentForm="ngForm" class="form">
+      <div class="form-group">
+        <label for="cardNumber">מספר כרטיס</label>
+        <input type="text" class="form-control" id="cardNumber" name="cardNumber" required ngModel
+          placeholder="מספר כרטיס" />
       </div>
 
-      <div class="form-group col-md-6">
-        <label for="securityCode">קוד אבטחה (CVV)</label>
-        <input
-          type="text"
-          class="form-control"
-          id="securityCode"
-          name="securityCode"
-          required
-          ngModel
-          placeholder="CVV"
-        />
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="expiration">תאריך תפוגה</label>
+          <input type="text" class="form-control" id="expiration" name="expiration" placeholder="MM/YY" required
+            ngModel />
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="securityCode">קוד אבטחה (CVV)</label>
+          <input type="text" class="form-control" id="securityCode" name="securityCode" required ngModel
+            placeholder="CVV" />
+        </div>
       </div>
+
+      <div class="form-group">
+        <label for="cardHolder">שם בעל הכרטיס</label>
+        <input type="text" class="form-control" id="cardHolder" name="cardHolder" required ngModel
+          placeholder="שם בעל הכרטיס" />
+      </div>
+
+      <button type="submit" class="btn btn-primary mt-3" [disabled]="!paymentForm.valid || !canPurchase">
+        אישור תשלום
+      </button>
+    </form>
+    <div class="flex col">
+      נא לחתום לאישור ההזמנה:
+      <canvas #canvas class="signature-pad"></canvas>
     </div>
-
-    <div class="form-group">
-      <label for="cardHolder">שם בעל הכרטיס</label>
-      <input
-        type="text"
-        class="form-control"
-        id="cardHolder"
-        name="cardHolder"
-        required
-        ngModel
-        placeholder="שם בעל הכרטיס"
-      />
-    </div>
-
-    <button
-      type="submit"
-      class="btn btn-primary mt-3"
-      [disabled]="!paymentForm.valid"
-    >
-      Submit Payment
-    </button>
-  </form>
-
+  </div>
   <div *ngIf="loading" class="mt-4">
-    <p>Processing your payment...</p>
+    <p>הבקשה בעיבוד, אנא המתן</p>
     <div class="spinner-border" role="status">
-      <span class="sr-only">Loading...</span>
+      <span class="sr-only">טוען...</span>
     </div>
   </div>
 </div>
