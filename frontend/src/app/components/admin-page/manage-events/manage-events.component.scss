@@ -13,3 +13,22 @@
         border: none;
     }
 }
+
+.search-bar {
+    width: 50%;
+    height: 10%;
+
+    justify-content: space-around;
+
+    input {
+        height: 30px;
+        margin-bottom: 15px;
+        padding-right: 5%;
+
+        background-color: #4F4F4F55;
+        color: var(--light-text-color);
+        border: none;
+        border-radius: 5px;
+        box-shadow: -1px 1px;
+    }
+}

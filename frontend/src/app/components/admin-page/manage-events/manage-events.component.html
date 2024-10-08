@@ -1,3 +1,18 @@
+<div class="search-bar flex">
+    <div>
+        גיל כניסה מינימלי:<br />
+        <input type="number" min="0" [(ngModel)]="minAge" (focusout)="loadEvents()">
+    </div>
+    <div>
+        מחיר כרטיס מגיע עד:<br />
+        <input type="number" min="0" [(ngModel)]="maxPrice" (focusout)="loadEvents()">
+    </div>
+    <div>
+        שם אולם:<br />
+        <input type="text" [(ngModel)]="venueName" (focusout)="loadEvents()" (ngModelChange)="reloadOnChange()">
+    </div>
+</div>
+
 <app-manage-models *ngIf="showList;else other_content" [title]="'מופעים'" [models]="EventsTableObjects"
     [buttonTitle]="'הוספת מופע חדש'" (deleteEvent)="delete($event)" (editEvent)="edit($event)"
     (newEvent)="newElement()">
@@ -18,9 +33,13 @@
             תאריך: <input type="date" class="form-control" id="date" required [(ngModel)]="dateString"
                 placeholder="תאריך">
         </section>
+        <section>
+            גיל כניסה מינימלי: <input type="number" class="form-control" id="age" required
+                [(ngModel)]="currentEvent.minimumAge" placeholder="גיל כניסה מינימלי">
+        </section>
         <section *ngFor="let ticket of currentEvent.tickets">
-            מחיר לכרטיס מסוג {{ticket.ticketType}}: <input type="number" class="form-control" required [(ngModel)]="ticket.price"
-            placeholder="מחיר">
+            מחיר לכרטיס מסוג {{ticket.ticketType}}: <input type="number" class="form-control" required
+                [(ngModel)]="ticket.price" placeholder="מחיר">
         </section>
         <button (click)="save()">שמור מופע</button>
     </div>

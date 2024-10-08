@@ -18,13 +18,14 @@ export class ManageEventsComponent implements OnInit {
   dateString: string | null = ''
   originalName: string
 
+  minAge: number
+  maxPrice: number
+  venueName: string
+
   constructor(private eventsService: EventsService, private venuesService: VenuesService) { }
 
   ngOnInit(): void {
-    this.eventsService.getEvents().subscribe(res => {
-      this.events = res.message
-      this.EventsTableObjects = this.events.map((it) => { return { 'id': it._id, 'name': it.name, 'date': it.date } })
-    })
+    this.loadEvents()
   }
 
   delete(id: string) {
@@ -69,14 +70,41 @@ export class ManageEventsComponent implements OnInit {
   }
 
   loadEvents() {
+    if (this.minAge < 0 || this.maxPrice < 0) {
+      return
+    }
+
+    var searchVenue = this.venueName
+
+    if (this.venueName === undefined || this.venueName.length <= 2) {
+      searchVenue = ''
+    }
+
     this.events = []
     this.EventsTableObjects = []
-    this.eventsService.getEvents().subscribe(res => {
+    this.eventsService.getEvents(this.minAge, this.maxPrice, searchVenue).subscribe(res => {
       this.events = res.message
       this.EventsTableObjects = this.events.map((it) => { return { 'id': it._id, 'name': it.name, 'date': it.date } })
     })
 
     this.showList = true;
+  }
+
+  reloadOnChange() {
+    if (this.venueName === undefined || this.venueName.length <= 2 || this.minAge < 0 || this.maxPrice < 0) {
+      if (this.minAge < 0 || this.maxPrice < 0) {
+        alert("אנא דאג שהמחיר המקסימלי לכרטיס או שהגיל המינימלי ללקוח הוא אי שלילי")
+      }
+      return
+    }
+
+    this.events = []
+    this.EventsTableObjects = []
+
+    this.eventsService.getEvents(this.minAge, this.maxPrice, this.venueName).subscribe(res => {
+      this.events = res.message
+      this.EventsTableObjects = this.events.map((it) => { return { 'id': it._id, 'name': it.name, 'date': it.date } })
+    })
   }
 
   save() {
@@ -97,6 +125,11 @@ export class ManageEventsComponent implements OnInit {
 
     if (this.currentEvent.tickets.filter(it => it.price <= 0).length > 0) {
       alert("אי אפשר שערך מחיר של כרטיס יהיה שלילי")
+      return
+    }
+
+    if(this.currentEvent.minimumAge < 0) {
+      alert("אנא דאג שגיל מינימלי לבעל כרטיס הוא אי שלילי")
       return
     }
 
