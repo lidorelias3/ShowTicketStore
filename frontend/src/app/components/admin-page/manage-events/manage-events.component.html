@@ -18,6 +18,10 @@
             תאריך: <input type="date" class="form-control" id="date" required [(ngModel)]="dateString"
                 placeholder="תאריך">
         </section>
+        <section>
+            גיל כניסה מינימלי: <input type="number" class="form-control" id="age" required [(ngModel)]="currentEvent.minimumAge"
+                placeholder="גיל כניסה מינימלי">
+        </section>
         <section *ngFor="let ticket of currentEvent.tickets">
             מחיר לכרטיס מסוג {{ticket.ticketType}}: <input type="number" class="form-control" required [(ngModel)]="ticket.price"
             placeholder="מחיר">

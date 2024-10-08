@@ -100,6 +100,11 @@ export class ManageEventsComponent implements OnInit {
       return
     }
 
+    if(this.currentEvent.minimumAge < 0) {
+      alert("אנא דאג שגיל מינימלי לבעל כרטיס הוא אי שלילי")
+      return
+    }
+
     this.currentEvent.date = new Date(this.dateString)
 
     if (this.isNew) {
