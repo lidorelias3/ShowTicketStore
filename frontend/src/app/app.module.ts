@@ -46,7 +46,6 @@ import { GoogleMapsModule } from '@angular/google-maps'; // Import Google Maps M
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule,
     BrowserAnimationsModule,
     GoogleMapsModule,
   ],
