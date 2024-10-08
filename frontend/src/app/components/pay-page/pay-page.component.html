@@ -65,8 +65,6 @@
             id="securityCode"
             name="securityCode"
             required
-            minlength="3"
-            maxlength="4"
             pattern="^[0-9]{3,4}$"
             ngModel
             #securityCode="ngModel"
@@ -79,14 +77,8 @@
             <small *ngIf="securityCode.errors?.['required']"
               >קוד אבטחה נדרש</small
             >
-            <small
-              *ngIf="
-                securityCode.errors?.['minlength'] || securityCode.errors?.['maxlength']
-              "
-              >הכנס 3 או 4 ספרות</small
-            >
             <small *ngIf="securityCode.errors?.['pattern']"
-              >הכנס ספרות בלבד</small
+              >הכנס 3 או 4 ספרות, הכנס ספרות בלבד</small
             >
           </div>
         </div>
