@@ -29,7 +29,7 @@ export class GaleryComponent implements OnInit {
 
   shows: Event[]
 
-  minAge: number = 10
+  minAge: number
   maxPrice: number
   venueName: string
 
@@ -88,7 +88,7 @@ export class GaleryComponent implements OnInit {
       alert("אנא דאג שהמחיר המקסימלי לכרטיס או שהגיל המינימלי ללקוח הוא אי שלילי")
       return
     }
-    
+
     this.shows = []
 
     this.showsService.getEvents(this.minAge, this.maxPrice, this.venueName).subscribe(res => {
