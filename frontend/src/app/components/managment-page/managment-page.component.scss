@@ -1,0 +1,14 @@
+section {
+    padding: 16px;
+}
+
+button {
+    background-color: transparent;
+    margin-inline: 8px;
+    border-radius: 8px;
+    border: 1px solid gray;
+    transition: background-color 200ms;
+    &:hover {
+        background-color: gray;
+    }
+}

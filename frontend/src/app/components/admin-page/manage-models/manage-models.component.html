@@ -1,7 +1,9 @@
 <div class="models-container container">
     <div class="flex">
         <h1>ניהול {{title}}</h1>
-        <button *ngIf="buttonTitle" (click)="add()">{{buttonTitle}}</button>
+        <button class="add-button" *ngIf="buttonTitle" (click)="add()">
+            <p>+</p>
+        </button>
     </div>
     <div>
         חיפוש {{title}} <br/>
@@ -12,8 +14,8 @@
         <tr *ngFor="let row of models">
             <td>{{row.name}}</td>
             <td *ngIf="row.date">{{row.date | date:'dd.MM.yyyy'}}</td>
-            <td (click)="edit(row.id)" class="button">ערוך {{title}}</td>
-            <td (click)="delete(row.id)" class="button">מחק {{title}}</td>
+            <td (click)="edit(row.id)" class="button">ערוך</td>
+            <td (click)="delete(row.id)" class="button">מחק</td>
         </tr>
     </table>
 </div>
