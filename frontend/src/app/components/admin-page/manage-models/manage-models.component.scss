@@ -1,3 +1,38 @@
+button {
+    background-color: transparent;
+    margin-inline: 8px;
+    border-radius: 8px;
+    border: 1px solid gray;
+    &:hover {
+        background-color: gray;
+    }
+}
+
+.add-button {
+    width: 31px;
+    height: 31px;
+    border-radius: 50%;
+    font-size: 24px;
+    position: relative;
+    top: -2px;
+    margin-inline-start: 16px;
+    background-color: #BCBAD3;
+    transition: background-color 200ms;
+    &:hover {
+        background-color: white;
+    }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-button p {
+    position: relative;
+    top: 8px;
+    color: #222222;
+    font-weight: bold;
+}
+
 .models-container {
     width: 100%;
     height: 100%;
@@ -10,6 +45,7 @@
         tr {
             width: 100%;
             height: 10%;
+            border-top: 1px var(--light-text-color) solid;
             border-bottom: 1px var(--light-text-color) solid;
 
             td {

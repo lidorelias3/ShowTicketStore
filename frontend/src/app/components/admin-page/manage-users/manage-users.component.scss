@@ -1,3 +1,13 @@
+button {
+    background-color: transparent;
+    margin-inline: 8px;
+    border-radius: 8px;
+    border: 1px solid gray;
+    &:hover {
+        background-color: gray;
+    }
+}
+
 .form {
     overflow-y: scroll;
     max-height: 90%;

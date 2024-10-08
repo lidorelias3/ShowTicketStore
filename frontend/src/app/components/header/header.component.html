@@ -2,13 +2,17 @@
     <img id="logo" src="../../../assets/site-logo.png">
     <img class="menu" src="../../../assets/menu.png" />
     <nav class="font-xl">
-        <div routerLink='/about'>אודות</div>
-        <div *ngIf="!isLoggedIn()" routerLink='/login'>התחברות</div>
-        <div *ngIf="!isLoggedIn()" routerLink='/register'>הרשמה</div>
-        <div *ngIf="isLoggedIn()" (click)="logout()">התנתקות</div>
-        <div *ngIf="isAdmin()" routerLink='/management-page'>דף ניהול</div>
-        <div routerLink='/my-cart'>העגלה שלי</div>
-        <div *ngIf="isLoggedIn()" routerLink="history">רכישות</div>
-        <div routerLink=''>בית</div>
+        <div class="navlink" *ngIf="!isLoggedIn()" routerLink='/login'>התחברות</div>
+        <div class="navlink" *ngIf="!isLoggedIn()" routerLink='/register'>הרשמה</div>
+        <div class="navlink" *ngIf="isLoggedIn()" (click)="logout()">
+            התנתקות
+            <img class="icon" src="../../../assets/logout.svg" />
+        </div>
+        <div class="divider"></div>
+        <div class="navlink" routerLink='/about'>אודות</div>
+        <div class="navlink" *ngIf="isLoggedIn()" routerLink="history">רכישות</div>
+        <div class="navlink" routerLink='/my-cart'>העגלה שלי</div>
+        <div class="navlink" *ngIf="isAdmin()" routerLink='/management-page'>דף ניהול</div>
+        <div class="navlink" routerLink=''>בית</div>
     </nav>
 </header>
