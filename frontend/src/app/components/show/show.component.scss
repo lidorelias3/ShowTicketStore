@@ -4,10 +4,30 @@
     height: 100%;
     align-items: start;
 
+    aside {
+        box-shadow: inset -7px 1px 1px -5px #bcbad3;
+
+    }
+
     .info {
         justify-content: start;
         flex-direction: column;
         width: 25%;
+
+
+        .weather {
+            height: 30px;
+            width: 100%;
+
+            img {
+                height: 30px;
+            }
+
+            h6 {
+                margin-top: 10px;
+                padding-right: 5px;
+            }
+        }
     }
 
     .tickets-container {

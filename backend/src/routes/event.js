@@ -116,16 +116,15 @@ router.get(
     const eventId = req.params.id;
 
     // Find the event by ID
-    const event = await Event.findById(eventId);
-    if (!event) {
+    const match = await Event.findById(eventId);
+    if (!match) {
       return handleResponse(res, 404, false, "Event not found");
     }
 
+    let event = JSON.parse(JSON.stringify(match));
+    await tryPredictWeather(event);
     return handleResponse(res, 200, true, event);
 
-
-
-    res.json(event);
   })
 );
 
