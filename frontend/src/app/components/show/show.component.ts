@@ -5,6 +5,7 @@ import { EventsService } from 'src/app/services/events.service';
 import { TicketsService } from 'src/app/services/tickets.service';
 import { VenuesService } from 'src/app/services/venues.service';
 import { Loader } from '@googlemaps/js-api-loader';
+import { environment } from 'src/app/environments/environment';
 
 @Component({
   selector: 'app-show',
@@ -45,7 +46,7 @@ export class ShowComponent implements OnInit {
 
   initializeMap(venue: any) {
     const loader = new Loader({
-      apiKey: 'AIzaSyDYJ2elwHMpMisrji9VBvbYHsMOs3Lsprg',
+      apiKey: environment.googleMapsApiKey,
       version: 'weekly',
     });
 
