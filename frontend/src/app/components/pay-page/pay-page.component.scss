@@ -1,16 +1,48 @@
-.form {
+.form-container {
+    width: 70%;
+    columns: 2;
+    column-gap: 10%;
+    align-items: baseline;
 
-    input {
-        width: 270px;
-        height: 30px;
-        margin-bottom: 15px;
-        
-        background-color: #4F4F4F55;
-        color: var(--light-text-color);
-        border: none;
+    .form {
+
+        input {
+            width: 270px;
+            height: 30px;
+            margin-bottom: 15px;
+
+            background-color: #4F4F4F55;
+            color: var(--light-text-color);
+            border: none;
+        }
+
+        *::placeholder {
+            color: var(--light-text-color);
+        }
     }
 
-    *::placeholder {
-        color: var(--light-text-color);
+    .signature {
+        width: fit-content;
+        flex-direction: column;
+
+        .signature-pad {
+            width: 300px;
+            height: 150px;
+            cursor: url(../../../assets/fountain-pen.png), pointer;
+            border: 2px solid var(--light-text-color);
+            border-radius: 4px;
+            margin: 1px;
+        }
+
+        button {
+            align-self: baseline;
+            margin-top: 2%;
+            background-color: var(--border-color);
+            border-radius: 7px;
+            border: none;
+            box-shadow: -1px 1px;
+        }
     }
+
+
 }
