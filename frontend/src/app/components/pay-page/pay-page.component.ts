@@ -53,7 +53,7 @@ export class PayPageComponent implements AfterViewInit {
   processPayment() {
     // Simulate payment processing
     this.loading = true;
-    this.clear()
+    
     this.ticketService.purchase().subscribe(res => {
       if (res === false) {
         this.loading = false
@@ -66,13 +66,8 @@ export class PayPageComponent implements AfterViewInit {
         this.router.navigate(['']);
       }
     })
-  }
 
-  handlePointerDown(event: any) {
-    this.writingMode = true;
-    this.context.beginPath();
-    const [positionX, positionY] = this.getCursorPosition(event);
-    this.context.moveTo(positionX, positionY);
+    this.clear()
   }
 
   getCursorPosition(event: any) {
@@ -81,20 +76,9 @@ export class PayPageComponent implements AfterViewInit {
     return [positionX, positionY];
   }
 
-  handlePointerUp() {
-    this.writingMode = false;
-  }
-
-  handlePointerMove(event: any) {
-    if (!this.writingMode) return
-    const [positionX, positionY] = this.getCursorPosition(event);
-    this.context.lineTo(positionX, positionY);
-    this.context.stroke();
-    this.canPurchase = true
-  }
-
   clear() {
     var canvasE = this.canvas.nativeElement
     this.context.clearRect(0, 0, canvasE.width, canvasE.height);
+    this.canPurchase = false;
   }
 }

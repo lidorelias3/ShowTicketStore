@@ -32,9 +32,10 @@
         אישור תשלום
       </button>
     </form>
-    <div class="flex col">
+    <div class="flex signature">
       נא לחתום לאישור ההזמנה:
       <canvas #canvas class="signature-pad"></canvas>
+      <button (click)="clear()">נקה חתימה</button>
     </div>
   </div>
   <div *ngIf="loading" class="mt-4">
