@@ -26,10 +26,10 @@ export class AuthService {
       contentType: "application/json",
       data: body,
       async: true,
-      success: function (data) {
+      success: function (data: any) {
         subject.next(data)
       },
-      error: function(data) {
+      error: function(data: any) {
         subject.next(data)
       }
     });
@@ -51,10 +51,10 @@ export class AuthService {
       contentType: "application/json",
       data: body,
       async: true,
-      success: function (data) {
+      success: function (data: any) {
         subject.next(data)
       },
-      error: function(data) {
+      error: function(data: any) {
         subject.next(data)
       }
     });

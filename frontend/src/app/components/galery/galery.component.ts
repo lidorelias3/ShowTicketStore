@@ -29,12 +29,14 @@ export class GaleryComponent implements OnInit {
 
   shows: Event[]
 
+  minAge: number = 10
+  maxPrice: number
+  venueName: string
+
   constructor(private showsService: EventsService) {}
   
   ngOnInit(): void { 
-    this.showsService.getEvents().subscribe(res => {
-      this.shows = res.message;
-    })
+    this.reload()
   }
 
   scroll(times: number) {
@@ -59,5 +61,38 @@ export class GaleryComponent implements OnInit {
     } else {
       this.showLeftArrow = true;
     }
+  }
+
+  reload() {
+    if (this.minAge < 0 || this.maxPrice < 0) {
+      return
+    }
+
+    this.shows = []
+
+    if (this.venueName === undefined || this.venueName.length <= 2) {
+      this.showsService.getEvents(this.minAge, this.maxPrice, '').subscribe(res => {
+        this.shows = res.message;
+      })
+
+      return
+    }
+
+    this.showsService.getEvents(this.minAge, this.maxPrice, this.venueName).subscribe(res => {
+      this.shows = res.message;
+    })
+  }
+
+  reloadOnChange() {
+    if (this.venueName === undefined || this.venueName.length <= 2 || this.minAge < 0 || this.maxPrice < 0) {
+      alert("אנא דאג שהמחיר המקסימלי לכרטיס או שהגיל המינימלי ללקוח הוא אי שלילי")
+      return
+    }
+    
+    this.shows = []
+
+    this.showsService.getEvents(this.minAge, this.maxPrice, this.venueName).subscribe(res => {
+      this.shows = res.message;
+    })
   }
 }

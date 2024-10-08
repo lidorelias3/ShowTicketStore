@@ -1,8 +1,33 @@
+.main-container {
+    width: 100%;
+    height: 100%;
+    padding-top: 2%;
+
+    .search-bar {
+        width: 50%;
+        height: 10%;
+
+        justify-content: space-around;
+
+        input {
+            height: 30px;
+            margin-bottom: 15px;
+            padding-right: 5%;
+
+            background-color: #4F4F4F55;
+            color: var(--light-text-color);
+            border: none;
+            border-radius: 5px;
+            box-shadow: -1px 1px;
+        }
+    }
+}
+
 .galery-container {
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 100%;
+    height: 85%;
     align-items: center;
     justify-content: space-evenly;
 }
@@ -57,6 +82,6 @@ section {
     }
 
     h6 {
-        margin-top: 10px   
+        margin-top: 10px
     }
 }
