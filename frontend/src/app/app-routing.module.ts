@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'management-page', component: ManagmentPageComponent, canActivate: [isAdminGuard]},
   { path: 'shows/:id', component: ShowComponent},
   { path: 'my-cart', component: MyCartComponent },
-  { path: 'pay', component: PayPageComponent },
+  { path: 'pay', component: PayPageComponent, canActivate: [isAuthenticatedGuard]},
   { path: 'history', component: PurchaseHistoryComponent, canActivate: [isAuthenticatedGuard]},
   { path: 'about', component: AboutPageComponent },
   { path: '', component: HomeComponent }
