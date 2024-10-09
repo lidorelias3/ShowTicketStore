@@ -18,6 +18,8 @@ export class ManageEventsComponent implements OnInit {
   dateString: string | null = ''
   originalName: string
 
+  modelFilter: any
+
   minAge: number
   maxPrice: number
   venueName: string
@@ -80,9 +82,15 @@ export class ManageEventsComponent implements OnInit {
       searchVenue = ''
     }
 
+    var searchByName = this.modelFilter
+
+    if (this.modelFilter === undefined || this.modelFilter.length <= 2) {
+      searchByName = undefined
+    }
+
     this.events = []
     this.EventsTableObjects = []
-    this.eventsService.getEvents(this.minAge, this.maxPrice, searchVenue).subscribe(res => {
+    this.eventsService.getEvents(searchByName, this.minAge, this.maxPrice, searchVenue).subscribe(res => {
       this.events = res.message
       this.EventsTableObjects = this.events.map((it) => { return { 'id': it._id, 'name': it.name, 'date': it.date } })
     })
@@ -101,7 +109,7 @@ export class ManageEventsComponent implements OnInit {
     this.events = []
     this.EventsTableObjects = []
 
-    this.eventsService.getEvents(this.minAge, this.maxPrice, this.venueName).subscribe(res => {
+    this.eventsService.getEvents(undefined, this.minAge, this.maxPrice, this.venueName).subscribe(res => {
       this.events = res.message
       this.EventsTableObjects = this.events.map((it) => { return { 'id': it._id, 'name': it.name, 'date': it.date } })
     })
@@ -144,6 +152,11 @@ export class ManageEventsComponent implements OnInit {
           this.loadEvents()
       })
     }
+  }
+
+  filter(eventName: string) {
+    this.modelFilter = eventName
+    this.loadEvents()
   }
 
   getVenue() {

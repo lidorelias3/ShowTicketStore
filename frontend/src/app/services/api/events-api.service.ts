@@ -9,7 +9,7 @@ import * as $ from 'jquery';
 })
 export class EventAPIService {
 
-  getAllEvents(minAge?: number, maxPrice?:number, venueName?: string): Observable<any> {
+  getAllEvents(eventName?: string, minAge?: number, maxPrice?: number, venueName?: string): Observable<any> {
     var params: string[] = []
 
     if (minAge !== undefined && minAge > 0) {
@@ -24,7 +24,12 @@ export class EventAPIService {
       params.push(`venue=${encodeURIComponent(venueName)}`);
     }
 
-    var url = 'http://localhost:3000/api/event?' + params.join("&")
+    let url = "";
+    if (eventName && eventName != "") {
+      url = `http://localhost:3000/api/event/name/${encodeURIComponent(eventName)}`
+    } else {
+      url = 'http://localhost:3000/api/event?' + params.join("&")
+    }
 
     var subject = new Subject<any>()
     authenticatedAjax({
@@ -33,7 +38,7 @@ export class EventAPIService {
       success: function (data: any) {
         subject.next(data)
       },
-      error: function(data: any) {
+      error: function (data: any) {
         subject.next(data)
       }
     });
@@ -49,7 +54,7 @@ export class EventAPIService {
       success: function (data: any) {
         subject.next(data)
       },
-      error: function(data: any) {
+      error: function (data: any) {
         subject.next(data)
       }
     });
@@ -67,7 +72,7 @@ export class EventAPIService {
       success: function (data: any) {
         subject.next(data)
       },
-      error: function(data: any) {
+      error: function (data: any) {
         subject.next(data)
       }
     });
@@ -77,7 +82,7 @@ export class EventAPIService {
 
   deleteEvent(name: string) {
     var subject = new Subject<any>()
-   authenticatedAjax({
+    authenticatedAjax({
       url: `http://localhost:3000/api/event/${name}`,
       type: 'DELETE',
       async: true,
@@ -99,7 +104,7 @@ export class EventAPIService {
       success: function (data: any) {
         subject.next(data)
       },
-      error: function(data: any) {
+      error: function (data: any) {
         subject.next(data)
       }
     });
@@ -107,11 +112,11 @@ export class EventAPIService {
     return subject.asObservable()
   }
 
-  purchase(tickets: Array<{eventId: string, ticketType: string, quantity: number}>): Observable<any> {
+  purchase(tickets: Array<{ eventId: string, ticketType: string, quantity: number }>): Observable<any> {
     var body = JSON.stringify({
       tickets: tickets
     })
-    
+
     var subject = new Subject<any>()
     authenticatedAjax({
       type: "POST",
@@ -122,7 +127,7 @@ export class EventAPIService {
       success: function (data: any) {
         subject.next(data)
       },
-      error: function(data: any) {
+      error: function (data: any) {
         subject.next(data)
       }
     });

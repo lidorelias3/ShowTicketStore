@@ -1,5 +1,9 @@
 <div class="container">
     <h1>היסטוריית הזמנות: </h1>
+    <div>
+        סכום הזמנה:<br/>
+        <input [(ngModel)]="searchedPrice" (focusout)="loadOrders()" type="number" min="0" >
+     </div>
     <div class="orders">
         <div *ngFor="let obj of ordersEvents" class="flex purchase">
             <div *ngIf="watchAll" class="user">{{obj.user?.firstName}} {{obj.user?.lastName}}</div>

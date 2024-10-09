@@ -69,8 +69,9 @@ export class UserService {
     this.router.navigate([""])
   }
 
-  getAllUsers(): Observable<any> {
-    return this.userApiService.getAllUsers()
+  getAllUsers(filterFirstName? : string): Observable<any> {
+    console.log('GetALlUsers', filterFirstName, 'common');
+    return this.userApiService.getAllUsers(filterFirstName);
   }
 
   getUserByID(id: string) {

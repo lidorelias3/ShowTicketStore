@@ -1,5 +1,5 @@
 <app-manage-models *ngIf="showList;else other_content" [title]="'משתמשים'" [models]="usersTableObjects"
-    (deleteEvent)="delete($event)" (editEvent)="edit($event)">
+    (deleteEvent)="delete($event)" (editEvent)="edit($event)" (reloadEvent)="loadUsers($event)">
 </app-manage-models>
 
 <ng-template #other_content>

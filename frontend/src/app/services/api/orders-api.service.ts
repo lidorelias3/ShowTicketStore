@@ -9,11 +9,21 @@ export class OrdersApiService {
 
   constructor() { }
 
-  getById(id: String): Observable<any> {
+  getById(id: String, price ? : number): Observable<any> {
+
+    let url = "";
+    if (price) {
+      url = `http://localhost:3000/api/orders/${id}?totalPrice=${price}`
+    } else {
+      url = `http://localhost:3000/api/orders/${id}`
+    }
+
+    console.log('Price:', price, 'Url:', url);
+
     var subject = new Subject<any>()
     authenticatedAjax({
       type: 'GET',
-      url: 'http://localhost:3000/api/orders/' + id,
+      url: url,
       success: function (data: any) {
         subject.next(data)
       },
@@ -25,11 +35,19 @@ export class OrdersApiService {
     return subject.asObservable()
   }
 
-  getAll(): Observable<any> {
+  getAll(price?: number): Observable<any> {
+    let url = "";
+    if (price) {
+      url = `http://localhost:3000/api/orders/?totalPrice=${price}`
+    } else {
+      url = 'http://localhost:3000/api/orders/'
+    }
+
+
     var subject = new Subject<any>()
     authenticatedAjax({
       type: 'GET',
-      url: 'http://localhost:3000/api/orders/',
+      url: url,
       success: function (data: any) {
         subject.next(data)
       },
