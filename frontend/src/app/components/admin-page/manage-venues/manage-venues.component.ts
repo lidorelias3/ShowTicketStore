@@ -111,7 +111,7 @@ export class ManageVenuesComponent implements OnInit {
     this.currentVenue.maxCapacity = totalZonesCapacity
 
     if (this.currentVenue.maxCapacity < 1) {
-      alert("על האולם להכיל לפחות לקוח אחד")
+      alert("על האולם להיות מסוגל להכיל לפחות לקוח אחד, דאג להוסיף אזור ישיבה מתאים")
       return
     }
 

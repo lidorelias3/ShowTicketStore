@@ -9,21 +9,68 @@ const isAdmin = require("../middleware/isAdmin");
 const authenticateToken = require("../middleware/isAuthenticated");
 
 
+// Aggregates
+groupByEvent = [
+  {
+    $group: {
+      _id: "$eventId",
+      count: { $sum: 1 }
+    }
+  },
+  {
+    $lookup: {
+      from: "events",
+      localField: "_id",
+      foreignField: "_id",
+      as: "eventDetails",
+    }
+  },
+  {
+    $unwind: "$eventDetails"
+  },
+  {
+    $project: {
+      _id: 0,
+      eventName: "$eventDetails.name",
+      count: 1,
+    }
+  },
+]
+groupByDate = [
+  {
+    $group: {
+      _id: {
+        $dateToString: { format: "%Y-%m-%d", date: "$createdAt" }
+      },
+      count: { $sum: 1 }
+    }
+  },
+  {
+    $project: {
+      _id: 0,
+      createdAt: "$_id",
+      count: 1,
+    }
+  }
+]
+
+// Get all orders
 router.get(
   "/",
   isAdmin,
   asyncHandler(async (req, res) => {
     try {
-
-      let queryValid = true;
-      // Check that every GET parameter passed to the url is in the Modle's schema
-      Object.keys(req.query).forEach((key) => {
-        if (! Object.keys(Order.schema.paths).includes(key)) {
-          queryValid = false;
-        }
-      });
-
-      const orders = await Order.find(req.query);
+      let orders;
+      switch (req.query.groupby) {
+        case 'event':
+          orders = await Order.aggregate(groupByEvent);
+          break;
+        case 'createdAt':
+          orders = await Order.aggregate(groupByDate);
+          break;
+        default:
+          orders = await Order.find(req.query);
+      }
       return handleResponse(
         res,
         200,

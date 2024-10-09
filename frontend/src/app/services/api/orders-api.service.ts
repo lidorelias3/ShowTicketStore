@@ -31,18 +31,17 @@ export class OrdersApiService {
         subject.next(data)
       }
     });
-
     return subject.asObservable()
   }
 
-  getAll(price?: number): Observable<any> {
+
+  getAllOrders(price?: number): Observable<any> {
     let url = "";
     if (price) {
       url = `http://localhost:3000/api/orders/?totalPrice=${price}`
     } else {
       url = 'http://localhost:3000/api/orders/'
     }
-
 
     var subject = new Subject<any>()
     authenticatedAjax({
@@ -64,6 +63,38 @@ export class OrdersApiService {
     authenticatedAjax({
       type: 'DELETE',
       url: `http://localhost:3000/api/orders/${id}`,
+      success: function (data: any) {
+        subject.next(data)
+      },
+      error: function(data: any) {
+        subject.next(data)
+      }
+    });
+
+    return subject.asObservable()
+  }
+
+  getOrderCountByEvent(): Observable<any> {
+    var subject = new Subject<any>()
+    authenticatedAjax({
+      type: 'GET',
+      url: 'http://localhost:3000/api/orders?groupby=event',
+      success: function (data: any) {
+        subject.next(data)
+      },
+      error: function(data: any) {
+        subject.next(data)
+      }
+    });
+
+    return subject.asObservable()
+  }
+
+  getOrderCountByDate(): Observable<any> {
+    var subject = new Subject<any>()
+    authenticatedAjax({
+      type: 'GET',
+      url: 'http://localhost:3000/api/orders?groupby=createdAt',
       success: function (data: any) {
         subject.next(data)
       },

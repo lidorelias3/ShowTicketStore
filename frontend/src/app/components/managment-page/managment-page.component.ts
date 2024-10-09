@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./managment-page.component.scss'],
 })
 export class ManagmentPageComponent {
-  manage = 'events'
+  manage = 'dashboard-orders-by-date'
 
   select(input: string) {
     this.manage = input

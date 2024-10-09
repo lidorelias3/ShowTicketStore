@@ -1,10 +1,14 @@
 <div>
   <section>
+    <button (click)="select('dashboard-orders-by-date')">הזמנות לפי תאריך</button>
+    <button (click)="select('dashboard-orders-by-event')">הזמנות לפי אירוע</button>
     <button (click)="select('events')">ניהול אירועים</button>
     <button (click)="select('venues')">ניהול אולמות</button>
     <button (click)="select('users')">ניהול משתמשים</button>
     <button (click)="select('purchases')">ניהול הזמנות</button>
   </section>
+  <app-dashboard-orders-by-date *ngIf="manage=='dashboard-orders-by-date'"></app-dashboard-orders-by-date>
+  <app-dashboard-orders-by-event *ngIf="manage=='dashboard-orders-by-event'"></app-dashboard-orders-by-event>
   <app-manage-events *ngIf="manage=='events'"></app-manage-events>
   <app-manage-venues *ngIf="manage=='venues'"></app-manage-venues>
   <app-manage-users *ngIf="manage=='users'"></app-manage-users>
