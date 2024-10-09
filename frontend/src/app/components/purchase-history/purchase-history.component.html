@@ -1,10 +1,11 @@
 <div class="container">
     <h1>היסטוריית הזמנות: </h1>
-    <div>
+    <div *ngIf="ordersEvents !== undefined && ordersEvents.length > 0">
         סכום הזמנה:<br/>
         <input [(ngModel)]="searchedPrice" (focusout)="loadOrders()" type="number" min="0" >
      </div>
     <div class="orders">
+        <div *ngIf="ordersEvents === undefined || ordersEvents.length == 0">אין הזמנות באתר</div>
         <div *ngFor="let obj of ordersEvents" class="flex purchase">
             <div *ngIf="watchAll" class="user">{{obj.user?.firstName}} {{obj.user?.lastName}}</div>
             <div>

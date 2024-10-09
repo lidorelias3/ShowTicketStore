@@ -38,7 +38,7 @@ export class PurchaseHistoryComponent implements OnInit {
 
 
       if (this.watchAll) {
-        this.userService.getAllUsers().subscribe(users=> {
+        this.userService.getAllUsers().subscribe(users => {
           this.users = users.message;
           this.ordersApiService.getAllOrders(this.searchedPrice).subscribe(res => {
             if (!res.success) {
@@ -46,16 +46,20 @@ export class PurchaseHistoryComponent implements OnInit {
               alert(res.responseJSON.detailes)
               return
             }
-  
-            this.ordersEvents = res.message.map((it: Order) => { return { 
-              event: this.events.filter(e => e._id == it.eventId)[0], 
-              order: it,
-              user: this.users.filter(u => u._id == it.userId)[0]  
-            } })
+
+            this.ordersEvents = res.message.map((it: Order) => {
+              return {
+                event: this.events.filter(e => e._id == it.eventId)[0],
+                order: it,
+                user: this.users.filter(u => u._id == it.userId)[0]
+              }
+            })
+            this.ordersEvents = this.ordersEvents.sort((a: any, b: any) => new Date(b.order.createdAt).getTime() - new Date(a.order.createdAt).getTime());
+
           })
-  
+
         })
-        
+
         return
       }
 
@@ -68,20 +72,21 @@ export class PurchaseHistoryComponent implements OnInit {
 
       this.ordersApiService.getById(id!, this.searchedPrice).subscribe(res => {
         if (!res.success) {
-          alert(res.responseJSON.message)
+          this.ordersEvents = []
           return
         }
 
         this.ordersEvents = res.message.map((it: Order) => { return { event: this.events.filter(e => e._id == it.eventId)[0], order: it } })
+        this.ordersEvents = this.ordersEvents.sort((a: any, b: any) => new Date(b.order.createdAt).getTime() - new Date(a.order.createdAt).getTime());
       })
     })
   }
 
 
   delete(id: string) {
-    this.ordersApiService.delete(id).subscribe(res=> {
+    this.ordersApiService.delete(id).subscribe(res => {
       if (res.success) {
-        alert("ההזמנה נמחקה בהצלחה") 
+        alert("ההזמנה נמחקה בהצלחה")
         this.loadOrders()
         return
       }

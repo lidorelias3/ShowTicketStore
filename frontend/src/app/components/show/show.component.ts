@@ -95,10 +95,15 @@ export class ShowComponent implements OnInit {
 
   addToCart() {
     if (this.selectedType === '') {
-      alert('Please select a ticket type');
+      alert('עליך לבחור סוג כרטיס לפני הוספת הכרטיסים לעגלה');
       return;
     }
 
+    if (this.amount == 0) {
+      alert("עליך לבחור לפחות כרטיס אחד להוסיף לעגלה")
+      return
+    }
+    
     this.ticketsService.addToCart(
       this.show,
       this.show.tickets.filter((it) => it.ticketType == this.selectedType)[0],
