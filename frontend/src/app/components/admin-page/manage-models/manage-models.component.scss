@@ -22,3 +22,14 @@
         }
     }
 }
+
+input {
+    height: 30px;
+    margin-bottom: 15px;
+
+    background-color: #4F4F4F55;
+    color: var(--light-text-color);
+    border: none;
+    border-radius: 5px;
+    box-shadow: -1px 1px;
+}

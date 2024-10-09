@@ -11,10 +11,14 @@ export class ManageModelsComponent {
   @Output() editEvent = new EventEmitter<string>()
   @Output() deleteEvent = new EventEmitter<string>()
   @Output() newEvent = new EventEmitter<undefined>()
+  @Output() reloadEvent = new EventEmitter<string>()
+
 
   @Input() models: {'id': string, 'name': string, date?: string}[]
   @Input() title: string
   @Input() buttonTitle: string
+
+  searchQuery: string = ""
 
   constructor() { }
 
@@ -28,5 +32,10 @@ export class ManageModelsComponent {
 
   add() {
     this.newEvent.emit()
+  }
+
+  reload() {
+    console.log("Reload models", this.searchQuery);
+    this.reloadEvent.emit(this.searchQuery);
   }
 }

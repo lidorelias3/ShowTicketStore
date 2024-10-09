@@ -12,17 +12,17 @@ export class ManageUsersComponent implements OnInit {
   users: User[]
   usersTableObjects: any[] = []
   currentUser: User
-
+  
   constructor(private usersService: UserService) { }
 
   ngOnInit(): void {
     this.loadUsers()
   }
 
-  loadUsers() {
+  loadUsers(searchName ? : string) {
     this.users = []
     this.usersTableObjects = []
-    this.usersService.getAllUsers().subscribe(res => {
+    this.usersService.getAllUsers(searchName).subscribe(res => {
       this.users = res.message
       this.usersTableObjects = this.users.map((it) => { return { 'id': it._id, 'name': it.firstName + ' ' + it.lastName } })
     })

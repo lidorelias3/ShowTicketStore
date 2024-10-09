@@ -66,11 +66,12 @@ export class ManageVenuesComponent implements OnInit {
     }
   }
 
-  loadVenues() {
+  loadVenues(venueName ? : string) {
     this.venues = []
     this.VenuesTableObjects = []
     var searchZone = this.zoneName
     var searchCity = this.city
+    var searchByName = venueName
     if (this.zoneName === undefined || this.zoneName.length < 3) {
       searchZone = ''
     }
@@ -79,7 +80,11 @@ export class ManageVenuesComponent implements OnInit {
       searchCity = ''
     }
 
-    this.venuesService.getAllVenues(searchCity, this.minCapacity, searchZone).subscribe(res => {
+    if (venueName === undefined || venueName.length < 3) {
+      searchByName = ''
+    }
+
+    this.venuesService.getAllVenues(searchByName, searchCity, this.minCapacity, searchZone).subscribe(res => {
       this.venues = res.message
       this.VenuesTableObjects = this.venues.map((it) => { return { 'id': it._id, 'name': it.name } })
     })

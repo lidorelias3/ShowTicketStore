@@ -38,7 +38,7 @@ export class OrdersApiService {
   getAll(price?: number): Observable<any> {
     let url = "";
     if (price) {
-      url = `http://localhost:3000/api/orders/?totalPrice${price}`
+      url = `http://localhost:3000/api/orders/?totalPrice=${price}`
     } else {
       url = 'http://localhost:3000/api/orders/'
     }

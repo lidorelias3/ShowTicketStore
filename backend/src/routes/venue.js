@@ -67,7 +67,7 @@ router.get("/id/:id", async (req, res) => {
 // Get a single venue by ID
 router.get("/name/:name", async (req, res) => {
   try {
-    const venue = await Venue.find({ name: req.params.name });
+    const venue = await Venue.find({ name: new RegExp(req.params.name, 'i') });
     if (!venue) {
       return handleResponse(res, 404, false, "Venue not found");
     }

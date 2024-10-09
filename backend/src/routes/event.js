@@ -142,6 +142,24 @@ router.get(
   })
 );
 
+// Get specific event by ID
+router.get(
+  "/name/:name",
+  asyncHandler(async (req, res) => {
+    const eventName = req.params.name;
+
+    // Find the event by ID
+    const match = await Event.find({name: new RegExp(eventName, 'i')});
+    if (!match) {
+      return handleResponse(res, 404, false, "Event not found");
+    }
+
+    let event = JSON.parse(JSON.stringify(match));
+    await tryPredictWeather(event);
+    return handleResponse(res, 200, true, event);
+  })
+);
+
 // Update an event by Name
 router.put(
   "/:name",

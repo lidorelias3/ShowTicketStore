@@ -15,7 +15,7 @@
 
 <app-manage-models *ngIf="showList;else other_content" [title]="'אולמות'" [models]="VenuesTableObjects"
     [buttonTitle]="'הוספת אולם חדש'" (deleteEvent)="delete($event)" (editEvent)="edit($event)"
-    (newEvent)="newElement()">
+    (newEvent)="newElement()" (reloadEvent)="loadVenues($event)">
 </app-manage-models>
 
 <ng-template #other_content>

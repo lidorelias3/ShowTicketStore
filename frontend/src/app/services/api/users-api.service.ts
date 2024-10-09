@@ -12,11 +12,19 @@ export class UsersApiService {
 
   constructor() { }
 
-  getAllUsers(): Observable<any> {
+  getAllUsers(filterFirstName? : string): Observable<any> {
+    
+    let url = "";
+    if (filterFirstName && filterFirstName != "") {
+      url = `http://localhost:3000/api/users/?firstName=${filterFirstName}`
+    } else {
+      url = 'http://localhost:3000/api/users/'
+    }
+
     var subject = new Subject<any>()
     authenticatedAjax({
       type: 'GET',
-      url: 'http://localhost:3000/api/users/',
+      url: url,
       async: true,
       success: function (data: any) {
         subject.next(data)
