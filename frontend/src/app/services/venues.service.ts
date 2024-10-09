@@ -17,8 +17,8 @@ export class VenuesService {
   }
 
 
-  getAllVenues(city?: string, minCapacity?: number, zoneName?: string) {
-    return this.venuesApiService.getAllEvents(city, minCapacity, zoneName)
+  getAllVenues(venueName?: string, city?: string, minCapacity?: number, zoneName?: string) {
+    return this.venuesApiService.getAllEvents(venueName, city, minCapacity, zoneName)
   }
 
   newVenue(venue: Venue) {

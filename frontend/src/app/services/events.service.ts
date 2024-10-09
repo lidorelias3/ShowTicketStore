@@ -21,8 +21,9 @@ export class EventsService {
     return this.eventApiService.deleteEvent(eventName);
   }
 
-  getEvents(minAge?: number, maxPrice?: number, venueName?: string) {
-    return this.eventApiService.getAllEvents(minAge, maxPrice, venueName);
+
+  getEvents(eventName?:string, minAge?: number, maxPrice?: number, venueName?: string) {
+    return this.eventApiService.getAllEvents(eventName, minAge, maxPrice, venueName);
   }
 
 

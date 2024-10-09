@@ -1,4 +1,4 @@
-<div class="search-bar flex">
+<div class="search-bar flex" *ngIf="modelFilter === undefined || modelFilter === ''">
     <div>
         גיל כניסה מינימלי:<br />
         <input type="number" min="0" [(ngModel)]="minAge" (focusout)="loadEvents()">
@@ -15,7 +15,7 @@
 
 <app-manage-models *ngIf="showList;else other_content" [title]="'מופעים'" [models]="EventsTableObjects"
     [buttonTitle]="'הוספת מופע חדש'" (deleteEvent)="delete($event)" (editEvent)="edit($event)"
-    (newEvent)="newElement()">
+    (newEvent)="newElement()" (reloadEvent)="filter($event)">
 </app-manage-models>
 
 <ng-template #other_content>

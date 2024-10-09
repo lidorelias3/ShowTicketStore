@@ -3,6 +3,11 @@
         <h1>ניהול {{title}}</h1>
         <button *ngIf="buttonTitle" (click)="add()">{{buttonTitle}}</button>
     </div>
+    <div>
+        חיפוש {{title}} <br/>
+        <input [(ngModel)]="searchQuery" (focusout)="reload()" type="text"><br/>
+        שימו לב, אורך פלטור מינימלי הוא 3 תווים ובמידה וקיים פלטור מתקדם הוא יבוטל על ידי ערך זה
+     </div>
     <table>
         <tr *ngFor="let row of models">
             <td>{{row.name}}</td>

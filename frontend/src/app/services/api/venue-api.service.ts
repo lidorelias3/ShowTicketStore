@@ -7,7 +7,7 @@ import { authenticatedAjax } from './ajax.util';
   providedIn: 'root'
 })
 export class VenueApiService {
-  getAllEvents(city?: string, minCapacity?: number, zoneName?: string): Observable<any> {
+  getAllEvents(venueName?: string, city?: string, minCapacity?: number, zoneName?: string): Observable<any> {
     var params: string[] = []
 
     if (minCapacity !== undefined && minCapacity > 0) {
@@ -22,7 +22,12 @@ export class VenueApiService {
       params.push(`zoneName=${encodeURIComponent(zoneName)}`);
     }
 
-    var url = 'http://localhost:3000/api/venue?' + params.join('&')
+    let url = "";
+    if (venueName && venueName.length > 2) {
+      url = `http://localhost:3000/api/venue/name/${venueName}`
+    } else {
+      url = 'http://localhost:3000/api/venue?' + params.join('&')
+    }
 
     var subject = new Subject<any>()
     authenticatedAjax({

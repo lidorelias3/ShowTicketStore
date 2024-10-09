@@ -71,14 +71,14 @@ export class GaleryComponent implements OnInit {
     this.shows = []
 
     if (this.venueName === undefined || this.venueName.length <= 2) {
-      this.showsService.getEvents(this.minAge, this.maxPrice, '').subscribe(res => {
+      this.showsService.getEvents(undefined, this.minAge, this.maxPrice, '').subscribe(res => {
         this.shows = res.message;
       })
 
       return
     }
 
-    this.showsService.getEvents(this.minAge, this.maxPrice, this.venueName).subscribe(res => {
+    this.showsService.getEvents(undefined, this.minAge, this.maxPrice, this.venueName).subscribe(res => {
       this.shows = res.message;
     })
   }
@@ -93,7 +93,7 @@ export class GaleryComponent implements OnInit {
 
     this.shows = []
 
-    this.showsService.getEvents(this.minAge, this.maxPrice, this.venueName).subscribe(res => {
+    this.showsService.getEvents(undefined, this.minAge, this.maxPrice, this.venueName).subscribe(res => {
       this.shows = res.message;
     })
   }
