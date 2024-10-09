@@ -14,11 +14,10 @@ button {
 
     input {
         width: 270px;
-        height: 30px;
-        margin-bottom: 15px;
+        height: 25px;
+        margin-bottom: 10px;
         padding-right: 5%;
-
-        background-color: #4F4F4F55;
+        background-color: rgba(79, 79, 79, 0.3333333333);
         color: var(--light-text-color);
         border: none;
     }

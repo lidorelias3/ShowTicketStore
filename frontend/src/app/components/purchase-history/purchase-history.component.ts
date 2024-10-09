@@ -40,7 +40,7 @@ export class PurchaseHistoryComponent implements OnInit {
       if (this.watchAll) {
         this.userService.getAllUsers().subscribe(users=> {
           this.users = users.message;
-          this.ordersApiService.getAll(this.searchedPrice).subscribe(res => {
+          this.ordersApiService.getAllOrders(this.searchedPrice).subscribe(res => {
             if (!res.success) {
               alert(res.responseJSON.message)
               alert(res.responseJSON.detailes)

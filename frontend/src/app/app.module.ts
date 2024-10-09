@@ -15,6 +15,8 @@ import { PayPageComponent } from './components/pay-page/pay-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GaleryComponent } from './components/galery/galery.component';
 import { ShowComponent } from './components/show/show.component';
+import { DashboardOrdersByDateComponent } from './components/admin-page/dashboard-orders-by-date/dashboard-orders-by-date.component';
+import { DashboardOrdersByEventComponent } from './components/admin-page/dashboard-orders-by-event/dashboard-orders-by-event.component';
 import { ManageModelsComponent } from './components/admin-page/manage-models/manage-models.component';
 import { ManageEventsComponent } from './components/admin-page/manage-events/manage-events.component';
 import { ManageVenuesComponent } from './components/admin-page/manage-venues/manage-venues.component';
@@ -36,6 +38,8 @@ import { GoogleMapsModule } from '@angular/google-maps'; // Import Google Maps M
     PayPageComponent,
     GaleryComponent,
     ShowComponent,
+    DashboardOrdersByDateComponent,
+    DashboardOrdersByEventComponent,
     ManageModelsComponent,
     ManageEventsComponent,
     ManageVenuesComponent,

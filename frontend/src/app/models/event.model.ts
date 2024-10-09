@@ -4,7 +4,7 @@ export interface Event {
   date: Date;
 
   venueName: string;
-  tickets: Array<{ ticketType: string; price: number }>;
+  tickets: Array<{ ticketType: string; price: number, remaining: number }>;
   minimumAge: number;
 
   description: string;

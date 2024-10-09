@@ -2,6 +2,10 @@ section {
     padding: 16px;
 }
 
+app-manage-venues, app-manage-users, app-manage-events, app-purchase-history {
+    max-height: 85%;
+}
+
 button {
     background-color: transparent;
     margin-inline: 8px;

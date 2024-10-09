@@ -17,7 +17,7 @@ export class ShowComponent implements OnInit {
   show: Event;
 
   selectedType: string = '';
-  amount = 1;
+  amount = 0;
   center: google.maps.LatLngLiteral; // For map center
   map: google.maps.Map; // Google Map instance
 
@@ -109,6 +109,19 @@ export class ShowComponent implements OnInit {
   }
 
   increaseAmount(by: number) {
+    if (this.selectedType == '') {
+      alert("עליך לבחור סוג כרטיס לפני שתבחר כמות")
+    }
+
+    if (by == -1 && this.amount == 0) {
+      return
+    } 
+
+    if (by == 1 && this.show.tickets.filter((it) => it.ticketType == this.selectedType)[0].remaining == this.amount) {
+      alert("בחרת את כמות הכרטיסים המקסימלית לפריט זה")
+      return
+    }
+
     this.amount += 1 * by;
   }
 }

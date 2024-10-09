@@ -33,7 +33,7 @@
     <h3>2. בחר סוג כרטיס</h3>
     <div *ngFor="let ticket of show.tickets">
       <label for="{{ ticket.ticketType }}">
-        <input
+        <input *ngIf="ticket.remaining > 0"
           id="{{ ticket.ticketType }}"
           dir="rtl"
           [value]="ticket.ticketType"
@@ -43,7 +43,8 @@
         />
         {{ ticket.ticketType }}
       </label>
-
+      <div class="font-s" *ngIf="ticket.remaining == 0">נגמרו הכרטיסים לסוג זה</div>
+      <div class="font-s" *ngIf="ticket.remaining > 0">נשארו {{ticket.remaining}} כרטיסים מסוג זה</div>
       {{ ticket.price }} ש"ח לכרטיס
     </div>
     <h5 class="addToCart" (click)="addToCart()">
